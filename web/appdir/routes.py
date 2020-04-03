@@ -6,7 +6,7 @@ from appdir.models import Customer, User
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-@app.route("/")
+@app.route("/index")
 def index():
     return "<h1>Hello World</h1>"
 
@@ -15,12 +15,10 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         passw_hash = generate_password_hash(form.password.data)
-        customer = Customer(username=form.username.data, email=form.email.data,dob=form.dob.data, password_hash=passw_hash)
-        customer.address='default'
-        customer.phone='123456'
+        customer = Customer(username=form.username.data, email=form.email.data,dob=form.dob.data, password_hash=passw_hash, phone=form.phone.data, address=form.address.data)
         db.session.add(customer)
         db.session.commit()
-        return redirect(url_for('/'))
+        return redirect(url_for('/index'))
     return render_template('register.html', title='Register a new user', form=form)
 
 @app.route("/login")

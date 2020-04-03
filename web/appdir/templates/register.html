@@ -18,6 +18,24 @@
 
         </div>
 
+        <div id="passwords">    
+            <div>
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}
+            </div>
+            {% for error in form.password.errors %}
+            <span style="color: red;" class="flash">[{{ error }}]</span>
+            {% endfor %}
+            <div>
+                {{ form.password2.label }}<br>
+                {{ form.password2(size=32) }}<br>
+                <span id="checkpassword"></span>
+            </div>
+            {% for error in form.password2.errors %}
+            <span style="color: red;" class="flash">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+
         <div id="email">
             <div>
                 {{ form.email.label }}<br>
@@ -27,6 +45,16 @@
             {% for error in form.email.errors %}
             <span style="color: red;" class="flash">[{{ error }}]</span>
             {% endfor %}
+        </div>
+
+        <div id="phone">
+            <label>Phone Number</label><br>
+            {{ form.phone(size=32) }}<br>
+            <span id="checkphone"></span>
+        
+        {% for error in form.phone.errors %}
+        <span style="color: red;"  class="flash">[{{ error }}]</span>
+        {% endfor %}
         </div>
 
         <div id="birthday">
@@ -39,29 +67,25 @@
         {% endfor %}
         </div>
 
-        <div id="passwords">    
-            <div>
-                {{ form.password.label }}<br>
-                {{ form.password(size=35) }}
-            </div>
-            {% for error in form.password.errors %}
-            <span style="color: red;" class="flash">[{{ error }}]</span>
-            {% endfor %}
-            <div>
-                {{ form.password2.label }}<br>
-                {{ form.password2(size=35) }}<br>
-                <span id="checkpassword"></span>
-            </div>
-            {% for error in form.password2.errors %}
-            <span style="color: red;" class="flash">[{{ error }}]</span>
-            {% endfor %}
+        <div id="address">
+            <label>Address</label><br>
+            {{ form.address(size=32) }}<br>
+            <span id="checkadress"></span>
+        
+        {% for error in form.address.errors %}
+        <span style="color: red;"  class="flash">[{{ error }}]</span>
+        {% endfor %}
         </div>
+        
         <div>{{ form.accept_rules() }} {{ form.accept_rules.label }}</div>
+
         {% for error in form.accept_rules.errors %}
         <span style="color: red;" class="flash">[{{ error }}]</span>
         {% endfor %}
         <br />
+
         <div>{{ form.submit() }}</div>
+        
     </form>
 </div>
 {% endblock %}

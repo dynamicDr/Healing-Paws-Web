@@ -12,7 +12,9 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
 	username = StringField('Username', validators=[DataRequired()])
 	email = StringField('Email', validators=[DataRequired()])
-	dob = DateField ('Date of Birth (format: YYYY-MM-DD)', format='%Y-%m-%d', validators = [DataRequired()])
+	phone = StringField('Phone', validators=[DataRequired()])
+	dob = DateField('Date of Birth (format: YYYY-MM-DD)', format='%Y-%m-%d', validators=[DataRequired()])
+	address = StringField('Address', validators=[DataRequired()])
 	password = PasswordField('Password', validators=[DataRequired()])
 	password2 = PasswordField('Repeat Password', validators=[DataRequired()])
 	accept_rules = BooleanField('I accept the site rules', validators=[DataRequired()])
