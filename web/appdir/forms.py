@@ -22,3 +22,13 @@ class RegisterForm(FlaskForm):
 	accept_rules = BooleanField('I accept the site rules', validators=[DataRequired()])
 	
 	submit = SubmitField('Register')
+    
+class ReviewForm(FlaskForm):
+    keyword = StringField('Keyword', validators=[DataRequired()])
+    submit = SubmitField('Search')
+    
+class QuestionForm(FlaskForm):
+    title = StringField('Question', validators=[DataRequired()])
+    body = StringField('Question description')
+    anonymity = BooleanField('anonymity')
+    submit = SubmitField('Confirm')
