@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="url_for('reviewquestions')"><input type="button">Back</input></a>
+	<div>
+		<!-- <img> -->
+		<p>{{ user.username }}</p>
+	</div>
+	<hr>
+	<form action="" method="post" enctype="multipart/form-data" novalidate>
+		{{ form.hidden_tag() }}
+		<fieldset>
+			<legend>New Question</legend>
+			<p>
+				{{ form.title.label }}<br>
+				{{ form.title(size=32) }}
+			</p>
+			<p>
+				{{ form.body.label }}<br>
+				{{ form.body }}
+			</p>
+			<p>{{ form.anonymity }}</p>
+			<p>{{ form.submit() }}</p>
+		</fieldset>
+	</form>
+{% endblock %}
