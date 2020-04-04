@@ -21,16 +21,20 @@ def register():
         return redirect(url_for('index'))
     return render_template('register.html', title='Register a new user', form=form)
 
-@app.route("/login")
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return ""
-
-@app.route("/test")
-def test():
-    user = User(id='2', name='Jack2')
-    db.session.add(user)
-    db.session.commit()
-    return user
+    form = LoginForm()
+    if form.validate_on_submit():
+        user_in_db = User.query.filter(User.username == form.username.data).first()
+        if not user_in_db:
+            flash('No user found with username: {}'.format(form.username.data))
+            return redirect(url_for('login'))
+        if (check_password_hash(user_in_db.password_hash, form.password.data)):
+            session["USERNAME"] = user_in_db.username #登录成功后添加状态
+            return redirect(url_for('home'))
+        flash('Incorrect Password')
+        return redirect(url_for('login'))
+    return render_template('login.html', title='Login', form=form)
 
 @app.route("/reset")
 def reset():

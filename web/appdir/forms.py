@@ -17,7 +17,7 @@ class RegisterForm(FlaskForm):
 	address = StringField('Address', validators=[DataRequired()])
 	password = PasswordField('Password', validators=[DataRequired()])
 	password2 = PasswordField('Repeat Password', validators=[DataRequired()])
-	# account_type = RadioField('Customer or Employee', choices = [('C','Customer'),('E','Employee')], validators=[DataRequired()])
+	account_type = RadioField('Customer or Employee', choices = [('C','Customer'),('E','Employee')], validators=[DataRequired()])
 	# 暂时没必要，后面可修改得更合理，比如只有用户注册时会显示这个。
 	accept_rules = BooleanField('I accept the site rules', validators=[DataRequired()])
 	
