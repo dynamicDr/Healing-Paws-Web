@@ -14,8 +14,6 @@ def index():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        if form.account_type.data == 'C':
-            pass
         passw_hash = generate_password_hash(form.password.data)
         customer = Customer(username=form.username.data, email=form.email.data,dob=form.dob.data, password_hash=passw_hash, phone=form.phone.data, address=form.address.data)
         db.session.add(customer)
