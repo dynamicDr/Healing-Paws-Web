@@ -15,6 +15,8 @@ class User(db.Model):
     is_customer = db.Column(db.Boolean, index=True)
     questions = db.relationship('Question', backref='author', lazy='dynamic')
     answers = db.relationship('Answer', backref='author',lazy='dynamic')
+    pets = db.relationship('Pet', backref='owner', lazy='dynamic')
+    appointments = db.relationship('Appointmnet', backref='maker', lazy='dynamic')
 
 class Appointment(db.Model):
     __tablename__ = 'appointments'
@@ -33,7 +35,7 @@ class Appointment(db.Model):
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.id'))
     preferred_doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
     assigned_doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
-
+    
 class Pet(db.Model):
     __tablename__ = 'pets'
     id = db.Column(db.Integer, primary_key=True)
@@ -44,13 +46,11 @@ class Pet(db.Model):
 
 class Doctor(db.Model):
     __tablename__ = 'doctors'
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
     age = db.Column(db.Integer)
     profession = db.Column(db.String(32))
     phone = db.Column(db.String(15), nullable=True)
-
 
 class Question(db.Model):
     __tablename__ = 'questions'

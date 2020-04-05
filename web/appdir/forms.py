@@ -20,9 +20,11 @@ class RegisterForm(FlaskForm):
 	account_type = RadioField('Customer or Employee', choices = [('C','Customer'),('E','Employee')], validators=[DataRequired()])
 	# 暂时没必要，后面可修改得更合理，比如只有用户注册时会显示这个。
 	accept_rules = BooleanField('I accept the site rules', validators=[DataRequired()])
-	
 	submit = SubmitField('Register')
-    
+
+class AppointmentForm(FlaskForm):
+	pass
+
 class ReviewForm(FlaskForm):
     keyword = StringField('Keyword', validators=[DataRequired()])
     submit = SubmitField('Search')
