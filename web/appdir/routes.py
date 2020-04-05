@@ -8,6 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 @app.route("/")
 @app.route("/index")
 def index():
+    user = None
     if session.get("USERNAME") != None:
         user = User.query.filter(User.username == session.get("USERNAME")).first()
     return render_template('index.html', title='Home Page', user=user)
@@ -37,7 +38,7 @@ def login():
         flash('Incorrect Password')
         return redirect(url_for('login'))
     return render_template('login.html', title='Login', form=form)
-    
+
 @app.route('/logout')
 def logout():
     session.pop("USERNAME", None)
