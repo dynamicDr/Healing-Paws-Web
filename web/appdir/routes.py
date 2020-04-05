@@ -2,7 +2,7 @@ from appdir import app, db
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
 from appdir.config import Config
 from appdir.forms import LoginForm, RegisterForm, ReviewForm, QuestionForm
-from appdir.models import Customer, User, Question, Answer
+from appdir.models import User, Question, Answer
 from werkzeug.security import generate_password_hash, check_password_hash
 
 @app.route("/")
@@ -15,8 +15,8 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         passw_hash = generate_password_hash(form.password.data)
-        customer = Customer(username=form.username.data, email=form.email.data,dob=form.dob.data, password_hash=passw_hash, phone=form.phone.data, address=form.address.data)
-        db.session.add(customer)
+        user = User(username=form.username.data, email=form.email.data, dob=form.dob.data, password_hash=passw_hash, phone=form.phone.data, address=form.address.data, is_customer=form.account_type.data=='C')
+        db.session.add(user)
         db.session.commit()
         return redirect(url_for('index'))
     return render_template('register.html', title='Register a new user', form=form)
@@ -31,7 +31,7 @@ def login():
             return redirect(url_for('login'))
         if (check_password_hash(user_in_db.password_hash, form.password.data)):
             session["USERNAME"] = user_in_db.username #登录成功后添加状态
-            return redirect(url_for('home'))
+            return redirect(url_for('index'))
         flash('Incorrect Password')
         return redirect(url_for('login'))
     return render_template('login.html', title='Login', form=form)
