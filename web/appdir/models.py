@@ -21,22 +21,36 @@ class Appointment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     booking_datetime = db.Column(db.DateTime, default=datetime.utcnow)
-    date = db.Column(db.DateTime.date, index=True)
+    date = db.Column(db.Date, index=True)
     time = db.Column(db.Integer)
     message = db.Column(db.String(32))
-    status = db.Column(db.String(32))
+    status = db.Column(db.String(32))   #Pending/Confirmed/Canceled/Finished
+    pet_status = db.Column(db.String(32))
     location = db.Column(db.String(32))
     is_emergency = db.Column(db.Boolean)
+    accept_change = db.Column(db.Boolean)
+    employee_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    pet_id = db.Column(db.Integer, db.ForeignKey('pets.id'))
+    preferred_doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
+    assigned_doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
 
 class Pet(db.Model):
     __tablename__ = 'pets'
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
     age = db.Column(db.Integer)
     category = db.Column(db.String(32))
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    answers = db.relationship('User', backref='owner', lazy='dynamic')
+
+class Doctor(db.Model):
+    __tablename__ = 'doctors'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(32))
+    age = db.Column(db.Integer)
+    profession = db.Column(db.String(32))
+    phone = db.Column(db.String(15), nullable=True)
+
 
 class Question(db.Model):
     __tablename__ = 'questions'
