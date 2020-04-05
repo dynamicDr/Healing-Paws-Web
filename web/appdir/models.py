@@ -15,18 +15,21 @@ class User(db.Model):
     is_customer = db.Column(db.Boolean, index=True)
     questions = db.relationship('Question', backref='author', lazy='dynamic')
     answers = db.relationship('Answer', backref='author',lazy='dynamic')
+    pets = db.relationship('Pet', backref='owner', lazy='dynamic')
+    appointments = db.relationship('Appointmnet', backref='maker', lazy='dynamic')
 
 class Appointment(db.Model):
     __tablename__ = 'appointments'
 
     id = db.Column(db.Integer, primary_key=True)
     booking_datetime = db.Column(db.DateTime, default=datetime.utcnow)
-    date = db.Column(db.DateTime.date, index=True)
+    date = db.Column(db.Date, index=True)
     time = db.Column(db.Integer)
     message = db.Column(db.String(32))
     status = db.Column(db.String(32))
     location = db.Column(db.String(32))
     is_emergency = db.Column(db.Boolean)
+    maker_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 class Pet(db.Model):
     __tablename__ = 'pets'
@@ -36,7 +39,6 @@ class Pet(db.Model):
     age = db.Column(db.Integer)
     category = db.Column(db.String(32))
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    answers = db.relationship('User', backref='owner', lazy='dynamic')
 
 class Question(db.Model):
     __tablename__ = 'questions'
