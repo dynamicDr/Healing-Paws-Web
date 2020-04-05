@@ -15,7 +15,11 @@ class User(db.Model):
     is_customer = db.Column(db.Boolean, index=True)
     questions = db.relationship('Question', backref='author', lazy='dynamic')
     answers = db.relationship('Answer', backref='author',lazy='dynamic')
-    
+
+class Appointment(db.Model):
+    __tablename__ = 'appointments'
+
+    id = db.Column(db.Integer, primary_key=True)  
     
 class Question(db.Model):
     __tablename__ = 'questions'
