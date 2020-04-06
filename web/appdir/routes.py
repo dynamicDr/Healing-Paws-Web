@@ -53,7 +53,7 @@ def reset():
     db.create_all()
     return '重建所有表'
 
-@app.route('/reviewquestions')
+@app.route('/reviewquestions',methods=['GET','POST'])
 def reviewquestions():
     form = ReviewForm()
     if form.validate_on_submit():
@@ -80,9 +80,15 @@ def addquestion():
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))
     return render_template('addquestion.html',title="Add a Question", form=form)
+    
+
         
-@app.route('/answerquestion/<question_id>', methods=['GET','POST'])
-def answerquestion(question_id):
+@app.route('/answerquestion', methods=['GET','POST'])
+def answerquestion():
+    index = int(request.form['index'])
+    questions = Question.query.filter()
+    question_id = questions[index].id
+
     form = AnswerForm
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
