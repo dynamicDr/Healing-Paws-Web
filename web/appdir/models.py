@@ -16,7 +16,7 @@ class User(db.Model):
     questions = db.relationship('Question', backref='author', lazy='dynamic')
     answers = db.relationship('Answer', backref='author',lazy='dynamic')
     pets = db.relationship('Pet', backref='owner', lazy='dynamic')
-    appointments = db.relationship('Appointmnet', backref='maker', lazy='dynamic')
+    appointments = db.relationship('Appointment', backref='maker', lazy='dynamic')
 
 class Appointment(db.Model):
     __tablename__ = 'appointments'
