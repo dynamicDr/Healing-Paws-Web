@@ -1,8 +1,8 @@
 from appdir import app, db
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
 from appdir.config import Config
-from appdir.forms import LoginForm, RegisterForm, ReviewForm, QuestionForm
-from appdir.models import User, Question, Answer
+from appdir.forms import LoginForm, RegisterForm, ReviewForm, QuestionForm, AppointmentForm
+from appdir.models import User, Question, Answer, Appointment
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from appdir.models import *
@@ -99,7 +99,7 @@ def handleappointment(appointment_id):
         return redirect(url_for('login'))
 
 @app.route('/change_pet_status',methods=["POST"])
-def change_pet_status():
+def change_pet_status():    
     appointment_id = request.args.get("appointment_id")
     pet_status = request.args.get("pet_status")
     appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
@@ -114,12 +114,12 @@ def make_appointment():
         user_in_db = User.query.filter(User.username == username).first()
         if not user_in_db.is_customer:
             return "请以顾客身份登录"
-        if form.validate_on_submit():
-            passw_hash = generate_password_hash(form.password.data)
-            user = User(username=form.username.data, email=form.email.data, dob=form.dob.data, password_hash=passw_hash, phone=form.phone.data, address=form.address.data, is_customer=form.account_type.data=='C')
-            db.session.add(user)
-            db.session.commit()
-            return redirect(url_for('index'))
+        elif form.validate_on_submit(): # 第二次，已填写
+            return redirect('index')
+        else: # 第一次，还未填写
+            pets = Pet.query.filter(Pet.owner_id == user_in_db.id).all()
+            form.pet.choices = [(pet.id, pet.name) for pet in pets]
+            return render_template('make_appointment.html',title="Make a new appointment", user=user_in_db, form=form)
     else:
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))

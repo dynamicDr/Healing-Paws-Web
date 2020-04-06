@@ -38,6 +38,7 @@ class Appointment(db.Model):
     
 class Pet(db.Model):
     __tablename__ = 'pets'
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
     age = db.Column(db.Integer)
@@ -46,12 +47,14 @@ class Pet(db.Model):
 
 class Doctor(db.Model):
     __tablename__ = 'doctors'
+    
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
     age = db.Column(db.Integer)
     profession = db.Column(db.String(32))
     phone = db.Column(db.String(15), nullable=True)
-
+    location = db.Column(db.String(32))
+    
 class Question(db.Model):
     __tablename__ = 'questions'
 
