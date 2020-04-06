@@ -22,7 +22,7 @@
 		</tr>
 		{% for question in prev_questions %}
 		<tr>
-			<td> {{ question.body }}</td>
+			<a href="{{ url_for('answerquestion(question.id)')}}"><td> {{ question.body }}</td></a>
 			<td> {{ question.author.username }}</td>
 			<td> {{ question.answer.body }}</td>
 		</tr>
@@ -33,5 +33,5 @@
 		<p>No previous question</p>
 		<hr>
 	{% endif %}
-	<a href="url_for('addquestion')"><input type="button">New Question</input></a>
+	<a href="{{ url_for('addquestion') }}"><input type="button">New Question</input></a>
 {% endblock %}

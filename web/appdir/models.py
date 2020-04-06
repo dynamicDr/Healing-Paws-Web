@@ -16,7 +16,7 @@ class User(db.Model):
     questions = db.relationship('Question', backref='author', lazy='dynamic')
     answers = db.relationship('Answer', backref='author',lazy='dynamic')
     pets = db.relationship('Pet', backref='owner', lazy='dynamic')
-    appointments = db.relationship('Appointmnet', backref='maker', lazy='dynamic')
+    appointments = db.relationship('Appointment', backref='maker', lazy='dynamic')
 
 class Appointment(db.Model):
     __tablename__ = 'appointments'
@@ -62,7 +62,6 @@ class Question(db.Model):
     anonymity = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     answers = db.relationship('Answer', backref='question', lazy='dynamic')
-    
     
     def __repr__(self):
         return '<Question asked on {} by {}: {} >'.format(str(self.timestamp)[0:10],self.author.username,self.body)

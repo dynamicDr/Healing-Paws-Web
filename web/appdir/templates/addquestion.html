@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<a href="url_for('reviewquestions')"><input type="button">Back</input></a>
+<a href="{{ url_for('reviewquestions') }}"><input type="button">Back</input></a>
 	<div>
 		<!-- <img> -->
 		<p>{{ user.username }}</p>
@@ -18,7 +18,7 @@
 				{{ form.body.label }}<br>
 				{{ form.body }}
 			</p>
-			<p>{{ form.anonymity }}</p>
+			<p>{{ form.anonymity.label }} {{ form.anonymity }}</p>
 			<p>{{ form.submit() }}</p>
 		</fieldset>
 	</form>
