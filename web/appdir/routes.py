@@ -109,23 +109,41 @@ def handleappointment(appointment_id):
         user_in_db = User.query.filter(User.username == username).first()
         if user_in_db.is_customer:
             return "请以员工身份登录"
-        appointment = Appointment.query.filter(Appointment.id == appointment_id).first();
-        pet = Pet.query.filter(Pet.id == appointment.pet_id).first();
-        customer = User.query.filter(User.id == pet.owner_id).first();
-        employee = User.query.filter(User.id == appointment.employee_id).first();
-        preferred_doctor = Doctor.query.filter(Doctor.id == appointment.preferred_doctor_id).first();
-        assigned_doctor = Doctor.query.filter(Doctor.id == appointment.assigned_doctor_id).first();
-        return render_template('handleappointment.html',title="Handle Appointment",
-                               appointment=appointment,pet=pet,customer=customer,employee=employee,
-                               preferred_doctor=preferred_doctor,assigned_doctor=assigned_doctor);
+        appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
+        pet = Pet.query.filter(Pet.id == appointment.pet_id).first()
+        customer = User.query.filter(User.id == pet.owner_id).first()
+        employee = User.query.filter(User.id == appointment.employee_id).first()
+        preferred_doctor = Doctor.query.filter(Doctor.id == appointment.preferred_doctor_id).first()
+        assigned_doctor = Doctor.query.filter(Doctor.id == appointment.assigned_doctor_id).first()
+        return render_template('handleappointment.html', title="Handle Appointment",
+                               appointment=appointment, pet=pet, customer=customer, employee=employee,
+                               preferred_doctor=preferred_doctor, assigned_doctor=assigned_doctor, user=user_in_db)
     else:
-            flash("User needs to either login or signup first")
-            return redirect(url_for('login'))
+        flash("User needs to either login or signup first")
+        return redirect(url_for('login'))
 
 @app.route('/change_pet_status',methods=["POST"])
 def change_pet_status():
-    appointment_id = request.args.get("appointment_id");
-    pet_status = request.args.get("pet_status");
-    appointment = Appointment.query.filter(Appointment.id == appointment_id).first();
-    appointment.pet_status = pet_status;
+    appointment_id = request.args.get("appointment_id")
+    pet_status = request.args.get("pet_status")
+    appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
+    appointment.pet_status = pet_status
     return jsonify({"code":200})
+
+@app.route('/make_appointment', methods=['POST','GET'])
+def make_appointment():
+    form = AppointmentForm()
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
+        if not user_in_db.is_customer:
+            return "请以顾客身份登录"
+        if form.validate_on_submit():
+            passw_hash = generate_password_hash(form.password.data)
+            user = User(username=form.username.data, email=form.email.data, dob=form.dob.data, password_hash=passw_hash, phone=form.phone.data, address=form.address.data, is_customer=form.account_type.data=='C')
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('index'))
+    else:
+        flash("User needs to either login or signup first")
+        return redirect(url_for('login'))
