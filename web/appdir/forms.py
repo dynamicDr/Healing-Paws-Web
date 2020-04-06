@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, RadioField, FileField, DateTimeField, TextAreaField, RadioField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, RadioField, FileField, DateTimeField, TextAreaField, RadioField, SelectField
 from wtforms.validators import DataRequired, Email
 from flask_wtf.file import FileRequired, FileAllowed
 
@@ -23,7 +23,9 @@ class RegisterForm(FlaskForm):
 	submit = SubmitField('Register')
 
 class AppointmentForm(FlaskForm):
-	pass
+	appointment_type = RadioField('Standard or Emergency', choices = [('S','Standard'),('E','Emergency')], validators=[DataRequired()])
+	pet = SelectField(label='为哪只宠物预约', validators=[DataRequired('请选择宠物')], coerce=int)
+	submit = SubmitField('Comfirm and Submit')
 
 class ReviewForm(FlaskForm):
     keyword = StringField('Keyword', validators=[DataRequired()])
