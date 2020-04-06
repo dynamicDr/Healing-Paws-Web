@@ -66,7 +66,6 @@ class Question(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     answers = db.relationship('Answer', backref='question', lazy='dynamic')
     
-    
     def __repr__(self):
         return '<Question asked on {} by {}: {} >'.format(str(self.timestamp)[0:10],self.author.username,self.body)
         

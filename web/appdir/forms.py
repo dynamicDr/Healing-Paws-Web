@@ -36,3 +36,7 @@ class QuestionForm(FlaskForm):
     body = StringField('Question description')
     anonymity = BooleanField('anonymity')
     submit = SubmitField('Confirm')
+    
+class AnswerForm(FlaskForm):
+    body = StringField('Answer', validators=[DataRequired()])
+    submit = SubmitField('Reply')
