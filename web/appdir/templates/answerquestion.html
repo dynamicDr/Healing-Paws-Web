@@ -9,7 +9,7 @@
 		<li>Answers:
 		{% if prev_answers %}
 			<ul>
-			{% for answer in prev_questions %}
+			{% for answer in prev_answers %}
 				<li>{{ answer.body }} made by {{ answer.author.username }}</li>
 			{% endfor %}
 			</ul>

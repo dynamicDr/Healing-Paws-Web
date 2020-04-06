@@ -80,27 +80,25 @@ def addquestion():
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))
     return render_template('addquestion.html',title="Add a Question", form=form)
-    
-
         
 @app.route('/answerquestion', methods=['GET','POST'])
 def answerquestion():
     index = int(request.form['index'])
     questions = Question.query.filter()
-    question_id = questions[index].id
+    question_db = questions[index]
 
     form = AnswerForm
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if form.validate_on_submit():
-            answer_db = Answer(body = form.body.data, question_id = this.question_id, user=user_in_db)
+            answer_db = Answer(body = form.body.data, question_id = question_db.id, user=user_in_db)
             db.session.add(answer_db) 
             db.session.commit()
             return redirect(url_for('reviewquestions'))
         else:
-            prev_answers = Answer.query.filter(Answer.question_id == question_id).all()
-    return render_template('answerquestion.html',title="Answer Question",prev_answers=prev_answers,form=form)
+            prev_answers = Answer.query.filter(Answer.question_id == question_db.id).all()
+    return render_template('answerquestion.html',title="Answer Question",prev_answers=prev_answers,question = question_db, form=form)
 
         
 

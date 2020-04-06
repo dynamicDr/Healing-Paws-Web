@@ -1,8 +1,8 @@
 $(document).ready(function(){
 	// add all event handlers here
 	console.log("Adding event handlers");
-	$(".question").click(function () {
-		let index = $(".question").index(this);
+	$(".question li").click(function () {
+		let index = $(".question li").index(this);
 		$.post('/answerquestion', {
 			'index': index 
 		})

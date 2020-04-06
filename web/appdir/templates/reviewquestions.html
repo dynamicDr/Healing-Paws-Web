@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<script src="{{ url_for('static', filename='scripts/question.js') }}"></script>
+	<script src="{{ url_for('static', filename='scripts/question_id.js') }}"></script>
 	<form action="" method="post" enctype="multipart/form-data" novalidate>
 		{{ form.hidden_tag() }}
 		<fieldset>
@@ -21,15 +21,18 @@
 			<th>Author</th>
 			<th>Answer</th>
 		</tr>
+		<ul class='question'>
 		{% for question in prev_questions %}
 		<tr>
-			<a href="{{ url_for('answerquestion')}}" id='question'><td> {{ question.body }}</td></a>
+			<li>
+			<td> <a href="{{ url_for('answerquestion')}}" >{{ question.body }}</a></td>
 			{% if question.anonymity == 1 %}
 				<td>anonymous user</td>
 			{% else %}
 				<td> {{ question.author.username }}</td>
 			{% endif %}
 			<td> {{ question.answers.body }}</td>
+			</li>
 		</tr>
 		{% endfor %}
 		</table>
