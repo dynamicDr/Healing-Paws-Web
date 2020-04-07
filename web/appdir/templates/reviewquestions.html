@@ -24,7 +24,11 @@
 		<tr>
 			<td> {{ question.body }}</td>
 			<td> {{ question.author.username }}</td>
-			<td> {{ question.answer.body }}</td>
+			{% if question.answers[-1] %}
+			<td> {{ question.answers[-1].body }}</td>
+			{% else %}
+			<td>No answer yet</td>
+			{% endif %}
 		</tr>
 		{% endfor %}
 		</table>
@@ -33,5 +37,5 @@
 		<p>No previous question</p>
 		<hr>
 	{% endif %}
-	<a href="url_for('addquestion')"><input type="button">New Question</input></a>
+	<a href="{{ url_for('addquestion') }}"><input type="button">New Question</input></a>
 {% endblock %}

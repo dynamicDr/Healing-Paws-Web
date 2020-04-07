@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="signupWin">
+    <h2>Welcome New Employee</h2>
+    <p>Enter your details and register here</p>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div id="username">
+
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}<br>
+            <span id="checkuser"></span>
+
+            {% for error in form.username.errors %}
+            <span style="color: red;" class="flash">[{{ error }}]</span>
+            {% endfor %}
+
+        </div>
+
+        <div id="passwords">    
+            <div>
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}
+            </div>
+            {% for error in form.password.errors %}
+            <span style="color: red;" class="flash">[{{ error }}]</span>
+            {% endfor %}
+            <div>
+                {{ form.password2.label }}<br>
+                {{ form.password2(size=32) }}<br>
+                <span id="checkpassword"></span>
+            </div>
+            {% for error in form.password2.errors %}
+            <span style="color: red;" class="flash">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+
+        <div id="loc">
+            <label>Location</label><br>
+            {{ form.loc() }}<br>
+            <span id="checkloc"></span>
+            {% for error in form.loc.errors %}
+            <span style="color: red;"  class="flash">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        
+        <div id="intro">
+            {{ form.intro.label }}<br>
+            {{ form.intro(size=128) }}<br>
+            <span id="checkintro"></span>
+            {% for error in form.intro.errors %}
+            <span style="color: red;" class="flash">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+
+
+        <div>{{ form.accept_rules() }} {{ form.accept_rules.label }}</div>
+        {% for error in form.accept_rules.errors %}
+        <span style="color: red;" class="flash">[{{ error }}]</span>
+        {% endfor %}
+        <br />
+
+        <div>{{ form.submit() }}</div>
+
+    </form>
+</div>
+{% endblock %}
+
