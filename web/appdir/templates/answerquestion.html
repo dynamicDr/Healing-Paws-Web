@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<ul>
+		<li>Question: {{ question.title }}</li>
+		{% if question.body %}
+			<li>Description: {{ question.body }}</li>
+		{% endif %}
+		<li>Answers:
+		{% if prev_answers %}
+			<ul>
+			{% for answer in prev_answers %}
+				<li>{{ answer.body }} made by {{ answer.author.username }}</li>
+			{% endfor %}
+			</ul>
+		{% endif %}
+		</li>
+	</ul>
+	<hr>
+
+	<form action="" method="post" enctype="multipart/form-data" novalidate>
+		{{ form.hidden_tag() }}
+		<fieldset>
+			<legend>Add a new answer</legend>
+			<p>
+				{{ form.body.label }}<br>
+				{{ form.body }}
+			</p>
+			<p>{{ form.submit() }}</p>
+		</fieldset>
+	</form>
+{% endblock %}
