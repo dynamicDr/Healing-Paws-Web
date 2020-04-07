@@ -8,33 +8,45 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    email = db.Column(db.String(120), index=True, nullable=True)
-    dob = db.Column(db.DateTime, index=True, nullable=True)
-    address = db.Column(db.String(128), nullable=True)
-    phone = db.Column(db.String(15), nullable=True)
     is_customer = db.Column(db.Boolean, index=True)
+    ref_id = db.Column(db.Integer)
     questions = db.relationship('Question', backref='author', lazy='dynamic')
     answers = db.relationship('Answer', backref='author',lazy='dynamic')
     pets = db.relationship('Pet', backref='owner', lazy='dynamic')
-    appointments = db.relationship('Appointment', backref='maker', lazy='dynamic')
+    # appointments = db.relationship('Appointment', backref='maker', lazy='dynamic') #Appointment表里有两个User的外键，所以这里不能反向查询
+
+class Customer(db.Model):
+    __tablename__ = 'customers'
+
+    id = db.Column(db.Integer, primary_key=True)
+    dob = db.Column(db.DateTime)
+    email = db.Column(db.String(32), index=True, nullable=True)
+    address = db.Column(db.String(64), nullable=True)
+    phone = db.Column(db.String(15), nullable=True)
+
+
+class Employee(db.Model):
+    __tablename__ = 'employees'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    loc = db.Column(db.Integer, nullable=False)
+    intro = db.Column(db.String(32), nullable=True)
+
 
 class Appointment(db.Model):
     __tablename__ = 'appointments'
 
     id = db.Column(db.Integer, primary_key=True)
-    booking_datetime = db.Column(db.DateTime, default=datetime.utcnow)
-    date = db.Column(db.Date, index=True)
-    time = db.Column(db.Integer)
+    datetime = db.Column(db.DateTime, default=datetime.utcnow)# 提交的时间
     message = db.Column(db.String(32))
     status = db.Column(db.String(32))   #Pending/Confirmed/Canceled/Finished
     pet_status = db.Column(db.String(32))
-    location = db.Column(db.String(32))
+    location = db.Column(db.Integer)
     is_emergency = db.Column(db.Boolean)
     accept_change = db.Column(db.Boolean)
     employee_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.id'))
-    preferred_doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
-    assigned_doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
+    preferred_doctor_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
 class Pet(db.Model):
     __tablename__ = 'pets'
@@ -42,19 +54,9 @@ class Pet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
     age = db.Column(db.Integer)
-    category = db.Column(db.String(32))
+    category = db.Column(db.String(32))# dog/cat
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-class Doctor(db.Model):
-    __tablename__ = 'doctors'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(32))
-    age = db.Column(db.Integer)
-    profession = db.Column(db.String(32))
-    phone = db.Column(db.String(15), nullable=True)
-    location = db.Column(db.String(32))
-    
 class Question(db.Model):
     __tablename__ = 'questions'
 
