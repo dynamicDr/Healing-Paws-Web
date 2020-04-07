@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <table>
+        <tr>
+            <th>Appointment type</th>
+            <th>date</th>
+            <th>status</th>
+
+        </tr>
+        {% for appointment in appointments %}
+            <tr>
+                <td>
+                    {% if appointment.is_emergency == true %}
+                        Emergency
+                    {% else %}
+                        Standard
+                    {% endif %}
+                </td>
+                <td>{{ appointment.booking_datetime }}</td>
+                <td>{{ appointment.status }}</td>
+                <p id="save">save()</p>
+                <td><input id="details" type="button" value="details">details</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<script>
+    function save(cp_value){
+        var num = new Object;
+        num.cp_keynum ="key_num";
+        num.cp_num_value = cp_value;
+        var str = JSON.stringify(num);
+        localStorage.setItem(num.cp_keynum,str);
+    }
+btn = document.getElementById('details');
+    btn.onclick = function() {
+            save(appointment.id);
+            window.location.href('details');
+    }
+</script>
+{% endblock %}
