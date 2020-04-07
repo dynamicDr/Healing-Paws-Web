@@ -72,7 +72,7 @@ def reset():
     # 在这里往数据库里添加测试数据，每次reset后就直接添加
     return '重建所有表'
 
-@app.route('/reviewquestions')
+@app.route('/reviewquestions',methods=['GET','POST'])
 def reviewquestions():
     form = ReviewForm()
     if form.validate_on_submit():
@@ -97,6 +97,28 @@ def addquestion():
     else:
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))
+    return render_template('addquestion.html',title="Add a Question", form=form)
+        
+@app.route('/answerquestion', methods=['GET','POST'])
+def answerquestion():
+    index = int(request.form['index'])
+    questions = Question.query.filter()
+    question_db = questions[index]
+
+    form = AnswerForm
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
+        if form.validate_on_submit():
+            answer_db = Answer(body = form.body.data, question_id = question_db.id, user=user_in_db)
+            db.session.add(answer_db) 
+            db.session.commit()
+            return redirect(url_for('reviewquestions'))
+        else:
+            prev_answers = Answer.query.filter(Answer.question_id == question_db.id).all()
+    return render_template('answerquestion.html',title="Answer Question",prev_answers=prev_answers,question = question_db, form=form)
+
+        
 
 @app.route('/handleappointment/<appointment_id>')
 def handleappointment(appointment_id):
@@ -143,3 +165,30 @@ def make_appointment():
     else:
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))
+
+@app.route('/check_appointment')
+def check_appointment():
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
+        if not user_in_db.is_customer:
+            return "Please login as customer"
+        appointments = Appointment.query.filter(Appointment).all()
+
+        return render_template('handleappointment.html', title="Handle Appointment",
+                               appointments=appointments)
+    else:
+            flash("User needs to either login or signup first")
+            return redirect(url_for('login'))
+
+@app.route('/details/<appointment_id>')
+def details(appointment_id):
+    appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
+    pet = Pet.query.filter(Pet.id == appointment.pet_id).first()
+    customer = User.query.filter(User.id == pet.owner_id).first()
+    employee = User.query.filter(User.id == appointment.employee_id).first()
+    preferred_doctor = Doctor.query.filter(Doctor.id == appointment.preferred_doctor_id).first()
+    assigned_doctor = Doctor.query.filter(Doctor.id == appointment.assigned_doctor_id).first()
+    return render_template('details.html', title="Details",
+                           appointment=appointment, pet=pet, customer=customer, employee=employee,
+                           preferred_doctor=preferred_doctor, assigned_doctor=assigned_doctor)
