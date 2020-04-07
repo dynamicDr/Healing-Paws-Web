@@ -147,3 +147,30 @@ def make_appointment():
     else:
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))
+
+@app.route('/check_appointment')
+def check_appointment():
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
+        if not user_in_db.is_customer:
+            return "Please login as customer"
+        appointments = Appointment.query.filter(Appointment).all()
+
+        return render_template('handleappointment.html', title="Handle Appointment",
+                               appointments=appointments)
+    else:
+            flash("User needs to either login or signup first")
+            return redirect(url_for('login'))
+
+@app.route('/details/<appointment_id>')
+def details(appointment_id):
+    appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
+    pet = Pet.query.filter(Pet.id == appointment.pet_id).first()
+    customer = User.query.filter(User.id == pet.owner_id).first()
+    employee = User.query.filter(User.id == appointment.employee_id).first()
+    preferred_doctor = Doctor.query.filter(Doctor.id == appointment.preferred_doctor_id).first()
+    assigned_doctor = Doctor.query.filter(Doctor.id == appointment.assigned_doctor_id).first()
+    return render_template('details.html', title="Details",
+                           appointment=appointment, pet=pet, customer=customer, employee=employee,
+                           preferred_doctor=preferred_doctor, assigned_doctor=assigned_doctor)
