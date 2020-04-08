@@ -88,18 +88,20 @@ def reset():
     db.session.commit()
     return '重建所有表'
 
-@app.route('/reviewquestions',methods=['GET','POST'])
-def reviewquestions():
+@app.route('/reviewquestions/<int:page>',methods=['GET','POST'])
+def reviewquestions(page=None):
+    if not page:
+        page = 1
     form = ReviewForm()
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
     if form.validate_on_submit():
-        prev_questions = Question.query.filter(Question.title.like('%'+form.keyword.data+'%')).all()
-        return render_template('reviewquestions.html', title="Questions Review", prev_questions=prev_questions, form=form, user=user_in_db)
+        prev_questions = Question.query.filter(Question.title.like('%'+form.keyword.data+'%')).paginate(page=page,per_page=5)
+        return render_template('reviewquestions.html',title="Questions Review",prev_questions = prev_questions.items,pagination=prev_questions,form=form)
     else:
-        prev_questions = Question.query.filter()
-    return render_template('reviewquestions.html', title="Questions Review", prev_questions=prev_questions, form=form, user=user_in_db)
+        prev_questions = Question.query.filter().order_by(Question.timestamp.desc()).paginate(page=page,per_page=5)
+    return render_template('reviewquestions.html',title="Questions Review",prev_questions = prev_questions.items,pagination=prev_questions,form=form)
 
 @app.route('/addquestion', methods=['POST','GET'])
 def addquestion():
@@ -108,34 +110,35 @@ def addquestion():
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if form.validate_on_submit():
+            if not user_in_db.is_customer:
+                return "Only customers can ask questions"
             question_db = Question(title=form.title.data, body=form.body.data, anonymity=form.anonymity.data, user_id=user_in_db.id)
             db.session.add(question_db) 
             db.session.commit()
-            return redirect(url_for('reviewquestions'))
+            return redirect(url_for('reviewquestions',page=1))
         return render_template('addquestion.html', title="Add Questions", form=form, user=user_in_db)
     else:
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))
     return render_template('addquestion.html',title="Add a Question", form=form)
         
-@app.route('/answerquestion', methods=['GET','POST'])
-def answerquestion():
-    index = int(request.form['index'])
-    questions = Question.query.filter()
-    question_db = questions[index]
-
-    form = AnswerForm
+@app.route('/answerquestion/<questionid>', methods=['GET','POST'])
+def answerquestion(questionid):
+    question_db = Question.query.filter(Question.id == questionid).first()
+    form = AnswerForm()
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if form.validate_on_submit():
-            answer_db = Answer(body = form.body.data, question_id = question_db.id, user=user_in_db)
+            if user_in_db.is_customer:
+                return "Only the staff can answer the questions"
+            answer_db = Answer(body = form.body.data, question_id = questionid, user_id=user_in_db.id)
             db.session.add(answer_db) 
             db.session.commit()
-            return redirect(url_for('reviewquestions'))
+            return redirect(url_for('reviewquestions',page=1))
         else:
-            prev_answers = Answer.query.filter(Answer.question_id == question_db.id).all()
-    return render_template('answerquestion.html',title="Answer Question",prev_answers=prev_answers,question = question_db, form=form)   
+            prev_answers = Answer.query.filter(Answer.question_id == questionid).all()
+    return render_template('answerquestion.html',title="Answer Question",prev_answers=prev_answers,question = question_db, form=form)
 
 @app.route('/handleappointment/<appointment_id>')
 def handleappointment(appointment_id):
