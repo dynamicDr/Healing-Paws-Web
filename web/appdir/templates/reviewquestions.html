@@ -1,17 +1,12 @@
 {% extends "base.html" %}
+
 {% block content %}
-	<script src="{{ url_for('static', filename='scripts/question_id.js') }}"></script>
-	<form action="" method="post" enctype="multipart/form-data" novalidate>
-		{{ form.hidden_tag() }}
-		<fieldset>
-			<legend>Searching</legend>
-			<p>
-				{{ form.keyword.label }}<br>
-				{{ form.keyword(size=32) }}
-			</p>
-			<p>{{ form.submit() }}</p>
-		</fieldset>
-	</form>
+	<script src="{{ url_for('static', filename='scripts/questions.js') }}"></script>
+	<div id="search">
+		<input type="text" placeholder="Search..."/>
+    	<button>Search</button>
+	</div>
+	
 	<h3>Previous questions</h3>
 	{% if prev_questions %}
 		<table class="questionstable" border="2">
@@ -29,15 +24,14 @@
 			{% else %}
 				<td> {{ question.author.username }}</td>
 			{% endif %}
-			{% if question.answers %}
-				<td> {{ question.answers.first.body }}</td>
-			{% endif %}
+			<td> {{ question.answers.body }}</td>
+			</li>
 		</tr>
 		{% endfor %}
 		</table>
 		<hr>
 	{% else %}
-		<p>No previous question</p>
+		<p>No questions</p>
 		<hr>
 	{% endif %}
 	<a href="{{ url_for('addquestion') }}"><input type="button">New Question</input></a>

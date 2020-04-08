@@ -7,5 +7,15 @@ $(document).ready(function(){
 			'index': index 
 		})
 	});
+
+	$("#search").find("button").on("click", search);  
+
 	console.log("function registered");
 });
+
+function search(){
+    var input = $("#search").find("input");
+    var keyword = input.val();
+    window.location.replace("reviewquestions?page=1&key="+keyword);
+    
+}
