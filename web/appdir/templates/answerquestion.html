@@ -17,16 +17,19 @@
 		</li>
 	</ul>
 	<hr>
-
-	<form action="" method="post" enctype="multipart/form-data" novalidate>
-		{{ form.hidden_tag() }}
-		<fieldset>
-			<legend>Add a new answer</legend>
-			<p>
-				{{ form.body.label }}<br>
-				{{ form.body }}
-			</p>
-			<p>{{ form.submit() }}</p>
-		</fieldset>
-	</form>
+{% if user %}
+		{% if not user.is_customer %}
+			<form action="" method="post" enctype="multipart/form-data" novalidate>
+				{{ form.hidden_tag() }}
+				<fieldset>
+					<legend>Add a new answer</legend>
+					<p>
+						{{ form.body.label }}<br>
+						{{ form.body }}
+					</p>
+					<p>{{ form.submit() }}</p>
+				</fieldset>
+			</form>
+		{% endif %}
+	{% endif %}
 {% endblock %}

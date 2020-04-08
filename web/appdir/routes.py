@@ -93,36 +93,26 @@ def reviewquestions():
     page = int(request.args.get('page'))
     key = request.args.get('key')
     print(key)
-    form = ReviewForm()
-    if not session.get("USERNAME") is None:
-        username = session.get("USERNAME")
-        user_in_db = User.query.filter(User.username == username).first()
-    if key is not None:
-        prev_questions = Question.query.filter(Question.title.like('%'+key+'%')).paginate(page=page,per_page=5)
-        # return render_template('reviewquestions.html',title="Questions Review",prev_questions = prev_questions.items,pagination=prev_questions,form=form,user=user_in_db)
-    else:
-        prev_questions = Question.query.filter().order_by(Question.timestamp.desc()).paginate(page=page,per_page=5)
-    return render_template('reviewquestions.html',title="Questions Review",prev_questions = prev_questions.items,pagination=prev_questions,form=form,user=user_in_db)
-
-@app.route('/addquestion', methods=['POST','GET'])
-def addquestion():
     form = QuestionForm()
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
-        if form.validate_on_submit():
-            if not user_in_db.is_customer:
-                return "Only customers can ask questions"
-            question_db = Question(title=form.title.data, body=form.body.data, anonymity=form.anonymity.data, user_id=user_in_db.id)
-            db.session.add(question_db) 
-            db.session.commit()
-            return redirect(url_for('reviewquestions',page=1))
-        return render_template('addquestion.html', title="Add Questions", form=form, user=user_in_db)
     else:
-        flash("User needs to either login or signup first")
-        return redirect(url_for('login'))
-    return render_template('addquestion.html',title="Add a Question", form=form)
-        
+        user_in_db = None
+    if form.validate_on_submit():
+        question_db = Question(title=form.title.data, body=form.body.data, anonymity=form.anonymity.data, user_id=user_in_db.id)
+        db.session.add(question_db) 
+        db.session.commit()
+        return redirect(url_for('reviewquestions',page=1))
+    else:
+        if key is not None:
+            prev_questions = Question.query.filter(Question.title.like('%'+key+'%')).paginate(page=page,per_page=5)
+        else:
+            prev_questions = Question.query.filter().order_by(Question.timestamp.desc()).paginate(page=page,per_page=5)
+    return render_template('reviewquestions.html',title="Questions",prev_questions = prev_questions.items,pagination=prev_questions,form=form,user = user_in_db)
+
+
+
 @app.route('/answerquestion/<questionid>', methods=['GET','POST'])
 def answerquestion(questionid):
     question_db = Question.query.filter(Question.id == questionid).first()
@@ -131,15 +121,16 @@ def answerquestion(questionid):
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if form.validate_on_submit():
-            if user_in_db.is_customer:
-                return "Only the staff can answer the questions"
             answer_db = Answer(body = form.body.data, question_id = questionid, user_id=user_in_db.id)
             db.session.add(answer_db) 
             db.session.commit()
             return redirect(url_for('reviewquestions',page=1))
         else:
             prev_answers = Answer.query.filter(Answer.question_id == questionid).all()
-    return render_template('answerquestion.html',title="Answer Question",prev_answers=prev_answers,question = question_db, form=form)
+    else:
+        user_in_db = None
+        
+    return render_template('answerquestion.html',title="Answer Question",prev_answers=prev_answers,question = question_db, form=form, user = user_in_db)
 
 @app.route('/handleappointment/<appointment_id>')
 def handleappointment(appointment_id):

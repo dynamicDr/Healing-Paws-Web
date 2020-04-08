@@ -40,9 +40,6 @@ class AppointmentForm(FlaskForm):
 	location = RadioField('Which hospital', choices = [(1,'Customer'),('E','Employee')], validators=[DataRequired()])
 	submit = SubmitField('Comfirm and Submit')
 
-class ReviewForm(FlaskForm):
-    keyword = StringField('Keyword', validators=[DataRequired()])
-    submit = SubmitField('Search')
     
 class QuestionForm(FlaskForm):
     title = StringField('Question', validators=[DataRequired()])
