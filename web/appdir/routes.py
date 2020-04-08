@@ -71,34 +71,16 @@ def check_username():
 	else:
 		return jsonify({'text': 'Sorry! Username is already taken','returnvalue': 1})
 
-@app.route("/reset")
-def reset():
-    db.drop_all()
-    db.create_all()
-    # 在这里往数据库里添加测试数据，每次reset后就直接添加
-    customer = Customer(dob='2000-01-01', email='123@123.com', phone='123', address='123')
-    employee = Employee(intro='1123', loc=1)
-    db.session.add(customer)
-    db.session.add(employee)
-    db.session.flush()
-    user_e = User(username='e', password_hash=generate_password_hash('1'), is_customer=False, ref_id=employee.id)
-    user_c = User(username='c', password_hash=generate_password_hash('1'), is_customer=True, ref_id=customer.id)
-    db.session.add(user_c)
-    db.session.add(user_e)
-    db.session.commit()
-    return '重建所有表'
-
 @app.route('/reviewquestions' ,methods=['GET','POST'])
 def reviewquestions():
     page = int(request.args.get('page'))
     key = request.args.get('key')
     print(key)
     form = QuestionForm()
+    user_in_db = None
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
-    else:
-        user_in_db = None
     if form.validate_on_submit():
         question_db = Question(title=form.title.data, body=form.body.data, anonymity=form.anonymity.data, user_id=user_in_db.id)
         db.session.add(question_db) 
@@ -109,7 +91,8 @@ def reviewquestions():
             prev_questions = Question.query.filter(Question.title.like('%'+key+'%')).paginate(page=page,per_page=5)
         else:
             prev_questions = Question.query.filter().order_by(Question.timestamp.desc()).paginate(page=page,per_page=5)
-    return render_template('reviewquestions.html',title="Questions",prev_questions = prev_questions.items,pagination=prev_questions,form=form,user = user_in_db)
+    return render_template('reviewquestions.html',title="Questions",prev_questions = prev_questions.items,\
+        pagination=prev_questions,form=form,user = user_in_db)
 
 
 
@@ -130,7 +113,8 @@ def answerquestion(questionid):
     else:
         user_in_db = None
         
-    return render_template('answerquestion.html',title="Answer Question",prev_answers=prev_answers,question = question_db, form=form, user = user_in_db)
+    return render_template('answerquestion.html',title="Answer Question",prev_answers=prev_answers,\
+        question = question_db,form=form, user = user_in_db)
 
 @app.route('/handleappointment/<appointment_id>')
 def handleappointment(appointment_id):
@@ -145,9 +129,8 @@ def handleappointment(appointment_id):
         employee = User.query.filter(User.id == appointment.employee_id).first()
         preferred_doctor = Doctor.query.filter(Doctor.id == appointment.preferred_doctor_id).first()
         assigned_doctor = Doctor.query.filter(Doctor.id == appointment.assigned_doctor_id).first()
-        return render_template('handleappointment.html', title="Handle Appointment",
-                               appointment=appointment, pet=pet, customer=customer, employee=employee,
-                               preferred_doctor=preferred_doctor, assigned_doctor=assigned_doctor, user=user_in_db)
+        return render_template('handleappointment.html', title="Handle Appointment",appointment=appointment, pet=pet,\
+            customer=customer, employee=employee,preferred_doctor=preferred_doctor, assigned_doctor=assigned_doctor, user=user_in_db)
     else:
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))
@@ -162,18 +145,25 @@ def change_pet_status():
 
 @app.route('/make_appointment', methods=['POST','GET'])
 def make_appointment():
-    form = AppointmentForm()
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if not user_in_db.is_customer:
             return "请以顾客身份登录"
-        elif form.validate_on_submit(): # 第二次，已填写
+        form = AppointmentForm()
+        pets = Pet.query.filter(Pet.owner_id == user_in_db.id).all()
+        form.pet.choices = [(pet.id, pet.name) for pet in pets]
+        doctors = User.query.filter(User.is_customer == False).all()
+        form.doctor.choices = [(u.id, u.username) for u in doctors]
+        if form.validate_on_submit(): # 第二次，已填写
+            appointment = Appointment(loc=int(form.loc.data), pet_id=pets[int(form.loc.data)].id, description=form.description.data,\
+                is_emergency=(form.is_emergency.data=='E'), changeable=(form.changeable.data=='A'), preferred_doctor_id=doctors[int(form.loc.data)].id,\
+                     employee_id=doctors[int(form.doctor.data)].id)
+            print(appointment)
+            db.session.add(apt)
+            db.session.commit()
             return redirect('index')
-        else: # 第一次，还未填写
-            pets = Pet.query.filter(Pet.owner_id == user_in_db.id).all()
-            form.pet.choices = [(pet.id, pet.name) for pet in pets]
-            return render_template('make_appointment.html',title="Make a new appointment", user=user_in_db, form=form)
+        return render_template('make_appointment.html',title="Make a new appointment", user=user_in_db, form=form)
     else:
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))
@@ -199,6 +189,27 @@ def details(appointment_id):
     employee = User.query.filter(User.id == appointment.employee_id).first()
     preferred_doctor = Doctor.query.filter(Doctor.id == appointment.preferred_doctor_id).first()
     assigned_doctor = Doctor.query.filter(Doctor.id == appointment.assigned_doctor_id).first()
-    return render_template('details.html', title="Details",
-                           appointment=appointment, pet=pet, customer=customer, employee=employee,
-                           preferred_doctor=preferred_doctor, assigned_doctor=assigned_doctor)
+    return render_template('details.html', title="Details", appointment=appointment, pet=pet, \
+        customer=customer, employee=employee,preferred_doctor=preferred_doctor, assigned_doctor=assigned_doctor)
+
+@app.route("/reset")
+def reset():
+    db.drop_all()
+    db.create_all()
+    # 在这里往数据库里添加测试数据，每次reset后就直接添加
+    customer = Customer(dob='2000-01-01', email='123@123.com', phone='123', address='123')
+    employee = Employee(intro='1123', loc=1)
+    db.session.add(customer)
+    db.session.add(employee)
+    db.session.flush()
+    user_e = User(username='e', password_hash=generate_password_hash('1'), is_customer=False, ref_id=employee.id)
+    user_c = User(username='c', password_hash=generate_password_hash('1'), is_customer=True, ref_id=customer.id)
+    db.session.add(user_c)
+    db.session.add(user_e)
+    db.session.flush()
+    pet1 = Pet(name='dog1',age=1,category='dog',owner_id=user_c.id)
+    pet2 = Pet(name='cat1',age=1,category='cat',owner_id=user_c.id)
+    db.session.add(pet1)
+    db.session.add(pet2)
+    db.session.commit()
+    return '重建所有表'
