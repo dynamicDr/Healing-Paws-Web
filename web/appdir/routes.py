@@ -88,16 +88,17 @@ def reset():
     db.session.commit()
     return '重建所有表'
 
-@app.route('/reviewquestions/<int:page>',methods=['GET','POST'])
-def reviewquestions(page=None):
-    if not page:
-        page = 1
+@app.route('/reviewquestions' ,methods=['GET','POST'])
+def reviewquestions():
+    page = int(request.args.get('page'))
+    key = request.args.get('key')
+    print(key)
     form = ReviewForm()
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
-    if form.validate_on_submit():
-        prev_questions = Question.query.filter(Question.title.like('%'+form.keyword.data+'%')).paginate(page=page,per_page=5)
+    if key is not None:
+        prev_questions = Question.query.filter(Question.title.like('%'+key+'%')).paginate(page=page,per_page=5)
         # return render_template('reviewquestions.html',title="Questions Review",prev_questions = prev_questions.items,pagination=prev_questions,form=form,user=user_in_db)
     else:
         prev_questions = Question.query.filter().order_by(Question.timestamp.desc()).paginate(page=page,per_page=5)
@@ -139,8 +140,6 @@ def answerquestion(questionid):
         else:
             prev_answers = Answer.query.filter(Answer.question_id == questionid).all()
     return render_template('answerquestion.html',title="Answer Question",prev_answers=prev_answers,question = question_db, form=form)
-
-        
 
 @app.route('/handleappointment/<appointment_id>')
 def handleappointment(appointment_id):
@@ -196,12 +195,10 @@ def check_appointment():
         if not user_in_db.is_customer:
             return "Please login as customer"
         appointments = Appointment.query.filter(Appointment).all()
-
-        return render_template('handleappointment.html', title="Handle Appointment",
-                               appointments=appointments)
+        return render_template('handleappointment.html', title="Handle Appointment",appointments=appointments)
     else:
-            flash("User needs to either login or signup first")
-            return redirect(url_for('login'))
+        flash("User needs to either login or signup first")
+        return redirect(url_for('login'))
 
 @app.route('/details/<appointment_id>')
 def details(appointment_id):

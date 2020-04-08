@@ -1,18 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<script src="{{ url_for('static', filename='scripts/question_id.js') }}"></script>
-	<form action="" method="post" enctype="multipart/form-data" novalidate>
-		{{ form.hidden_tag() }}
-		<fieldset>
-			<legend>Searching</legend>
-			<p>
-				{{ form.keyword.label }}<br>
-				{{ form.keyword(size=32) }}
-			</p>
-			<p>{{ form.submit() }}</p>
-		</fieldset>
-	</form>
+	<script src="{{ url_for('static', filename='scripts/questions.js') }}"></script>
+	<div id="search">
+		<input type="text" placeholder="Search..."/>
+    	<button>Search</button>
+	</div>
+	
 	<h3>Previous questions</h3>
 	{% if prev_questions %}
 		<table class="questionstable" border="2">
@@ -24,8 +18,7 @@
 		<ul class='question'>
 		{% for question in prev_questions %}
 		<tr>
-			<li>
-			<td> <a href="{{ url_for('answerquestion',id=question.id)}}" >{{ question.body }}</a></td>
+			<td> <a href="{{ url_for('answerquestion',questionid=question.id)}}" >{{ question.body }}</a></td>
 			{% if question.anonymity == 1 %}
 				<td>anonymous user</td>
 			{% else %}
@@ -38,8 +31,13 @@
 		</table>
 		<hr>
 	{% else %}
-		<p>No previous question</p>
+		<p>No questions</p>
 		<hr>
 	{% endif %}
-	<input type="button" ><a href="{{ url_for('addquestion') }}">New Question</a></input>
+	<a href="{{ url_for('addquestion') }}"><input type="button">New Question</input></a>
+	<hr>
+	{%import 'questionpage.html' as pg%}
+	{{pg.my_paginate(pagination,'reviewquestions')}}
+	
 {% endblock %}
+
