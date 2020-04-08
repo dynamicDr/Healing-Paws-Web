@@ -6,7 +6,7 @@
 		<input type="text" placeholder="Search..."/>
     	<button>Search</button>
 	</div>
-	
+
 	<h3>Previous questions</h3>
 	{% if prev_questions %}
 		<table class="questionstable" border="2">
@@ -15,17 +15,15 @@
 			<th>Author</th>
 			<th>Answer</th>
 		</tr>
-		<ul class='question'>
 		{% for question in prev_questions %}
 		<tr>
-			<td> <a href="{{ url_for('answerquestion',questionid=question.id)}}" >{{ question.body }}</a></td>
+			<td> <a href="{{ url_for('answerquestion',questionid=question.id)}}" >{{ question.title }}</a></td>
 			{% if question.anonymity == 1 %}
 				<td>anonymous user</td>
 			{% else %}
 				<td> {{ question.author.username }}</td>
 			{% endif %}
 			<td> {{ question.answers.body }}</td>
-			</li>
 		</tr>
 		{% endfor %}
 		</table>
@@ -34,10 +32,53 @@
 		<p>No questions</p>
 		<hr>
 	{% endif %}
-	<a href="{{ url_for('addquestion') }}"><input type="button">New Question</input></a>
+
 	<hr>
 	{%import 'questionpage.html' as pg%}
 	{{pg.my_paginate(pagination,'reviewquestions')}}
-	
+	<hr>
+	<!-- <div id='customeronly' v-show="isShow"> -->
+	{% if user %}
+		{% if user.is_customer %}
+			<form action="" method="post" enctype="multipart/form-data" novalidate>
+				{{ form.hidden_tag() }}
+				<fieldset>
+					<legend>New Question</legend>
+					<p>
+						{{ form.title.label }}<br>
+						{{ form.title(size=32) }}
+					</p>
+					<p>
+						{{ form.body.label }}<br>
+						{{ form.body }}
+					</p>
+					<p>{{ form.anonymity.label }} {{ form.anonymity }}</p>
+					<p>{{ form.submit() }}</p>
+			</fieldset>
+		</form>
+		{% endif %}
+	{% endif %}
+	<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+	<!-- <script> -->
+		<!-- var customeronly = new Vue({ -->
+			<!-- el:"#customeronly",  -->
+			<!-- methods:{ -->
+				<!-- show:function(){ -->
+					<!-- if (user!=null){ -->
+						<!-- if (user.is_customer){ -->
+							<!-- return true; -->
+						<!-- } -->
+					<!-- } -->
+					<!-- else{ -->
+						<!-- alert('customeronly'); -->
+						<!-- return false; -->
+					<!-- } -->
+				<!-- } -->
+			<!-- }, -->
+			<!-- data:{ -->
+				<!-- isShow = show -->
+			<!-- } -->
+		<!-- }) -->
+	<!-- </script> -->
 {% endblock %}
 
