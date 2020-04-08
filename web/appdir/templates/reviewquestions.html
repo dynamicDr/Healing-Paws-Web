@@ -25,7 +25,7 @@
 		{% for question in prev_questions %}
 		<tr>
 			<li>
-			<td> <a href="{{ url_for('answerquestion')}}" >{{ question.body }}</a></td>
+			<td> <a href="{{ url_for('answerquestion',id=question.id)}}" >{{ question.body }}</a></td>
 			{% if question.anonymity == 1 %}
 				<td>anonymous user</td>
 			{% else %}
@@ -41,5 +41,5 @@
 		<p>No previous question</p>
 		<hr>
 	{% endif %}
-	<a href="{{ url_for('addquestion') }}"><input type="button">New Question</input></a>
+	<input type="button"><a href="{{ url_for('addquestion') }}">New Question</a></input>
 {% endblock %}

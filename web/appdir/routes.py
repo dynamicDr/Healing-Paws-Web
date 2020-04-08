@@ -5,9 +5,6 @@ from appdir.forms import *
 from appdir.models import *
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
-
-
 @app.route("/")
 @app.route("/index")
 def index():
@@ -65,22 +62,44 @@ def logout():
     session.pop("USERNAME", None)
     return redirect(url_for('login'))
 
+@app.route('/checkuser', methods=['POST'])
+def check_username():
+	chosen_name = request.form['username']
+	user_in_db = User.query.filter(User.username == chosen_name).first()
+	if not user_in_db:
+		return jsonify({'text': 'Username is available','returnvalue': 0})
+	else:
+		return jsonify({'text': 'Sorry! Username is already taken','returnvalue': 1})
+
 @app.route("/reset")
 def reset():
     db.drop_all()
     db.create_all()
     # 在这里往数据库里添加测试数据，每次reset后就直接添加
+    customer = Customer(dob='2000-01-01', email='123@123.com', phone='123', address='123')
+    employee = Employee(intro='1123', loc=1)
+    db.session.add(customer)
+    db.session.add(employee)
+    db.session.flush()
+    user_e = User(username='e', password_hash=generate_password_hash('1'), is_customer=False, ref_id=employee.id)
+    user_c = User(username='c', password_hash=generate_password_hash('1'), is_customer=True, ref_id=customer.id)
+    db.session.add(user_c)
+    db.session.add(user_e)
+    db.session.commit()
     return '重建所有表'
 
 @app.route('/reviewquestions',methods=['GET','POST'])
 def reviewquestions():
     form = ReviewForm()
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
     if form.validate_on_submit():
         prev_questions = Question.query.filter(Question.title.like('%'+form.keyword.data+'%')).all()
-        return render_template('reviewquestions.html',title="Questions Review",prev_questions=prev_questions,form=form)
+        return render_template('reviewquestions.html', title="Questions Review", prev_questions=prev_questions, form=form, user=user_in_db)
     else:
         prev_questions = Question.query.filter()
-    return render_template('reviewquestions.html',title="Questions Review",prev_questions=prev_questions,form=form)
+    return render_template('reviewquestions.html', title="Questions Review", prev_questions=prev_questions, form=form, user=user_in_db)
 
 @app.route('/addquestion', methods=['POST','GET'])
 def addquestion():
@@ -116,9 +135,7 @@ def answerquestion():
             return redirect(url_for('reviewquestions'))
         else:
             prev_answers = Answer.query.filter(Answer.question_id == question_db.id).all()
-    return render_template('answerquestion.html',title="Answer Question",prev_answers=prev_answers,question = question_db, form=form)
-
-        
+    return render_template('answerquestion.html',title="Answer Question",prev_answers=prev_answers,question = question_db, form=form)   
 
 @app.route('/handleappointment/<appointment_id>')
 def handleappointment(appointment_id):
