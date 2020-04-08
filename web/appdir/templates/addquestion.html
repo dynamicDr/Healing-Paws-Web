@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<a href="{{ url_for('reviewquestions') }}"><input type="button">Back</input></a>
+<a href="{{ url_for('reviewquestions',page=1) }}"><input type="button">Back</input></a>
 	<div>
 		<!-- <img> -->
 		<p>{{ user.username }}</p>
