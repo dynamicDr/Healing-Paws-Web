@@ -156,11 +156,10 @@ def make_appointment():
         doctors = User.query.filter(User.is_customer == False).all()
         form.doctor.choices = [(u.id, u.username) for u in doctors]
         if form.validate_on_submit(): # 第二次，已填写
-            appointment = Appointment(loc=int(form.loc.data), pet_id=pets[int(form.loc.data)].id, description=form.description.data,\
-                is_emergency=(form.is_emergency.data=='E'), changeable=(form.changeable.data=='A'), preferred_doctor_id=doctors[int(form.loc.data)].id,\
-                     employee_id=doctors[int(form.doctor.data)].id)
-            print(appointment)
-            db.session.add(apt)
+            appointment = Appointment(loc=int(form.loc.data), pet_id=int(form.loc.data), description=form.description.data,\
+                is_emergency=(form.is_emergency.data=='E'), changeable=(form.changeable.data=='A'), preferred_doctor_id=int(form.loc.data),\
+                     employee_id=int(form.doctor.data))
+            db.session.add(appointment)
             db.session.commit()
             return redirect('index')
         return render_template('make_appointment.html',title="Make a new appointment", user=user_in_db, form=form)
