@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %}
 	<script src="{{ url_for('static', filename='scripts/question_id.js') }}"></script>
 	<form action="" method="post" enctype="multipart/form-data" novalidate>
@@ -24,15 +23,15 @@
 		<ul class='question'>
 		{% for question in prev_questions %}
 		<tr>
-			<li>
-			<td> <a href="{{ url_for('answerquestion')}}" >{{ question.body }}</a></td>
+			<td> <a href="{{ url_for('answerquestion',questionid=question.id)}}" >{{ question.body }}</a></td>
 			{% if question.anonymity == 1 %}
 				<td>anonymous user</td>
 			{% else %}
 				<td> {{ question.author.username }}</td>
 			{% endif %}
-			<td> {{ question.answers.body }}</td>
-			</li>
+			{% if question.answers %}
+				<td> {{ question.answers.first.body }}</td>
+			{% endif %}
 		</tr>
 		{% endfor %}
 		</table>
@@ -42,4 +41,8 @@
 		<hr>
 	{% endif %}
 	<a href="{{ url_for('addquestion') }}"><input type="button">New Question</input></a>
+	<hr>
+	{%import 'questionpage.html' as pg%}
+	{{pg.my_paginate(pagination,'reviewquestions')}}
+	
 {% endblock %}
