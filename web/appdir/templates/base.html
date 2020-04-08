@@ -16,9 +16,10 @@
             <li><a href="index">Home</a></li>
             <li><a href="register?role=c">Register</a></li>
             <li><a href="register?role=e">Join us</a></li>
+            <li><a href="reviewquestions">Question Board</a></li>
             {% if user %}
             <li><a href="/logout">Logout</a></li>
-            <li id="menu_name">{{ user.username }}</li>
+            <li id="username"><a href="/personal_info">{{ user.username }}</a></li>
             {% else %}
             <li><a href="/login">Login</a></li>
             {% endif %}
