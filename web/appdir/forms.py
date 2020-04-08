@@ -35,9 +35,16 @@ class RegisterForm_E(FlaskForm):
 	submit = SubmitField('Register')
 
 class AppointmentForm(FlaskForm):
-	appointment_type = RadioField('Standard or Emergency', choices = [('S','Standard'),('E','Emergency')], validators=[DataRequired()])
 	pet = SelectField(label='为哪只宠物预约', validators=[DataRequired('请选择宠物')], coerce=int)
-	location = RadioField('Which hospital', choices = [(1,'Customer'),('E','Employee')], validators=[DataRequired()])
+	loc = RadioField(
+        validators=[DataRequired('请选择就医所在地')],
+        choices=[(1, '北京'), (2, '上海'), (3, '成都')],
+        coerce=int
+    )
+	is_emergency = RadioField(label='What type of appointment?', choices = [('E','Emergency'), ('S', 'Standard')], validators=[DataRequired('请选择')])
+	changeable = RadioField(label='Do you accept CHANGE?', choices = [('A','Accpet'), ('R', 'Refuse')], validators=[DataRequired('请选择')])
+	description = StringField(label="Describe your pet's condition", validators=[DataRequired()])
+	doctor = SelectField(label='希望预约哪位医生?', coerce=int, validators=[DataRequired()])
 	submit = SubmitField('Comfirm and Submit')
 
     
