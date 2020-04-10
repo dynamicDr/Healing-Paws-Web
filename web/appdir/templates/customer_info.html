@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <div><h2>Personal Information</h2></div>
+    <p>Username: {{ user.username }}</p>
+    <p>Phone: {{ customer.phone }}</p>
+    <p>Email: {{ customer.email }}</p>
+    <p>Brithdaty: {{ customer.dob }}</p>
+    <p>Address: {{ customer.address }}</p>
+    
+    <fieldset id='pets'>
+        <legend>Your pets</legend>
+        <table border="1">
+            <tr>
+                <th>name</th><th>age</th><th>category</th><th>operation</th>
+            </tr>
+            {% for pet in pets %}
+            <tr>
+                <td>{{ pet.name }}</td>
+                <td>{{ pet.age }}</td>
+                <td>{{ pet.category }}</td>
+                <td><button><a href="delete_pet?id={{ pet.id }}">delete</a></button></td>
+            </tr>
+            {% endfor %}
+            <form action="" method="post" enctype="multipart/form-data" novalidate>
+                {{ form.hidden_tag() }}
+                <td>{{ form.name() }}</td>
+                <td>{{ form.age() }}</td>
+                <td>{{ form.category() }}</td>
+                <td>{{ form.submit() }}</td>
+			</form>
+        </table> 
+    </fieldset>
+
+</div>
+  
+{% endblock %}

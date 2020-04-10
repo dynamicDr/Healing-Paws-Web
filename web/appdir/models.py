@@ -19,11 +19,10 @@ class Customer(db.Model):
     __tablename__ = 'customers'
 
     id = db.Column(db.Integer, primary_key=True)
-    dob = db.Column(db.DateTime)
+    dob = db.Column(db.Date)
     email = db.Column(db.String(32), index=True, nullable=True)
     address = db.Column(db.String(64), nullable=True)
     phone = db.Column(db.String(15), nullable=True)
-
 
 class Employee(db.Model):
     __tablename__ = 'employees'
@@ -31,7 +30,6 @@ class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     loc = db.Column(db.Integer, nullable=False)
     intro = db.Column(db.String(32), nullable=True)
-
 
 class Appointment(db.Model):
     __tablename__ = 'appointments'

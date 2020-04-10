@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, RadioField, FileField, DateTimeField, TextAreaField, RadioField, SelectField
-from wtforms.validators import DataRequired, Email
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, RadioField, FileField, DateTimeField, TextAreaField, RadioField, SelectField, IntegerField
+from wtforms.validators import DataRequired, Email, NumberRange
 from flask_wtf.file import FileRequired, FileAllowed
 
 class LoginForm(FlaskForm):
@@ -57,3 +57,12 @@ class QuestionForm(FlaskForm):
 class AnswerForm(FlaskForm):
     body = StringField('Answer', validators=[DataRequired()])
     submit = SubmitField('Reply')
+
+class PetForm(FlaskForm):
+	name = StringField('Name', validators=[DataRequired()])
+	age = IntegerField('Age', validators=[NumberRange(min=0,max=30)])
+	category = RadioField(
+        validators=[DataRequired('请选择宠物种类')],
+        choices=[('dog', '狗'), ('cat', '猫')]
+    )
+	submit = SubmitField('Add')

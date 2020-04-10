@@ -71,6 +71,28 @@ def check_username():
 	else:
 		return jsonify({'text': 'Sorry! Username is already taken','returnvalue': 1})
 
+@app.route('/personal_info', methods=['GET','POST'])
+def personal_info():
+    form = PetForm()
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
+        if user_in_db.is_customer:
+            customer = Customer.query.filter(Customer.id == user_in_db.ref_id).first()
+            pets = Pet.query.filter(Pet.owner_id == user_in_db.id).all()
+            if form.validate_on_submit():
+                pet = Pet(name=form.name.data, age=form.age.data, category=form.category.data, owner_id=user_in_db.id)
+                db.session.add(pet)
+                db.session.commit()
+                return redirect(url_for('personal_info'))
+            else:
+                return render_template('customer_info.html',title="Personal Infomation", user=user_in_db, customer=customer, pets=pets, form=form)
+        else:
+            pass
+    else:
+        flash("User needs to either login or signup first")
+        return redirect(url_for('login'))
+
 @app.route('/reviewquestions' ,methods=['GET','POST'])
 def reviewquestions():
     page = int(request.args.get('page'))
@@ -93,8 +115,6 @@ def reviewquestions():
             prev_questions = Question.query.filter().order_by(Question.timestamp.desc()).paginate(page=page,per_page=5)
     return render_template('reviewquestions.html',title="Questions",prev_questions = prev_questions.items,\
         pagination=prev_questions,form=form,user = user_in_db)
-
-
 
 @app.route('/answerquestion/<questionid>', methods=['GET','POST'])
 def answerquestion(questionid):
@@ -190,6 +210,22 @@ def details(appointment_id):
     assigned_doctor = Doctor.query.filter(Doctor.id == appointment.assigned_doctor_id).first()
     return render_template('details.html', title="Details", appointment=appointment, pet=pet, \
         customer=customer, employee=employee,preferred_doctor=preferred_doctor, assigned_doctor=assigned_doctor)
+
+@app.route('/delete_pet', methods=['GET', 'POST'])
+def deletePost():
+    id = request.args.get('id')
+    pet = Pet.query.filter(Pet.id == id).first()
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
+        if not user_in_db.is_customer:
+            return "Please login as customer"
+        db.session.delete(pet)
+        db.session.commit()
+        return redirect(url_for('personal_info'))
+    else:
+        flash('Please login first')
+        return redirect(url_for('login'))
 
 @app.route("/reset")
 def reset():
