@@ -214,10 +214,11 @@ def make_appointment():
         doctors = User.query.filter(User.is_customer == False).all()
         form.doctor.choices = [(u.id, u.username) for u in doctors]
         if form.validate_on_submit():  # 第二次，已填写
-            appointment = Appointment(loc=int(form.loc.data), pet_id=int(form.loc.data),
-                                      description=form.description.data, \
-                                      is_emergency=(form.is_emergency.data == 'E'),
-                                      changeable=(form.changeable.data == 'A'), preferred_doctor_id=int(form.loc.data), \
+            appointment = Appointment(loc=int(form.loc.data), pet_id=int(form.loc.data),\
+                                      description=form.description.data,\
+                                      is_emergency=(form.is_emergency.data == 'E'),\
+                                      changeable=(form.changeable.data == 'A'),\
+                                      preferred_doctor_id=int(form.doctor.data),\
                                       employee_id=int(form.doctor.data))
             db.session.add(appointment)
             db.session.commit()
@@ -235,8 +236,8 @@ def check_appointment():
         user_in_db = User.query.filter(User.username == username).first()
         if not user_in_db.is_customer:
             return "Please login as customer"
-        appointments = Appointment.query.filter(Appointment).all()
-        return render_template('handleappointment.html', title="Handle Appointment", appointments=appointments)
+        appointments = Appointment.query.all()
+        return render_template('check_appointment.html', title="Handle Appointment", appointments=appointments)
     else:
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))
@@ -248,8 +249,9 @@ def details(appointment_id):
     pet = Pet.query.filter(Pet.id == appointment.pet_id).first()
     customer = User.query.filter(User.id == pet.owner_id).first()
     employee = User.query.filter(User.id == appointment.employee_id).first()
+    preferred_doctor = User.query.filter(User.id == appointment.preferred_doctor_id).first()
     return render_template('details.html', title="Details", appointment=appointment, pet=pet, \
-                           customer=customer, employee=employee)
+                           customer=customer, employee=employee, preferred_doctor=preferred_doctor)
 
 
 @app.route('/delete_pet', methods=['GET', 'POST'])

@@ -18,10 +18,10 @@
                         Standard
                     {% endif %}
                 </td>
-                <td>{{ appointment.booking_datetime }}</td>
+                <td>{{ appointment.datetime }}</td>
                 <td>{{ appointment.status }}</td>
                 <p id="save">save()</p>
-                <td><input id="details" type="button" value="details">details</td>
+                <td><button><a href="details/{{ appointment.id }}">details</a></button></td>
             </tr>
         {% endfor %}
     </table>

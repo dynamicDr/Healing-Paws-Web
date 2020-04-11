@@ -15,11 +15,12 @@
     <p>Pet Name: {{ pet.name }}</p>
     <p>Appointment Time: {{ appointment.booking_datetime }}</p>
     <p>Appointment location: {{ appointment.location }}</p>
-    <p>Preferred Doctor: {{ preferred_doctor.name }}</p>
-    <p>Assigned Doctor: {{ assigned_doctor.name }}</p>
+    <p>Preferred Doctor: {{ preferred_doctor.username }}</p>
+    <p>Assigned Doctor: {{ employee.username }}</p>
     <p>Appointment Status: {{ appointment.status }}</p>
     {% if appointment.is_emergency == true %}
     <p>Pet Status: {{ appointment.pet_status }}</p>
+    {% endif %}
 </div>
 <script>
     function find(){
