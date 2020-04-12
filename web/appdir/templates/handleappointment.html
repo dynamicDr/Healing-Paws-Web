@@ -30,28 +30,30 @@
     <p>Preferred Doctor: {{ preferred.username }}</p>
     <p>Accept Adjustment: {{ appointment.changable }}</p>
     {% if appointment.status == "Pending" %}
-        <a href="{{ url_for('update_appointment',apt=appointment.id,operation="Reject") }}"><button>Reject</button></a>
-        <a href="{{ url_for('update_appointment',apt=appointment.id,operation="Confirm") }}"><button>Confirm</button></a>
+        <p>
+            <a href="{{ url_for('update_appointment',apt=appointment.id,operation="Reject") }}"><button>Reject</button></a>
+            <a href="{{ url_for('update_appointment',apt=appointment.id,operation="Confirm") }}"><button>Confirm</button></a>
+        </p>
     {% elif appointment.status == "Confirmed" %}
         {% if appointment.is_emergency == true %}
-            <p>Pet Status:</p>
-            <textarea id="pet_status",rows="1">{{ appointment.pet_status }}</textarea>
-            <input id="update" type="button" value="update">
+            <p>
+                Pet Status:
+                <textarea id="pet_status",rows="1">{{ appointment.pet_status }}</textarea>
+                <input id="update" type="button" value="update">
+            </p>
         {% endif %}
-        <a href="{{ url_for('update_appointment',apt=appointment.id,operation="Cancel") }}"><button>Cancel</button></a>
-        <a href="{{ url_for('update_appointment',apt=appointment.id,operation="Finish") }}"><button>Finish</button></a>
+        <p>
+            <a href="{{ url_for('update_appointment',apt=appointment.id,operation="Cancel") }}"><button>Cancel</button></a>
+            <a href="{{ url_for('update_appointment',apt=appointment.id,operation="Finish") }}"><button>Finish</button></a>
+        </p>
     {% endif %}
 </div>
 <script>
     btn = document.getElementById('update');
     btn.onclick = function() {
-            var pet_status = document.getElementById("pet_status");
-            alert("ok");
-            $.post('/change_pet_status',
-                {'status':pet_status,'appointment_id':{{ appointment.id }}},
-                    function (data,status) {
-                        console.log(data.code,status);
-                    })
+            var pet_status = document.getElementById("pet_status").textContent.toString();
+            alert(pet_status);
+            window.location.href = "{{url_for('set_status',apt=appointment.id) }}&status="+pet_status;
         }
 </script>
 {% endblock %}

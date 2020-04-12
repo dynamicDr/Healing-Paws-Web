@@ -200,6 +200,19 @@ def update_appointment():
     db.session.commit()
     return redirect(url_for('handleappointment', appointment_id=appointment_id))
 
+@app.route('/set_status', methods=["GET"])
+def set_status():
+    # username = session.get("USERNAME")
+    # user_in_db = User.query.filter(User.username == username).first()
+    appointment_id = request.args.get("apt")
+    status = request.args.get("status")
+    print("status=" + str(status))
+    appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
+    appointment.pet_status = status
+    print("apt.ps="+str(appointment.pet_status))
+    db.session.add(appointment)
+    db.session.commit()
+    return redirect(url_for('handleappointment', appointment_id=appointment_id))
 
 @app.route('/make_appointment', methods=['POST', 'GET'])
 def make_appointment():
