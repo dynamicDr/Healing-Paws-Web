@@ -35,14 +35,14 @@ class Appointment(db.Model):
     __tablename__ = 'appointments'
 
     id = db.Column(db.Integer, primary_key=True)
-    datetime = db.Column(db.DateTime, default=datetime.utcnow)# 提交的时间
+    datetime = db.Column(db.DateTime, default=datetime.now)# 提交的时间
     description = db.Column(db.String(32), default='')
     status = db.Column(db.String(32), default='Pending')   #Pending/Confirmed/Canceled/Finished
     pet_status = db.Column(db.String(32), default='Unchecked')  #设计一系列状态
     loc = db.Column(db.Integer)
     is_emergency = db.Column(db.Boolean)
     changeable = db.Column(db.Boolean)
-    employee_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    employee_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.id'))
     preferred_doctor_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
@@ -61,7 +61,7 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30))
     body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     anonymity = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     answers = db.relationship('Answer', backref='question', lazy='dynamic')
