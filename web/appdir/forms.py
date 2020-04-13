@@ -50,7 +50,7 @@ class AppointmentForm(FlaskForm):
     
 class QuestionForm(FlaskForm):
     title = StringField('Question', validators=[DataRequired()])
-    body = StringField('Question description')
+    body = TextAreaField('Question description')
     anonymity = BooleanField('anonymity')
     submit = SubmitField('Confirm')
     

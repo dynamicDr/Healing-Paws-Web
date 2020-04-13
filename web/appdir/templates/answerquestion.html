@@ -2,9 +2,9 @@
 
 {% block content %}
 	<ul>
-		<li>Question: {{ question.title }}</li>
-		{% if question.body %}
-			<li>Description: {{ question.body }}</li>
+		<li>Question: {{ question.title }}</li><br>
+		{% if question.body!=''%}
+			<li>Description: {{ question.body }}</li><br>
 		{% endif %}
 		<li>Answers:
 		{% if prev_answers %}
@@ -13,6 +13,8 @@
 				<li>{{ answer.body }} made by {{ answer.author.username }}</li>
 			{% endfor %}
 			</ul>
+		{% else %}
+			No answer yet
 		{% endif %}
 		</li>
 	</ul>
