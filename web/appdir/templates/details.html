@@ -14,7 +14,16 @@
     <p>Customer Name: {{ customer.username }}</p>
     <p>Pet Name: {{ pet.name }}</p>
     <p>Appointment Time: {{ appointment.booking_datetime }}</p>
-    <p>Appointment location: {{ appointment.location }}</p>
+    <p>Appointment location:
+        {% if  appointment.loc  == 1 %}
+            Beijing
+        {% elif  appointment.loc  == 2 %}
+            Shanghai
+        {% elif appointment.loc  == 3 %}
+            Chengdu
+        {% else %}
+        {% endif %}</p>
+    <p>Appointment description: {{ appointment.description }}</p>
     <p>Preferred Doctor: {{ preferred_doctor.username }}</p>
     <p>Assigned Doctor: {{ employee.username }}</p>
     <p>Appointment Status: {{ appointment.status }}</p>
