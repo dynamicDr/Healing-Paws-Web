@@ -65,6 +65,7 @@ class Question(db.Model):
     anonymity = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     answers = db.relationship('Answer', backref='question', lazy='dynamic')
+    counta = db.Column(db.Integer,default=0)
     
     def __repr__(self):
         return '<Question asked on {} by {}: {} >'.format(str(self.timestamp)[0:10],self.author.username,self.body)
