@@ -23,6 +23,7 @@
         {% else %}
         {% endif %}
     </p>
+    <p>Description: {{ appointment.description }}</p>
 {#    <p>Appointment Date: {{ appointment.date }}</p>#}
 {#    <p>Appointment Time: {{ appointment.time }}</p>#}
     <p>Customer Name: {{ customer.username }}</p>
@@ -33,6 +34,13 @@
             Yes
         {% else %}
             No
+        {% endif %}
+    </p>
+    <p>Assigned Employee:
+        {% if assigned %}
+             {{ assigned.username }}
+        {% else %}
+            None
         {% endif %}
     </p>
     {% if appointment.status == "Pending" %}

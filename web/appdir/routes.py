@@ -161,8 +161,9 @@ def handleappointment(appointment_id):
         pet = Pet.query.filter(Pet.id == appointment.pet_id).first()
         customer = User.query.filter(User.id == pet.owner_id).first()
         preferred = User.query.filter(User.id == appointment.preferred_doctor_id).first()
+        assigned = User.query.filter(User.id == appointment.employee_id).first()
         return render_template('handleappointment.html', title="Handle Appointment", appointment=appointment, pet=pet, \
-                               customer=customer, user=user_in_db, preferred=preferred)
+                               customer=customer, user=user_in_db, preferred=preferred, assigned=assigned)
     else:
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))
@@ -194,6 +195,7 @@ def update_appointment():
             flash("Cannot reject the appointment. There is an assigned doctor.")
             return redirect(url_for('handleappointment', appointment_id=appointment_id))
         appointment.status = "Confirmed"
+        appointment.employee_id = user_in_db.id;
     elif operation == "Cancel":
         appointment.status = "Canceled"
     elif operation == "Finish":
