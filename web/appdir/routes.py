@@ -137,6 +137,8 @@ def answerquestion(questionid):
         if form.validate_on_submit():
             answer_db = Answer(body=form.body.data, question_id=questionid, user_id=user_in_db.id)
             db.session.add(answer_db)
+            question_db = Question.query.filter(Question.id == questionid).first()
+            question_db.counta += 1
             db.session.commit()
             return redirect(url_for('reviewquestions', page=1))
         else:

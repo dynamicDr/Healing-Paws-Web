@@ -23,7 +23,11 @@
 			{% else %}
 				<td> {{ question.author.username }}</td>
 			{% endif %}
-			<td> {{ question.answers.body }}</td>
+			<!-- {% if question.answers %} -->
+				<!-- <td id="answerCount">question.counta</td> -->
+			<!-- {% else %} -->
+				<!-- <td> No answer yet <td> -->
+			<!-- {% endif %} -->
 		</tr>
 		{% endfor %}
 		</table>
@@ -37,7 +41,6 @@
 	{%import 'questionpage.html' as pg%}
 	{{pg.my_paginate(pagination,'reviewquestions')}}
 	<hr>
-	<!-- <div id='customeronly' v-show="isShow"> -->
 	{% if user %}
 		{% if user.is_customer %}
 			<form action="" method="post" enctype="multipart/form-data" novalidate>
@@ -58,27 +61,8 @@
 		</form>
 		{% endif %}
 	{% endif %}
-	<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
 	<!-- <script> -->
-		<!-- var customeronly = new Vue({ -->
-			<!-- el:"#customeronly",  -->
-			<!-- methods:{ -->
-				<!-- show:function(){ -->
-					<!-- if (user!=null){ -->
-						<!-- if (user.is_customer){ -->
-							<!-- return true; -->
-						<!-- } -->
-					<!-- } -->
-					<!-- else{ -->
-						<!-- alert('customeronly'); -->
-						<!-- return false; -->
-					<!-- } -->
-				<!-- } -->
-			<!-- }, -->
-			<!-- data:{ -->
-				<!-- isShow = show -->
-			<!-- } -->
-		<!-- }) -->
+
 	<!-- </script> -->
 {% endblock %}
 
