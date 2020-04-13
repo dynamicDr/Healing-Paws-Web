@@ -146,7 +146,7 @@ def answerquestion(questionid):
     else:
         user_in_db = None
 
-    return render_template('answerquestion.html', title="Answer Question", prev_answers=prev_answers, \
+    return render_template('answerquestion.html', title="Answer Question",  \
                            question=question_db, form=form, user=user_in_db)
 
 

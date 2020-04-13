@@ -2,18 +2,20 @@
 
 {% block content %}
 	<script src="{{ url_for('static', filename='scripts/questions.js') }}"></script>
-	<div id="search">
+	<div id="search" class='right'>
 		<input type="text" placeholder="Search..."/>
-    	<button>Search</button>
-	</div>
+		<button>Search</button>
 
+	</div>
+	<div class='center'>
+	<br>
 	<h3>Previous questions</h3>
 	{% if prev_questions %}
-		<table class="questionstable" border="2">
+		<table id="questionstable" border="2" >
 		<tr>
 			<th>Questions</th>
 			<th>Author</th>
-			<th>Answer</th>
+			<th>Answers</th>
 		</tr>
 		{% for question in prev_questions %}
 		<tr>
@@ -23,11 +25,17 @@
 			{% else %}
 				<td> {{ question.author.username }}</td>
 			{% endif %}
-			<!-- {% if question.answers %} -->
-				<!-- <td id="answerCount">question.counta</td> -->
-			<!-- {% else %} -->
-				<!-- <td> No answer yet <td> -->
-			<!-- {% endif %} -->
+			{% if question.counta!=0 %}
+				<td id="answerCount">{{ question.counta }}</td>
+			{% else %}
+				{% if user %}
+					{% if user.is_customer != 1 %}
+						<td style="color:red"> No answer yet </td>
+					{% else %}
+					<td> No answer yet </td>
+					{% endif %}
+				{% endif %}
+			{% endif %}
 		</tr>
 		{% endfor %}
 		</table>
@@ -36,33 +44,33 @@
 		<p>No questions</p>
 		<hr>
 	{% endif %}
-
+	</div>
+	
 	<hr>
 	{%import 'questionpage.html' as pg%}
 	{{pg.my_paginate(pagination,'reviewquestions')}}
 	<hr>
+
 	{% if user %}
 		{% if user.is_customer %}
 			<form action="" method="post" enctype="multipart/form-data" novalidate>
 				{{ form.hidden_tag() }}
 				<fieldset>
 					<legend>New Question</legend>
-					<p>
+					<p class="center formcss">
 						{{ form.title.label }}<br>
-						{{ form.title(size=32) }}
+						{{ form.title(size=64) }}
 					</p>
-					<p>
-						{{ form.body.label }}<br>
-						{{ form.body }}
+					<p class="center formcss">
+						{{ form.body.label }}:<br>
+						{{ form.body(cols=60,rows=6) }}
 					</p>
-					<p>{{ form.anonymity.label }} {{ form.anonymity }}</p>
-					<p>{{ form.submit() }}</p>
+					<p class='right red'>{{ form.anonymity.label }} {{ form.anonymity }}</p>
+					<br>
+					<p class='center'>{{ form.submit() }}</p>
 			</fieldset>
 		</form>
 		{% endif %}
 	{% endif %}
-	<!-- <script> -->
-
-	<!-- </script> -->
 {% endblock %}
 
