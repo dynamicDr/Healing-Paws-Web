@@ -16,14 +16,21 @@
     <body>
         <ul class="menu">
             <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="{{ url_for('register',role="c") }}">Register</a></li>
-            <li><a href="{{ url_for('register',role="e") }}">Join us</a></li>
+
             <li><a href="{{ url_for('reviewquestions',page=1) }}">Question Board</a></li>
             {% if user %}
+                {% if user.is_customer %}
+                    <li><a href="{{ url_for('check_appointment',page=1) }}">My appointments</a></li>
+                    <li><a href="{{ url_for('make_appointment') }}">New appointment</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('all_appointment',page=1) }}">All appointments</a></li>
+                {% endif %}
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
             <li id="username"><a href="{{ url_for('personal_info') }}">{{ user.username }}</a></li>
             {% else %}
-            <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register',role="c") }}">Register</a></li>
+                <li><a href="{{ url_for('register',role="e") }}">Join us</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
             {% endif %}
         </ul>
         <hr>
