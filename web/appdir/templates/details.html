@@ -2,18 +2,18 @@
 
 {% block content %}
 <div>
-    <!-- <input id="back" type="button" value="back" onclick="window.location.href('check_appointment')"> -->
-    <p>Appointment Details</p>
-    <p>Appointment type: {% if appointment.is_emergency == true %}
-                        Emergency
-                    {% else %}
-                        Standard
-                    {% endif %}
+    <div class="appointment"></div>
+     <a href="{{ url_for('check_appointment') }}"><button>Back</button></a>
+    <p>Appointment id: {{ appointment.id }}</p>
+    <p>Appointment type:
+        {% if appointment.is_emergency == true %}
+            Emergency
+        {% else %}
+            Standard
+        {% endif %}
     </p>
-    <p>find()</p>
-    <p>Customer Name: {{ customer.username }}</p>
-    <p>Pet Name: {{ pet.name }}</p>
-    <p>Appointment Time: {{ appointment.booking_datetime }}</p>
+    <p>Submit time: {{ appointment.datetime }}</p>
+    <p>Appointment Status: {{ appointment.status }}</p>
     <p>Appointment location:
         {% if  appointment.loc  == 1 %}
             Beijing
@@ -22,22 +22,38 @@
         {% elif appointment.loc  == 3 %}
             Chengdu
         {% else %}
-        {% endif %}</p>
-    <p>Appointment description: {{ appointment.description }}</p>
-    <p>Preferred Doctor: {{ preferred_doctor.username }}</p>
-    <p>Assigned Doctor: {{ employee.username }}</p>
-    <p>Appointment Status: {{ appointment.status }}</p>
-    {% if appointment.is_emergency == true %}
-    <p>Pet Status: {{ appointment.pet_status }}</p>
+        {% endif %}
+    </p>
+    <p>Description: {{ appointment.description }}</p>
+{#    <p>Appointment Date: {{ appointment.date }}</p>#}
+{#    <p>Appointment Time: {{ appointment.time }}</p>#}
+    <p>Customer Name: {{ customer.username }}</p>
+    <p>Pet Name: {{ pet.name }}</p>
+    <p>Preferred Doctor: {{ preferred.username }}</p>
+    <p>Accept Adjustment:
+        {% if  appointment.changeable == 1 %}
+            Yes
+        {% else %}
+            No
+        {% endif %}
+    </p>
+    <p>Assigned Employee:
+        {% if assigned %}
+             {{ assigned.username }}
+        {% else %}
+            None
+        {% endif %}
+    </p>
+    {% if appointment.status == "Pending" %}
+        <p>
+             <a href="{{ url_for('update_appointment',apt=appointment.id,operation="Cancel") }}"><button>Cancel</button></a>
+        </p>
+    {% elif appointment.status == "Confirmed" %}
+        {% if appointment.is_emergency == true %}
+            <p>
+                Pet Status: {{ appointment.pet_status }}
+            </p>
+        {% endif %}
     {% endif %}
 </div>
-<script>
-    function find(){
-        var cp_keynum = "key_num";
-        var str = localStorage.getItem(cp_keynum);
-        var find_result = document.getElementById("find_result");
-        var num = JSON.parse(str);
-        find_result.innerHTML = cp_keynum + "==" + num.cp_num_value;
-}
-</script>
 {% endblock %}

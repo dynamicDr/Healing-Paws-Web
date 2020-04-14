@@ -3,6 +3,7 @@
 {% block content %}
 <div>
     <div class="appointment"></div>
+    <a href="{{ url_for('all_appointment') }}"><button>Back</button></a>
     <p>Appointment id: {{ appointment.id }}</p>
     <p>Appointment type:
         {% if appointment.is_emergency == true %}
