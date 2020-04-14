@@ -6,7 +6,6 @@
         <tr>
             <th>Appointment type</th>
             <th>date</th>
-            <th>location</th>
             <th>status</th>
 
         </tr>
@@ -20,17 +19,9 @@
                     {% endif %}
                 </td>
                 <td>{{ appointment.datetime }}</td>
-                <td>{% if  appointment.loc  == 1 %}
-                        Beijing
-                    {% elif  appointment.loc  == 2 %}
-                        Shanghai
-                    {% elif appointment.loc  == 3 %}
-                        Chengdu
-                    {% else %}
-                    {% endif %}</td>
                 <td>{{ appointment.status }}</td>
                 <!-- <p id="save">save()</p> -->
-                <td><a href="{{ url_for('details',appointment_id=appointment.id) }}"><button>details</button></a></td>
+                <td><a href="{{ url_for('handleappointment',appointment_id=appointment.id) }}"><button>details</button></a></td>
             </tr>
         {% endfor %}
     </table>
