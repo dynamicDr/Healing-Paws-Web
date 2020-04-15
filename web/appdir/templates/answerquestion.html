@@ -10,7 +10,7 @@
 		{% if prev_answers %}
 			<ul>
 			{% for answer in prev_answers %}
-				<li>{{ answer.body }} made by {{ answer.author.username }}</li>
+				<li>{{ answer.body }} made by {{ answer.author.username }}</li><br>
 			{% endfor %}
 			</ul>
 		{% else %}
@@ -25,11 +25,11 @@
 				{{ form.hidden_tag() }}
 				<fieldset>
 					<legend>Add a new answer</legend>
-					<p>
+					<p class="center">
 						{{ form.body.label }}<br>
-						{{ form.body }}
+						{{ form.body(cols=100,rows=6) }}
 					</p>
-					<p>{{ form.submit() }}</p>
+					<p class="right">{{ form.submit() }}</p>
 				</fieldset>
 			</form>
 		{% endif %}

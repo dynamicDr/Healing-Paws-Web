@@ -6,34 +6,59 @@
         <title>Don't be lazy! Set a title.</title>
         {% endif %}
         <script src="{{ url_for('static', filename='scripts/jquery-3.4.1.js') }}"></script>
+		<script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+		<script src="{{ url_for('static', filename='scripts/jquery.fractionslider.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='scripts/jquery.colorbox.js') }}"></script>
+		<script src="{{ url_for('static', filename='scripts/isotop.js') }}"></script>
+		<script src="{{ url_for('static', filename='scripts/bootstrap.js') }}"></script>
+		<script src="{{ url_for('static', filename='scripts/bootstrap.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='scripts/animation.js') }}"></script>
+		<script src="{{ url_for('static', filename='scripts/jquery.min.js') }}"></script>
         <style type="text/css">
             li{ display:inline} 
 		</style>
         <link rel="stylesheet" href="{{ url_for('static', filename='style/question.css') }}">
-        
+        <link rel="stylesheet" href="{{ url_for('static', filename='style/animate.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/animate-custom.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap-theme.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap-theme.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/font-awesome.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/font-awesome.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/fractionslider.css') }}">
     </head>
 
     <body>
-        <ul class="menu">
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-
-            <li><a href="{{ url_for('reviewquestions',page=1) }}">Question Board</a></li>
-            {% if user %}
-                {% if user.is_customer %}
-                    <li><a href="{{ url_for('check_appointment',page=1) }}">My appointments</a></li>
-                    <li><a href="{{ url_for('make_appointment') }}">New appointment</a></li>
-                {% else %}
-                    <li><a href="{{ url_for('all_appointment',page=1) }}">All appointments</a></li>
-                {% endif %}
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
-            <li id="username"><a href="{{ url_for('personal_info') }}">{{ user.username }}</a></li>
-            {% else %}
-                <li><a href="{{ url_for('register',role="c") }}">Register</a></li>
-                <li><a href="{{ url_for('register',role="e") }}">Join us</a></li>
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-            {% endif %}
-        </ul>
-        <hr>
+		<div class="header">
+		<div class="container">
+           <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center">
+                    <nav class="navbar navbar-default" role="navigation">
+                          <ul class="nav navbar-nav pull-right">
+                                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                                    <li><a href="{{ url_for('reviewquestions',page=1) }}">Question Board</a></li>
+                                    {% if user %}
+										{% if user.is_customer %}
+											<li><a href="{{ url_for('check_appointment',page=1) }}">My appointments</a></li>
+											<li><a href="{{ url_for('make_appointment') }}">New appointment</a></li>
+										{% else %}
+											<li><a href="{{ url_for('all_appointment',page=1) }}">All appointments</a></li>
+										{% endif %}
+										<li><a href="{{ url_for('logout') }}">Logout</a></li>
+										<li id="username"><a href="{{ url_for('personal_info') }}">{{ user.username }}</a></li>
+									{% else %}
+										<li><a href="{{ url_for('register',role='c') }}">Register</a></li>
+										<li><a href="{{ url_for('register',role='e') }}">Join us</a></li>
+										<li><a href="{{ url_for('login') }}">Login</a></li>
+									{% endif %}
+                           </ul>
+                      </div>
+                    </nav>
+                </div>
+           </div>
+           </div>
+		   </div>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>
