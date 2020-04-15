@@ -29,7 +29,7 @@ class RegisterForm_E(FlaskForm):
         choices=[(1, '北京'), (2, '上海'), (3, '成都')],
         coerce=int
     )
-	intro = StringField('Introduction')
+	intro = TextAreaField('Introduction')
 	# 暂时没必要，后面可修改得更合理，比如只有用户注册时会显示这个。
 	accept_rules = BooleanField('I accept the site rules', validators=[DataRequired()])
 	submit = SubmitField('Register')
@@ -43,7 +43,7 @@ class AppointmentForm(FlaskForm):
     )
 	is_emergency = RadioField(label='What type of appointment?', choices = [('E','Emergency'), ('S', 'Standard')], validators=[DataRequired('请选择')])
 	changeable = RadioField(label='Do you accept CHANGE?', choices = [('A','Accpet'), ('R', 'Refuse')], validators=[DataRequired('请选择')])
-	description = StringField(label="Describe your pet's condition", validators=[DataRequired()])
+	description = TextAreaField(label="Describe your pet's condition", validators=[DataRequired()])
 	doctor = SelectField(label='希望预约哪位医生?', coerce=int, validators=[DataRequired()])
 	submit = SubmitField('Comfirm and Submit')
 
@@ -55,7 +55,7 @@ class QuestionForm(FlaskForm):
     submit = SubmitField('Confirm')
     
 class AnswerForm(FlaskForm):
-    body = StringField('Answer', validators=[DataRequired()])
+    body = TextAreaField('Answer', validators=[DataRequired()])
     submit = SubmitField('Reply')
 
 class PetForm(FlaskForm):

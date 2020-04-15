@@ -147,7 +147,7 @@ def answerquestion(questionid):
         user_in_db = None
 
     return render_template('answerquestion.html', title="Answer Question", \
-                           question=question_db, form=form, user=user_in_db)
+                           question=question_db, prev_answers=prev_answers, form=form, user=user_in_db)
 
 
 @app.route('/all_appointments')

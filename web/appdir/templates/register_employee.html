@@ -2,9 +2,9 @@
 
 {% block content %}
 <script src="{{ url_for('static', filename='scripts/signup_check.js') }}"></script>
-<div id="signupWin">
+<div id="signupWin" class="center">
     <h2>Welcome New Employee</h2>
-    <p>Enter your details and register here</p>
+    <p class="right">Enter your details and register here</p><hr>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <div id="username">
@@ -48,7 +48,7 @@
         
         <div id="intro">
             {{ form.intro.label }}<br>
-            {{ form.intro(size=128) }}<br>
+            {{ form.intro(cols=60,rows=6) }}<br>
             <span id="checkintro"></span>
             {% for error in form.intro.errors %}
             <span style="color: red;" class="flash">[{{ error }}]</span>

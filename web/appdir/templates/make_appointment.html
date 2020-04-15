@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="make_appointment">
+<div id="make_appointment" class="center">
     <h2>Make a new appointment</h2>
-    <p>Enter your information</p>
+    <p class="right">Enter your information</p><hr>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <div id="pet">
-            {{ form.pet.label }}<br>
-            {{ form.pet() }}<br>
+            {{ form.pet.label }}
+            <span class="bor1">{{ form.pet() }}<br></span>
             <span id="checkpet"></span>
             {% for error in form.pet.errors %}
             <span style="color: red;" class="flash">[{{ error }}]</span>
@@ -16,8 +16,8 @@
         </div>
 
         <div id="loc">
-            <label>Location</label><br>
-            {{ form.loc() }}<br>
+            <label>Location</label>&nbsp;&nbsp;
+            <span class="bor1">{{ form.loc() }}&nbsp;&nbsp;</span>
             <span id="checkloc"></span>
             {% for error in form.loc.errors %}
             <span style="color: red;"  class="flash">[{{ error }}]</span>
@@ -25,8 +25,8 @@
         </div>
 
         <div id="apt_type">
-            {{ form.is_emergency.label }}<br>
-            {{ form.is_emergency() }}<br>
+            {{ form.is_emergency.label }}&nbsp;&nbsp;
+            <span class="bor1">{{ form.is_emergency() }}&nbsp;&nbsp;</span>
             <span id="checkapt_type"></span>
             {% for error in form.is_emergency.errors %}
             <span style="color: red;"  class="flash">[{{ error }}]</span>
@@ -34,17 +34,17 @@
         </div>
 
         <div id="choose_doctor">
-            {{ form.doctor.label }}<br>
-            {{ form.doctor() }}<br>
+            {{ form.doctor.label }}&nbsp;&nbsp;
+            <span class="bor1">{{ form.doctor() }}&nbsp;&nbsp;</span>
             <span id="checkdoctor"></span>
             {% for error in form.doctor.errors %}
             <span style="color: red;" class="flash">[{{ error }}]</span>
             {% endfor %}
-        </div>
+        </div><br>
 
         <div id="changeable">
-            {{ form.changeable.label }}<br>
-            {{ form.changeable() }}<br>
+            {{ form.changeable.label }}&nbsp;&nbsp;
+            <span class="bor1">{{ form.changeable() }}&nbsp;&nbsp;</span>
             <span id="checkchangeable"></span>
             {% for error in form.changeable.errors %}
             <span style="color: red;"  class="flash">[{{ error }}]</span>
@@ -53,12 +53,13 @@
 
         <div id="description">
             {{ form.description.label }}<br>
-            {{ form.description(size=128) }}<br>
+            <span class="bor1">{{ form.description(cols=100,rows=3) }}&nbsp;</span>
             <span id="checkdescription"></span>
             {% for error in form.description.errors %}
             <span style="color: red;" class="flash">[{{ error }}]</span>
             {% endfor %}
         </div>
+		<br>
 
         <div>{{ form.submit() }}</div>
         {% for error in form.submit.errors %}
