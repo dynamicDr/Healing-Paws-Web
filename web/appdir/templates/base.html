@@ -48,11 +48,11 @@
                         {% else %}
                             <li><a href="{{ url_for('all_appointment',page=1) }}" class="i18n" name="all_appointment"></a></li>
                         {% endif %}
-                        <li><a href="{{ url_for('logout') }}" class="i18n" name="all_appointment"></a></li>
+                        <li><a href="{{ url_for('logout') }}" class="i18n" name="logout"></a></li>
                         <li id="username"><a href="{{ url_for('personal_info') }}">{{ user.username }}</a></li>
                     {% else %}
                         <li><a href="{{ url_for('register',role='c') }}" class="i18n" name="register"></a></li>
-                        <li><a href="{{ url_for('register',role='e') }}" class="i18n" name="join">s</a></li>
+                        <li><a href="{{ url_for('register',role='e') }}" class="i18n" name="join"></a></li>
                         <li><a href="{{ url_for('login') }}" class="i18n" name="login"></a></li>
                     {% endif %}
                         <li><select id="language">
