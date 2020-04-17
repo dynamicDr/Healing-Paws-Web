@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta id="i18n_pagename" content="index">
         {% if title %}
         <title>{{ title }}</title>
         {% else %}
@@ -13,7 +14,9 @@
 		<script src="{{ url_for('static', filename='scripts/bootstrap.js') }}"></script>
 		<script src="{{ url_for('static', filename='scripts/bootstrap.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='scripts/animation.js') }}"></script>
-		<script src="{{ url_for('static', filename='scripts/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='scripts/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='scripts/jquery.i18n.properties.js') }}"></script>
+        <script src="{{ url_for('static', filename='scripts/language.js') }}"></script>
         <style type="text/css">
             li{ display:inline} 
 		</style>
@@ -32,33 +35,37 @@
     <body>
 		<div class="header">
 		<div class="container">
-           <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center">
-                    <nav class="navbar navbar-default" role="navigation">
-                          <ul class="nav navbar-nav pull-right">
-                                    <li><a href="{{ url_for('index') }}">Home</a></li>
-                                    <li><a href="{{ url_for('reviewquestions',page=1) }}">Question Board</a></li>
-                                    {% if user %}
-										{% if user.is_customer %}
-											<li><a href="{{ url_for('check_appointment',page=1) }}">My appointments</a></li>
-											<li><a href="{{ url_for('make_appointment') }}">New appointment</a></li>
-										{% else %}
-											<li><a href="{{ url_for('all_appointment',page=1) }}">All appointments</a></li>
-										{% endif %}
-										<li><a href="{{ url_for('logout') }}">Logout</a></li>
-										<li id="username"><a href="{{ url_for('personal_info') }}">{{ user.username }}</a></li>
-									{% else %}
-										<li><a href="{{ url_for('register',role='c') }}">Register</a></li>
-										<li><a href="{{ url_for('register',role='e') }}">Join us</a></li>
-										<li><a href="{{ url_for('login') }}">Login</a></li>
-									{% endif %}
-                           </ul>
-                      </div>
-                    </nav>
-                </div>
-           </div>
-           </div>
-		   </div>
+        <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center">
+            <nav class="navbar navbar-default" role="navigation">
+                <ul class="nav navbar-nav pull-right">
+                    <li><a href="{{ url_for('index') }}" class="i18n" name="home"></a></li>
+                    <li><a href="{{ url_for('reviewquestions',page=1) }}" class="i18n" name="question_board"></a></li>
+                    {% if user %}
+                        {% if user.is_customer %}
+                            <li><a href="{{ url_for('check_appointment',page=1) }}" class="i18n" name="my_appointment"></a></li>
+                            <li><a href="{{ url_for('make_appointment') }}" class="i18n" name="new_appointment"></a></li>
+                        {% else %}
+                            <li><a href="{{ url_for('all_appointment',page=1) }}" class="i18n" name="all_appointment"></a></li>
+                        {% endif %}
+                        <li><a href="{{ url_for('logout') }}" class="i18n" name="all_appointment"></a></li>
+                        <li id="username"><a href="{{ url_for('personal_info') }}">{{ user.username }}</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('register',role='c') }}" class="i18n" name="register"></a></li>
+                        <li><a href="{{ url_for('register',role='e') }}" class="i18n" name="join">s</a></li>
+                        <li><a href="{{ url_for('login') }}" class="i18n" name="login"></a></li>
+                    {% endif %}
+                        <li><select id="language">
+                            <option value="zh-CN">中文简体</option>
+                            <option value="en">English</option>
+                            </select>
+                        </li>
+                </ul>
+            </nav>
+        </div>
+        </div>
+        </div>
+        </div>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>
