@@ -4,49 +4,52 @@
 <div class="big">
 
     <a href="{{ url_for('all_appointment') }}"><button>Back</button></a><hr>
-    <p>Appointment id: {{ appointment.id }} <span class="right"><i>Submit time: {{ appointment.datetime }}</i></span></p>
-    <p>Appointment type:
+    <p class="center">Appointment id: {{ appointment.id }} <span class="right"><i>Submit time: {{ appointment.datetime }}</i></span></p>
+    <p class="center">Appointment type:
         {% if appointment.is_emergency == true %}
             <span class="red">Emergency</span>
         {% else %}
             <b>Standard</b>
         {% endif %}
     </p><hr>
-    
-    <p>Appointment Status: <b>{{ appointment.status }}</p></b>
-    <p>Appointment location:
+    <div class="center"> 
+    <table border="2px">
+    <tr><td>Appointment Status:</td> <td><b>{{ appointment.status }}</td></b></tr>
+    <tr><td>Appointment location:</td>
         {% if  appointment.loc  == 1 %}
-            <b>Beijing</b>
+            <td><b>Beijing</b></td>
         {% elif  appointment.loc  == 2 %}
-            <b>Shanghai</b>
+            <td><b>Shanghai</b></td>
         {% elif appointment.loc  == 3 %}
-            <b>Chengdu</b>
+            <td><b>Chengdu</b></td>
         {% else %}
         {% endif %}
-    </p>
-    <p>Description: <b>{{ appointment.description }}</b></p>
+    </tr>
+    <tr><td>Description: </td><td><b>{{ appointment.description }}</td></tr>
 {#    <p>Appointment Date: <b>{{ appointment.date }}</b></p>#}
 {#    <p>Appointment Time: <b>{{ appointment.time }}</b></p>#}
-    <p>Customer Name: <b>{{ customer.username }}</b></p>
-    <p>Pet Name: <b>{{ pet.name }}</b></p>
-    <p>Preferred Doctor: <b>{{ preferred.username }}</b></p>
-    <p>Accept Adjustment:
+    <tr><td>Customer Name: </td><td><b>{{ customer.username }}</b></td></tr>
+    <tr><td>Pet Name: </td><td><b>{{ pet.name }}</b></td></tr>
+    <tr><td>Preferred Doctor: </td><td><b>{{ preferred.username }}</b></td></tr>
+    <tr><td>Accept Adjustment:</td>
         {% if  appointment.changeable == 1 %}
-            <b>Yes</b>
+            <td><b>Yes</b></td>
         {% else %}
-            <span class="red">No</span>
+            <td><span class="red">No</span></td>
         {% endif %}
-    </p>
-    <p>Assigned Employee:
+    </tr>
+    <tr><td>Assigned Employee:</td>
         {% if assigned %}
-             <b>{{ assigned.username }}</b>
+             <td><b>{{ assigned.username }}</b></td>
         {% else %}
-            None
+            <td>None</td>
         {% endif %}
-    </p>
+    </tr><br><br>
+    </table>
     {% if appointment.status == "Pending" %}
         <p>
             <a href="{{ url_for('update_appointment',apt=appointment.id,operation='Reject') }}"><button>Reject</button></a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="{{ url_for('update_appointment',apt=appointment.id,operation='Confirm') }}"><button>Confirm</button></a>
         </p>
     {% elif appointment.status == "Confirmed" %}
@@ -59,9 +62,11 @@
         {% endif %}
         <p>
             <a href="{{ url_for('update_appointment',apt=appointment.id,operation='Cancel') }}"><button>Cancel</button></a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="{{ url_for('update_appointment',apt=appointment.id,operation='Finish') }}"><button>Finish</button></a>
         </p>
     {% endif %}
+    </div>
 </div>
 <script>
     btn = document.getElementById('update');
