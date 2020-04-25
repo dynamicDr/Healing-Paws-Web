@@ -106,7 +106,6 @@ def personal_info():
 def reviewquestions():
     page = int(request.args.get('page'))
     key = request.args.get('key')
-    print(key)
     form = QuestionForm()
     user_in_db = None
     if not session.get("USERNAME") is None:
@@ -127,8 +126,9 @@ def reviewquestions():
                            pagination=prev_questions, form=form, user=user_in_db)
 
 
-@app.route('/answerquestion/<questionid>', methods=['GET', 'POST'])
-def answerquestion(questionid):
+@app.route('/answerquestion', methods=['GET', 'POST'])
+def answerquestion():
+    questionid = request.args.get('questionid')
     question_db = Question.query.filter(Question.id == questionid).first()
     form = AnswerForm()
     if not session.get("USERNAME") is None:
@@ -165,8 +165,9 @@ def all_appointment():
         return redirect(url_for('login'))
 
 
-@app.route('/handleappointment/<appointment_id>')
-def handleappointment(appointment_id):
+@app.route('/handleappointment', methods=['GET'])
+def handleappointment():
+    appointment_id = request.args.get('appointment_id')
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
@@ -210,7 +211,7 @@ def update_appointment():
             flash("Cannot reject the appointment. There is an assigned doctor.")
             return redirect(url_for('handleappointment', appointment_id=appointment_id))
         appointment.status = "Confirmed"
-        appointment.employee_id = user_in_db.id;
+        appointment.employee_id = user_in_db.id
     elif operation == "Cancel":
         appointment.status = "Canceled"
     elif operation == "Finish":
@@ -283,8 +284,9 @@ def check_appointment():
         return redirect(url_for('login'))
 
 
-@app.route('/details/<appointment_id>')
-def details(appointment_id):
+@app.route('/details', methods=['GET'])
+def details():
+    appointment_id = request.args.get('appointment_id')
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
