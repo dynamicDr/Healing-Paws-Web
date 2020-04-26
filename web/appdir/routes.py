@@ -150,16 +150,17 @@ def answerquestion():
                            question=question_db, prev_answers=prev_answers, form=form, user=user_in_db)
 
 
-@app.route('/all_appointments')
-def all_appointment():
+@app.route('/all_appointments', methods=['GET', 'POST'])
+def all_appointments():
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if user_in_db.is_customer:
             return "Please login as employee"
-        appointments = Appointment.query.all()
-        return render_template('all_appointments.html', title="Check Appointment", appointments=appointments,
-                               user=user_in_db)
+        page = int(request.args.get('page'))
+        appointments = Appointment.query.filter().order_by(Appointment.datetime.desc()).paginate(page=page, per_page=5)
+        return render_template('all_appointments.html', title="Check Appointment", appointments=appointments.items,
+                               user=user_in_db,page=page,pagination=appointments)
     else:
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))
@@ -266,19 +267,19 @@ def make_appointment():
         return redirect(url_for('login'))
 
 
-@app.route('/check_appointment')
+@app.route('/check_appointment', methods=['GET', 'POST'])
 def check_appointment():
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if not user_in_db.is_customer:
             return "Please login as customer"
-        # my_pets = Pet.query.filter(Pet.owner_id == User.id).all()
         my_pets = Pet.query.with_entities(Pet.id).filter(Pet.owner_id == User.id).all()
-        appointments = Appointment.query.join(Pet, Appointment.pet_id == Pet.id).filter(
-            Pet.owner_id == user_in_db.id).all()
-        return render_template('check_appointment.html', title="Handle Appointment", appointments=appointments,
-                               user=user_in_db)
+        page = int(request.args.get('page'))
+        appointments = Appointment.query.join(Pet, Appointment.pet_id == Pet.id).filter(Pet.owner_id == user_in_db.id)\
+            .order_by(Appointment.datetime.desc()).paginate(page=page, per_page=5)
+        return render_template('check_appointment.html', title="Handle Appointment", appointments=appointments.items,
+                               user=user_in_db,page=page,pagination=appointments)
     else:
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))

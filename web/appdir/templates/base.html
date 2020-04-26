@@ -46,7 +46,7 @@
                             <li><a href="{{ url_for('check_appointment',page=1) }}" class="i18n" name="my_appointment"></a></li>
                             <li><a href="{{ url_for('make_appointment') }}" class="i18n" name="new_appointment"></a></li>
                         {% else %}
-                            <li><a href="{{ url_for('all_appointment',page=1) }}" class="i18n" name="all_appointment"></a></li>
+                            <li><a href="{{ url_for('all_appointments',page=1) }}" class="i18n" name="all_appointment"></a></li>
                         {% endif %}
                         <li><a href="{{ url_for('logout') }}" class="i18n" name="logout"></a></li>
                         <li id="username"><a href="{{ url_for('personal_info') }}">{{ user.username }}</a></li>
