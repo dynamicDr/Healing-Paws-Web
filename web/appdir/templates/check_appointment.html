@@ -34,6 +34,11 @@
             </tr>
         {% endfor %}
     </table>
+
+	<hr>
+	{%import 'questionpage.html' as pg%}
+	{{pg.my_paginate(pagination,'check_appointment')}}
+	<hr>
 </div>
 {#<script>#}
 {#    function save(cp_value){#}
