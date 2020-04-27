@@ -1,91 +1,70 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="page-title">
-    	
-        <div class="container">
-        	<h1>About Us</h1>
-        </div>
-        
-    </div><!-- /page-title -->
-        
-        <div class="h-recent-work">
-        
-  			<div class="container">
-						
-                 <div class="about">
-					<hr>
-                
-                    <div class="center">
-                        
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            
-                            <h1>A Few Word About us</h1>
-                            
-                            <p>This is a website for you balabala You are allowed to make appointments for more than 1 pets</p>
-            
-                        </div>
-                        
-                    </div>
-                    <hr>
-                    <div class="center">
-                        
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <h1>Our Advantages</h1>
-                            
-                            <div class="panel-group" id="accordion">
-                              <div class="panel panel-default">
-                                <div class="panel-heading">
-                                  <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                      advantage1
-                                    </a>
-                                  </h4>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse in">
-                                  <div class="panel-body">
-                                    优点描述 可以折叠
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="panel panel-default">
-                                <div class="panel-heading">
-                                  <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                      优点2
-                                    </a>
-                                  </h4>
-                                </div>
-                                <div id="collapseTwo" class="panel-collapse collapse">
-                                  <div class="panel-body">
-									优点2描述
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="panel panel-default">
-                                <div class="panel-heading">
-                                  <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-										3
-                                    </a>
-                                  </h4>
-                                </div>
-                                <div id="collapseThree" class="panel-collapse collapse">
-                                  <div class="panel-body">
-										1
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                           
-                        </div>
-                       
-                        </div>
-                        
-                    </div>
-                
+    <div class="container">
+        <h1 class="i18n" name="about_us">About Us</h1>
+    </div>
+</div><!-- /page-title -->
+<div class="h-recent-work">
+    <div class="container">
+        <div class="about">
+            <hr>
+            <div class="center"> 
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <h1 class="i18n" name="intro"></h1>
+                    <p class="i18n" name="intro_detail"></p>
                 </div>
-			</div>
+            </div>
+            <hr>
+            <div class="center">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <h1 class="i18n" name="our_adv"></h1>
+                    <div class="panel-group" id="accordion">
 
-        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="i18n" name="adv1"></a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <!-- 中英文切换的功能不能用在div里面直接放文本的情况，放在p里面就可以，希望不会影响到你的css -->
+                                    <p class="i18n" name="adv1_des"></p>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="i18n" name="adv2">优点2</a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <p class="i18n" name="adv2_des"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"  class="i18n" name="adv3">3</a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse">
+                                <div class="panel-body" class="i18n" name="adv3_des">
+                                    <p class="i18n" name="adv3_des"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
