@@ -119,9 +119,9 @@ def reviewquestions():
         return redirect(url_for('reviewquestions', page=1))
     else:
         if key is not None:
-            prev_questions = Question.query.filter(Question.title.like('%' + key + '%')).paginate(page=page, per_page=5)
+            prev_questions = Question.query.filter(Question.title.like('%' + key + '%')).paginate(page=page, per_page=6)
         else:
-            prev_questions = Question.query.filter().order_by(Question.timestamp.desc()).paginate(page=page, per_page=5)
+            prev_questions = Question.query.filter().order_by(Question.timestamp.desc()).paginate(page=page, per_page=6)
     return render_template('reviewquestions.html', title="Questions", prev_questions=prev_questions.items, \
                            pagination=prev_questions, form=form, user=user_in_db)
 
