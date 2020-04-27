@@ -1,92 +1,104 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="signupWin" class="center">
-    <h2>Welcome New User</h2>
-    <p class="right">Enter your details and register here</p>
-	<hr>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <div id="username">
-
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            <span id="checkuser"></span>
-
-            {% for error in form.username.errors %}
-            <span style="color: red;" class="flash">[{{ error }}]</span>
-            {% endfor %}
-
-        </div>
+<section  id="section-home">
+  <div class="container">
+	<div class="row align-items-center justify-content-center">
+	  <div class="col-md-6">
+		<h2 class="heading mb-3">We Care for Your Pets Health
+						Every Moment	</h2>
+		<div class="sub-heading">
+			<p class="mb-4">Healing Paws Veterinary Hospital</p>
+		</div>
+	  </div> 
+	  <div class="col-md-1">
+	  </div>
+	  <div class="col-md-5 relative align-self-center">
+		
+		<form action="" method="post" novalidate>
+			<div class="form-group">
+			{{ form.hidden_tag() }}
+				<div id="username">
+					{{ form.username.label }}<br>
+					{{ form.username(size=32) }}<br>
+					<span id="checkuser"></span>
+					{% for error in form.username.errors %}
+						<span style="color: red;" class="flash">[{{ error }}]</span>
+					{% endfor %}
+				</div>
         <!-- 前端还需要一个重复密码验证 -->
-        <div id="passwords">    
-            <div>
-                {{ form.password.label }}<br>
-                {{ form.password(size=32) }}
-            </div>
-            {% for error in form.password.errors %}
-            <span style="color: red;" class="flash">[{{ error }}]</span>
-            {% endfor %}
-            <div>
-                {{ form.password2.label }}<br>
-                {{ form.password2(size=32) }}<br>
-                <span id="checkpassword"></span>
-            </div>
-            {% for error in form.password2.errors %}
-            <span style="color: red;" class="flash">[{{ error }}]</span>
-            {% endfor %}
-        </div>
+				<div id="passwords">    
+					<div>
+						{{ form.password.label }}<br>
+						{{ form.password(size=32) }}
+					</div>
+					{% for error in form.password.errors %}
+						<span style="color: red;" class="flash">[{{ error }}]</span>
+					{% endfor %}
+					<div>
+						{{ form.password2.label }}<br>
+						{{ form.password2(size=32) }}<br>
+						<span id="checkpassword"></span>
+					</div>
+					{% for error in form.password2.errors %}
+						<span style="color: red;" class="flash">[{{ error }}]</span>
+					{% endfor %}
+				</div>
 
-        <div id="email">
-            <div>
-                {{ form.email.label }}<br>
-                {{ form.email(size=32) }}<br>
-                <span id="checkemail"></span>
-            </div>
-            {% for error in form.email.errors %}
-            <span style="color: red;" class="flash">[{{ error }}]</span>
-            {% endfor %}
-        </div>
+				<div id="email">
+					<div>
+						{{ form.email.label }}<br>
+						{{ form.email(size=32) }}<br>
+						<span id="checkemail"></span>
+					</div>
+					{% for error in form.email.errors %}
+						<span style="color: red;" class="flash">[{{ error }}]</span>
+					{% endfor %}
+				</div>
 
-        <div id="phone">
-            <label>Phone Number</label><br>
-            {{ form.phone(size=32) }}<br>
-            <span id="checkphone"></span>
+				<div id="phone">
+					<label>Phone Number</label><br>
+					{{ form.phone(size=32) }}<br>
+					<span id="checkphone"></span>
         
-        {% for error in form.phone.errors %}
-        <span style="color: red;"  class="flash">[{{ error }}]</span>
-        {% endfor %}
-        </div>
+					{% for error in form.phone.errors %}
+						<span style="color: red;"  class="flash">[{{ error }}]</span>
+					{% endfor %}
+				</div>
 
-        <div id="birthday">
-            <label>Birthday</label><br>
-            {{ form.dob(size=32) }}<br>
-            <span id="checkdob"></span>
+				<div id="birthday">
+					<label>Birthday</label><br>
+					{{ form.dob(size=32) }}<br>
+					<span id="checkdob"></span>
         
-        {% for error in form.dob.errors %}
-        <span style="color: red;"  class="flash">[{{ error }}]</span>
-        {% endfor %}
-        </div>
+					{% for error in form.dob.errors %}
+						<span style="color: red;"  class="flash">[{{ error }}]</span>
+					{% endfor %}
+				</div>
 
-        <div id="address">
-            <label>Address</label><br>
-            {{ form.address(size=32) }}<br>
-            <span id="checkadress"></span>
+				<div id="address">
+					<label>Address</label><br>
+					{{ form.address(size=32) }}<br>
+					<span id="checkadress"></span>
         
-        {% for error in form.address.errors %}
-        <span style="color: red;"  class="flash">[{{ error }}]</span>
-        {% endfor %}
-        </div>
+					{% for error in form.address.errors %}
+						<span style="color: red;"  class="flash">[{{ error }}]</span>
+					{% endfor %}
+				</div>
 
-        <div>{{ form.accept_rules() }} {{ form.accept_rules.label }}</div>
-        {% for error in form.accept_rules.errors %}
-        <span style="color: red;" class="flash">[{{ error }}]</span>
-        {% endfor %}
-        <br />
+				<div>{{ form.accept_rules() }} {{ form.accept_rules.label }}</div>
+				{% for error in form.accept_rules.errors %}
+					<span style="color: red;" class="flash">[{{ error }}]</span>
+				{% endfor %}
+				<br>
 
-        <div>{{ form.submit() }}</div>
+				<div value="Register">{{ form.submit() }}</div>
 
-    </form>
-</div>
+			</div> 
+		</div>
+	</div>
+	</div>
+	</div>
+</section>
 {% endblock %}
 

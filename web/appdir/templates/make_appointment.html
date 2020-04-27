@@ -1,71 +1,114 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="make_appointment" class="center">
-    <h2>Make a new appointment</h2>
-    <p class="right">Enter your information</p><hr>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <div id="pet">
-            {{ form.pet.label }}
-            <span class="bor1">{{ form.pet() }}<br></span>
-            <span id="checkpet"></span>
-            {% for error in form.pet.errors %}
-            <span style="color: red;" class="flash">[{{ error }}]</span>
-            {% endfor %}
-        </div>
+	<section class="banner-area relative" id="home">
+		<div class="overlay overlay-bg"></div>	
+		<div class="container">
+			<div class="row fullscreen d-flex align-items-center justify-content-center">
+				<div class="banner-content col-lg-8 col-md-12">
+					<h1>
+						We Care for Your Pets Health
+						Every Moment		
+					</h1>
+					<p class="pt-10 pb-10 text-white">
+						 Healing Paws Veterinary Hospital
+					</p>
+					<a href="#" class="primary-btn text-uppercase">Get Started</a>
+				</div>										
+			</div>
+		</div>					
+	</section>
+	<section class="appointment-area">			
+		<div class="container">
+			<div class="row justify-content-between align-items-center pb-120 appointment-wrap">						
+			<div class="col-lg-5 col-md-6 appointment-left">
+				<h1>
+					Servicing Hour
+				</h1>
+					<ul class="time-list">
+						<li class="d-flex justify-content-between">
+						<span>Monday-Friday</span>
+						<span>08.00 am - 10.00 pm</span>
+						</li><br><br><br><br><br><br>
+						<li class="d-flex justify-content-between">
+							<span>Saturday</span>
+							<span>08.00 am - 10.00 pm</span>
+						</li><br><br><br><br><br><br>
+						<li class="d-flex justify-content-between">
+							<span>Sunday</span>
+							<span>08.00 am - 10.00 pm</span>
+						</li>																
+					</ul>
+				</div>
+				<div class="col-lg-6 col-md-6 appointment-right pt-80 pb-60">
+				<h2>Make a new appointment</h2>
+				<p class="right">Enter your information</p><hr>
+				<form action="" method="post" novalidate>
+				{{ form.hidden_tag() }}
+				<div id="pet">
+					{{ form.pet.label }}
+					<span class="bor1">{{ form.pet() }}<br></span>
+					<span id="checkpet"></span>
+					{% for error in form.pet.errors %}
+					<span style="color: red;" class="flash">[{{ error }}]</span>
+					{% endfor %}
+				</div>
 
-        <div id="loc">
-            <label>Location</label>&nbsp;&nbsp;
-            <span class="bor1">{{ form.loc() }}&nbsp;&nbsp;</span>
-            <span id="checkloc"></span>
-            {% for error in form.loc.errors %}
-            <span style="color: red;"  class="flash">[{{ error }}]</span>
-            {% endfor %}
-        </div>
+				<div id="loc">
+					<label>Location</label>&nbsp;&nbsp;
+					<span class="bor1">{{ form.loc() }}&nbsp;&nbsp;</span>
+					<span id="checkloc"></span>
+					{% for error in form.loc.errors %}
+					<span style="color: red;"  class="flash">[{{ error }}]</span>
+					{% endfor %}
+				</div>
 
-        <div id="apt_type">
-            {{ form.is_emergency.label }}&nbsp;&nbsp;
-            <span class="bor1">{{ form.is_emergency() }}&nbsp;&nbsp;</span>
-            <span id="checkapt_type"></span>
-            {% for error in form.is_emergency.errors %}
-            <span style="color: red;"  class="flash">[{{ error }}]</span>
-            {% endfor %}
-        </div>
+				<div id="apt_type">
+					{{ form.is_emergency.label }}&nbsp;&nbsp;
+					<span class="bor1">{{ form.is_emergency() }}&nbsp;&nbsp;</span>
+					<span id="checkapt_type"></span>
+					{% for error in form.is_emergency.errors %}
+					<span style="color: red;"  class="flash">[{{ error }}]</span>
+					{% endfor %}
+				</div>
 
-        <div id="choose_doctor">
-            {{ form.doctor.label }}&nbsp;&nbsp;
-            <span class="bor1">{{ form.doctor() }}&nbsp;&nbsp;</span>
-            <span id="checkdoctor"></span>
-            {% for error in form.doctor.errors %}
-            <span style="color: red;" class="flash">[{{ error }}]</span>
-            {% endfor %}
-        </div><br>
+				<div id="choose_doctor">
+					{{ form.doctor.label }}&nbsp;&nbsp;
+					<span class="bor1">{{ form.doctor() }}&nbsp;&nbsp;</span>
+					<span id="checkdoctor"></span>
+					{% for error in form.doctor.errors %}
+					<span style="color: red;" class="flash">[{{ error }}]</span>
+					{% endfor %}
+				</div><br>
 
-        <div id="changeable">
-            {{ form.changeable.label }}&nbsp;&nbsp;
-            <span class="bor1">{{ form.changeable() }}&nbsp;&nbsp;</span>
-            <span id="checkchangeable"></span>
-            {% for error in form.changeable.errors %}
-            <span style="color: red;"  class="flash">[{{ error }}]</span>
-            {% endfor %}
-        </div>
+				<div id="changeable">
+					{{ form.changeable.label }}&nbsp;&nbsp;
+					<span class="bor1">{{ form.changeable() }}&nbsp;&nbsp;</span>
+					<span id="checkchangeable"></span>
+					{% for error in form.changeable.errors %}
+					<span style="color: red;"  class="flash">[{{ error }}]</span>
+					{% endfor %}
+				</div>
 
-        <div id="description">
-            {{ form.description.label }}<br>
-            <span class="bor1">{{ form.description(cols=100,rows=3) }}&nbsp;</span>
-            <span id="checkdescription"></span>
-            {% for error in form.description.errors %}
-            <span style="color: red;" class="flash">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-		<br>
+				<div id="description">
+					{{ form.description.label }}<br>
+					<span class="bor1">{{ form.description(cols=100,rows=3) }}&nbsp;</span>
+					<span id="checkdescription"></span>
+					{% for error in form.description.errors %}
+					<span style="color: red;" class="flash">[{{ error }}]</span>
+					{% endfor %}
+				</div>
+				<br>
 
-        <div>{{ form.submit() }}</div>
-        {% for error in form.submit.errors %}
-        <span style="color: red;" class="flash">[{{ error }}]</span>
-        {% endfor %}
+				<div>{{ form.submit() }}</div>
+				{% for error in form.submit.errors %}
+				<span style="color: red;" class="flash">[{{ error }}]</span>
+				{% endfor %}
 
-    </form>
-</div>
+				</form>
+			</div>
+			</div>
+
+				</div>	
+		</section>
 {% endblock %}

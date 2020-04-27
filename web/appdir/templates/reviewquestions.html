@@ -7,47 +7,39 @@
 		<button>Search</button>
 
 	</div>
-	<div class='center'>
-	<br>
-	<h3>Previous questions</h3>
-	{% if prev_questions %}
-		<table id="questionstable" border="2" >
-		<tr>
-			<th>Questions</th>
-			<th>Author</th>
-			<th>Answers</th>
-		</tr>
-		{% for question in prev_questions %}
-		<tr>
-			<td> <a href="{{ url_for('answerquestion',questionid=question.id)}}" >{{ question.title }}</a></td>
-			{% if question.anonymity == 1 %}
-				<td>anonymous user</td>
-			{% else %}
-				<td> {{ question.author.username }}</td>
-			{% endif %}
-			{% if question.counta!=0 %}
-				<td id="answerCount">{{ question.counta }}</td>
-			{% else %}
-				{% if user %}
-					{% if user.is_customer != 1 %}
-						<td style="color:red"> No answer yet </td>
-					{% else %}
-					<td> No answer yet </td>
-					{% endif %}
-				{% else %}
-					<td> No answer yet </td>
-				{% endif %}
-			{% endif %}
-		</tr>
-		{% endfor %}
-		</table>
-		<hr>
-	{% else %}
-		<p>No questions</p>
-		<hr>
-	{% endif %}
-	</div>
-	
+	<section class="site-section bg-light">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-12">
+            <div class="section-heading text-center">
+              <h2><strong>Questions</strong></h2>
+            </div>
+          </div>
+        </div>
+		{% if prev_questions %}
+			<div class="row">
+			{% for question in prev_questions %}
+			<div class="col-md-6">
+				<div class="block-47 d-flex mb-5">
+					<blockquote class="block-47-quote">
+						<a href="{{ url_for('answerquestion',questionid=question.id)}}" >{{ question.title }}</a><br>
+						{% if question.anonymity == 1 %}
+						<cite class="block-47-quote-author">- Asked by an anonymous user</cite>
+						{% else %}
+							<cite class="block-47-quote-author">- Asked by {{ question.author.username }}</cite>
+						{% endif %}
+					</blockquote>
+				</div>
+			</div>
+			{% endfor %}
+			</div>
+		{% else %}
+			<p>No questions</p>
+			<hr>
+		{% endif %}        
+      </div>
+    </section>
+
 	<hr>
 	{%import 'questionpage.html' as pg%}
 	{{pg.my_paginate(pagination,'reviewquestions')}}
@@ -57,6 +49,7 @@
 		{% if user.is_customer %}
 			<form action="" method="post" enctype="multipart/form-data" novalidate>
 				{{ form.hidden_tag() }}
+				<div class="form-group">
 				<fieldset>
 					<legend>New Question</legend>
 					<p class="center formcss">
@@ -71,6 +64,7 @@
 					<br>
 					<p class='center'>{{ form.submit() }}</p>
 			</fieldset>
+			</div>
 		</form>
 		{% endif %}
 	{% endif %}

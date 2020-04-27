@@ -1,9 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="loginWin" class="center">
-    <div class="login"><h2>Login</h2></div><hr>
-    <form action="" method="post" novalidate>
+<!-- <div id="loginWin" class="center"> -->
+    <!-- <div class="login"><h2>Login</h2></div><hr> -->
+    <!-- <form action="" method="post" novalidate> -->
+        <!-- {{ form.hidden_tag() }} -->
+        <!-- <div class="username"> -->
+            <!-- {{ form.username.label }}<br /> -->
+            <!-- {{ form.username(size=32) }} -->
+        <!-- </div> -->
+        <!-- <div class="password"> -->
+            <!-- {{ form.password.label }}<br /> -->
+            <!-- {{ form.password(size=32) }} -->
+        <!-- </div> -->
+        <!-- <div class="remember">{{ form.remember_me() }} {{ form.remember_me.label }}</div> -->
+        <!-- <div class="submit">{{ form.submit() }}</div> -->
+    <!-- </form> -->
+<!-- </div> -->
+
+<section  id="section-home">
+  <div class="container">
+	<div class="row align-items-center justify-content-center">
+	  <div class="col-md-6">
+		<h2 class="heading mb-3">We Care for Your Pets Health
+						Every Moment	</h2>
+		<div class="sub-heading">
+			<p class="mb-4">Healing Paws Veterinary Hospital</p>
+		</div>
+	  </div> 
+	  <div class="col-md-1">
+	  </div>
+	  <div class="col-md-5 relative align-self-center">
+
+		<h1>Login</h1>
+		<!-- Loging form -->
+		<form action="" method="post" novalidate>
+		<div class="form-group">
         {{ form.hidden_tag() }}
         <div class="username">
             {{ form.username.label }}<br />
@@ -15,7 +47,14 @@
         </div>
         <div class="remember">{{ form.remember_me() }} {{ form.remember_me.label }}</div>
         <div class="submit">{{ form.submit() }}</div>
-    </form>
-</div>
-  
+		</form>
+		 <!-- End Loging form -->
+
+	</div> 
+		</div>
+	</div>
+	</div>
+	</div>
+</section>
+
 {% endblock %}

@@ -30,6 +30,25 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='style/font-awesome.css') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='style/font-awesome.min.css') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='style/fractionslider.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/animate.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/font-awesome.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/jquery-ui.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/linearicons.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/magnific-popup.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/nice-select.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/owl.carousel.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/flexslider.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/_icon-fonts.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/helpers.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/landing-1.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/landing-2.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/restaurant.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/slick.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/slick-theme.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style/styles.css') }}">
     </head>
 
     <body>
@@ -38,7 +57,7 @@
         <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center">
             <nav class="navbar navbar-default" role="navigation">
-                <ul class="nav navbar-nav pull-right">
+                <ul style="display:inline" class="nav navbar-nav pull-right">
                     <li><a href="{{ url_for('index') }}" class="i18n" name="home"></a></li>
                     <li><a href="{{ url_for('reviewquestions',page=1) }}" class="i18n" name="question_board"></a></li>
                     {% if user %}
