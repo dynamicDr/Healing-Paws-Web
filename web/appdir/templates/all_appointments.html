@@ -3,23 +3,24 @@
 {% block content %}
 <div id="filter">
     {#TODO#}
-    <form action="" method="get">
+    <form action={{ url_for("all_appointments",page=page) }} method="get">
+        <label style="display:none;"><input name="page" value={{ page }}></label>
         Type:
-        <label><input name="type" type="radio" value="" checked="checked"/>All</label>
-        <label><input name="type" type="radio" value="" />Standard </label>
-        <label><input name="type" type="radio" value="" />Emergency </label>
+        <label><input name="type" type="radio" value="all"/>All</label>
+        <label><input name="type" type="radio" value="standard" />Standard </label>
+        <label><input name="type" type="radio" value="emergency" />Emergency </label>
         <br>
         Status:
-        <label><input name="status" type="radio" value="" checked="checked"/>All</label>
-        <label><input name="status" type="radio" value="" />Pending </label>
-        <label><input name="status" type="radio" value="" />Confirmed </label>
-        <label><input name="status" type="radio" value="" />Canceled </label>
-        <label><input name="status" type="radio" value="" />Finished </label>
+        <label><input name="status" type="radio" value="all"/>All</label>
+        <label><input name="status" type="radio" value="Pending" />Pending </label>
+        <label><input name="status" type="radio" value="Confirmed" />Confirmed </label>
+        <label><input name="status" type="radio" value="Canceled" />Canceled </label>
+        <label><input name="status" type="radio" value="Finished" />Finished </label>
         <br>
         Customer Name:
         <input name="name" type="text" value=""/>
         <br>
-        <a onClick=""><button>Search</button></a>
+        <button id="search">Search</button>
     </form>
 
 </div>
@@ -49,10 +50,36 @@
         {% endfor %}
     </table>
 <hr>
-{%import 'questionpage.html' as pg%}
-{{pg.my_paginate(pagination,'all_appointments')}}
+{%import 'aptpage.html' as pg%}
+{{pg.my_paginate(pagination,type,status,'all_appointments')}}
 <hr>
 </div>
 <script>
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+current_type=getQueryVariable("type")
+if(current_type){
+    type_radio=$("[value="+current_type+"][name='type']")
+}
+else {
+    type_radio=$("[value='all'][name='type']")
+}
+type_radio.prop("checked",1);
+current_status=getQueryVariable("status")
+if(current_status){
+    status_radio=$("[value="+current_status+"][name='status']")
+}
+else {
+    status_radio=$("[value='all'][name='status']")
+}
+status_radio.prop("checked",1);
 </script>
 {% endblock %}

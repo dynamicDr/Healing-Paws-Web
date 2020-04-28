@@ -3,7 +3,7 @@
 {% block content %}
 <div class="big">
 
-    <a onClick="javascript :history.back(-1);"><button>Back</button></a>
+    <a href={{ url_for('all_appointments',page=1) }}><button>Back</button></a>
     <hr>
     <p class="center">Appointment id: {{ appointment.id }} <span class="right"><i>Submit time: {{ appointment.datetime }}</i></span></p>
     <p class="center">Appointment type:
@@ -76,5 +76,6 @@
             alert(pet_status);
             window.location.href = "{{url_for('set_status',apt=appointment.id) }}&status="+pet_status;
         }
+
 </script>
 {% endblock %}
