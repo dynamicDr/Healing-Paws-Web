@@ -3,8 +3,10 @@ from flask import render_template, flash, redirect, url_for, session, request, j
 from appdir.config import Config
 from appdir.forms import *
 from appdir.models import *
+from appdir.email import send_password_reset_email
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import text
+
 
 @app.route("/")
 @app.route("/index")
@@ -23,11 +25,11 @@ def register():
         form = RegisterForm_C()
         if form.validate_on_submit():
             passw_hash = generate_password_hash(form.password.data)
-            customer = Customer(dob=form.dob.data, email=form.email.data, phone=form.phone.data,
+            customer = Customer(dob=form.dob.data, phone=form.phone.data,
                                 address=form.address.data)
             db.session.add(customer)
             db.session.flush()
-            user = User(username=form.username.data, password_hash=passw_hash, is_customer=True, ref_id=customer.id)
+            user = User(username=form.username.data, password_hash=passw_hash, email=form.email.data, is_customer=True, ref_id=customer.id)
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('index'))
@@ -39,7 +41,7 @@ def register():
             employee = Employee(intro=form.intro.data, loc=int(form.loc.data))
             db.session.add(employee)
             db.session.flush()
-            user = User(username=form.username.data, password_hash=passw_hash, is_customer=False, ref_id=employee.id)
+            user = User(username=form.username.data, password_hash=passw_hash, email=form.email.data, is_customer=False, ref_id=employee.id)
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('index'))
@@ -344,13 +346,13 @@ def reset():
     db.drop_all()
     db.create_all()
     # 在这里往数据库里添加测试数据，每次reset后就直接添加
-    customer = Customer(dob='2000-01-01', email='123@123.com', phone='123', address='123')
+    customer = Customer(dob='2000-01-01', phone='123', address='123')
     employee = Employee(intro='1123', loc=1)
     db.session.add(customer)
     db.session.add(employee)
     db.session.flush()
-    user_e = User(username='e', password_hash=generate_password_hash('1'), is_customer=False, ref_id=employee.id)
-    user_c = User(username='c', password_hash=generate_password_hash('1'), is_customer=True, ref_id=customer.id)
+    user_e = User(username='e', password_hash=generate_password_hash('1'), email='1092950198@qq.com', is_customer=False, ref_id=employee.id)
+    user_c = User(username='c', password_hash=generate_password_hash('1'), email='1092950198@qq.com', is_customer=True, ref_id=customer.id)
     db.session.add(user_c)
     db.session.add(user_e)
     db.session.flush()
@@ -360,3 +362,18 @@ def reset():
     db.session.add(pet2)
     db.session.commit()
     return '重建所有表'
+
+@app.route("/reset_password_request", methods=['GET','POST'])
+def reset_password_request():
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter(User.email == form.email.data).first()
+        if not user:
+            flash('该电子邮箱未注册')
+            return redirect(url_for('reset_password_request'))
+
+        send_password_reset_email(user)
+        flash('查看您的电子邮箱消息，以重置您的密码')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html', title='重置密码', form=form)
+    # https://blog.csdn.net/sdwang198912/java/article/details/89884414
