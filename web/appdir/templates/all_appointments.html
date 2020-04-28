@@ -4,7 +4,7 @@
 <div id="filter">
     {#TODO#}
     <form action={{ url_for("all_appointments",page=page) }} method="get">
-        <label style="display:none;"><input name="page" value={{ page }}></label>
+        <label style="display:none;"><input name="page" value=1></label>
         Type:
         <label><input name="type" type="radio" value="all"/>All</label>
         <label><input name="type" type="radio" value="standard" />Standard </label>

@@ -72,7 +72,7 @@
 <script>
     btn = document.getElementById('update');
     btn.onclick = function() {
-            var pet_status = document.getElementById("pet_status").textContent.toString();
+            let pet_status = document.getElementById("pet_status").value;
             alert(pet_status);
             window.location.href = "{{url_for('set_status',apt=appointment.id) }}&status="+pet_status;
         }
