@@ -1,6 +1,7 @@
 from datetime import datetime
-from appdir import db
-
+from appdir import db, app
+import jwt
+from time import time
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -9,18 +10,33 @@ class User(db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     is_customer = db.Column(db.Boolean, index=True)
+    email = db.Column(db.String(32), index=True, nullable=True)
     ref_id = db.Column(db.Integer)
     questions = db.relationship('Question', backref='author', lazy='dynamic')
     answers = db.relationship('Answer', backref='author',lazy='dynamic')
     pets = db.relationship('Pet', backref='owner', lazy='dynamic')
     # appointments = db.relationship('Appointment', backref='maker', lazy='dynamic') #Appointment表里有两个User的外键，所以这里不能反向查询
+    
+    def get_jwt_token(self, expires_in=600):
+        """获取JWT令牌"""
+        return jwt.encode({'reset_password': self.id, 'exp': time() + expires_in},\
+                          app.config['SECRET_KEY'], algorithm='HS256').decode('utf8')
+
+    @staticmethod
+    def verify_jwt_token(token):
+        try:
+            user_id = jwt.decode(token, app.config['SECRET_KEY'], algorithms='HS256')['reset_password']
+        except Exception as e:
+            print(e)
+            return
+        return User.query.get(user_id)
+# https://blog.csdn.net/sdwang198912/java/article/details/89884414
 
 class Customer(db.Model):
     __tablename__ = 'customers'
 
     id = db.Column(db.Integer, primary_key=True)
     dob = db.Column(db.Date)
-    email = db.Column(db.String(32), index=True, nullable=True)
     address = db.Column(db.String(64), nullable=True)
     phone = db.Column(db.String(15), nullable=True)
 
@@ -77,3 +93,4 @@ class Answer(db.Model):
     body = db.Column(db.String(140))
     question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+

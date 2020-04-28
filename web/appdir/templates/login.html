@@ -47,6 +47,9 @@
                             {{ form.remember_me() }}
                             <span class="i18n" name="remember"></span>
                         </div>
+                        <div>
+                            <a href="{{ url_for('reset_password_request') }}">忘记密码？</a>
+                        </div>
                         <div class="submit">
                             <button id="submit" name="submit" type="submit" class="i18n"></button>
                         </div>
@@ -55,7 +58,8 @@
                 <!-- End Loging form -->
             </div> 
 		</div>
-	</div>
+    </div>
+    
 </section>
 <script>
 </script>

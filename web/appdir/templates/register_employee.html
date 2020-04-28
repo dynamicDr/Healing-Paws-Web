@@ -43,6 +43,17 @@
 							{% endfor %}
 						</div>
 
+						<div id="email">
+							<div>
+								<span class="i18n" name="email"></span><br>
+								{{ form.email(size=32) }}<br>
+								<span id="checkemail"></span>
+							</div>
+							{% for error in form.email.errors %}
+								<span style="color: red;" class="flash">[{{ error }}]</span>
+							{% endfor %}
+						</div>
+
 						<div id="loc">
 							<span class="i18n" name="location"></span><br>
 							{{ form.loc() }}<br>

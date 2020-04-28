@@ -21,6 +21,7 @@ class RegisterForm_C(FlaskForm):
 
 class RegisterForm_E(FlaskForm):
 	username = StringField('Username', validators=[DataRequired()])
+	email = StringField('Email', validators=[DataRequired(), Email()])
 	password = PasswordField('Password', validators=[DataRequired()])
 	password2 = PasswordField('Repeat Password', validators=[DataRequired()])
 	loc = SelectField(
@@ -64,3 +65,8 @@ class PetForm(FlaskForm):
         choices=[('dog', '狗'), ('cat', '猫')]
     )
 	submit = SubmitField('Add')
+
+class ResetPasswordRequestForm(FlaskForm):
+    """重置密码请求表单"""
+    email = StringField('邮箱', validators=[DataRequired(), Email()])
+    submit = SubmitField('请求密码重置')
