@@ -17,7 +17,6 @@ class RegisterForm_C(FlaskForm):
 	address = StringField('Address', validators=[DataRequired()])
 	password = PasswordField('Password', validators=[DataRequired()])
 	password2 = PasswordField('Repeat Password', validators=[DataRequired()])
-	accept_rules = BooleanField('I accept the site rules', validators=[DataRequired()])
 	submit = SubmitField('Register')
 
 class RegisterForm_E(FlaskForm):
@@ -26,12 +25,11 @@ class RegisterForm_E(FlaskForm):
 	password2 = PasswordField('Repeat Password', validators=[DataRequired()])
 	loc = SelectField(
         validators=[DataRequired('请选择注册医院所在地')],
-        choices=[(1, '北京'), (2, '上海'), (3, '成都')],
+        choices=[(1, 'Beijing'), (2, 'Shanghai'), (3, 'Chengdu')],
         coerce=int
     )
 	intro = TextAreaField('Introduction')
 	# 暂时没必要，后面可修改得更合理，比如只有用户注册时会显示这个。
-	accept_rules = BooleanField('I accept the site rules', validators=[DataRequired()])
 	submit = SubmitField('Register')
 
 class AppointmentForm(FlaskForm):
