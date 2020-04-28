@@ -4,7 +4,7 @@ from appdir.config import Config
 from appdir.forms import *
 from appdir.models import *
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from sqlalchemy import text
 
 @app.route("/")
 @app.route("/index")
@@ -158,9 +158,26 @@ def all_appointments():
         if user_in_db.is_customer:
             return "Please login as employee"
         page = int(request.args.get('page'))
-        appointments = Appointment.query.filter().order_by(Appointment.datetime.desc()).paginate(page=page, per_page=5)
+        type = request.args.get('type')
+        status = request.args.get('status')
+        name = request.args.get('name')
+        filter_text=""
+        if type == "emergency":
+            filter_text = "is_emergency=1"
+        elif type == "standard":
+            filter_text = "is_emergency=0"
+        else:
+            filter_text = "true"
+            print("all")
+
+        if not status is None:
+            if status != "all":
+                filter_text += " and status=\"" + status+"\""
+            else:
+                print("all")
+        appointments = Appointment.query.filter(text(filter_text)).order_by(Appointment.datetime.desc()).paginate(page=page, per_page=5)
         return render_template('all_appointments.html', title="Check Appointment", appointments=appointments.items,
-                               user=user_in_db,page=page,pagination=appointments)
+                               user=user_in_db,page=page,pagination=appointments,type=type,status=status,name=name)
     else:
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))
