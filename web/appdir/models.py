@@ -2,6 +2,7 @@ from datetime import datetime
 from appdir import db, app
 import jwt
 from time import time
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -30,6 +31,11 @@ class User(db.Model):
             print(e)
             return
         return User.query.get(user_id)
+
+    def set_password(self, raw_password):
+        """密码加密"""
+        self.password_hash = generate_password_hash(raw_password)
+
 # https://blog.csdn.net/sdwang198912/java/article/details/89884414
 
 class Customer(db.Model):

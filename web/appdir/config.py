@@ -7,15 +7,15 @@ class Config(object):
 
     # ----------EMAIL相关配置------------#
     # 电子邮箱服务器
-    MAIL_SERVER = os.environ.get('smtp.163.com')
+    MAIL_SERVER = 'smtp.163.com'
     # 电子邮箱端口，标准端口为25
-    MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
+    MAIL_PORT = 465
     # 电子邮件服务器凭证默认不使用
     # MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
     # 电子邮箱服务器用户名
-    MAIL_USERNAME = 'jackzhu74@163.com'
+    MAIL_USERNAME = 'se_project_test@163.com'
     # 电子邮箱服务器密码
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    MAIL_PASSWORD = 'TJVKEZWVDBNJRQOB'
     # 电子邮箱邮件接收地址
     # MAIL_ADMINS = ['1069291377@qq.com']
     MAIL_USE_SSL = True
