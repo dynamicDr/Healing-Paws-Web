@@ -25,7 +25,17 @@
                 {% elif appointment.loc == 3 %}
                     <td class="i18n" name="chengdu"></td>
                 {% endif %}
-                <td>{{ appointment.status }}</td>
+                <td>
+                {% if appointment.status == 'Canceled' %}
+                    <b class="i18n" name="canceled"></b>
+                {% elif appointment.status == 'Pending' %}
+                    <b class="i18n" name="pending"></b>
+                {% elif appointment.status == 'Finished' %}
+                    <b class="i18n" name="finished"></b>
+                {% elif appointment.status == 'Confirmed' %}
+                    <b class="i18n" name="confirmed"></b>
+                {% endif %}
+                </td>
                 <!-- <p id="save">save()</p> -->
                 <td><a href="{{ url_for('details',appointment_id=appointment.id) }}"><button>details</button></a></td>
             </tr>

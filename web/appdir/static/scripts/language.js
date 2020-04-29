@@ -120,8 +120,11 @@ var execI18n = function(){
                 console.log(".i18n 写入中...");
                 insertEle.each(function() {
                     // 根据i18n元素的 name 获取内容写入
-                    $(this).html($.i18n.prop($(this).attr('name')));
+                    var tmp = $(this).html()
+                    console.log('123'+tmp)
+                    $(this).html( $.i18n.prop($(this).attr('name'))+tmp);
                 });
+                console.log('123')
                 console.log("写入完毕");
 
                 console.log(".i18n-input 写入中...");
@@ -139,6 +142,7 @@ var execI18n = function(){
 }
 
 /*页面执行加载执行*/
+// $(document).ready(function(){
 $(function(){
 
     /*执行I18n翻译*/
