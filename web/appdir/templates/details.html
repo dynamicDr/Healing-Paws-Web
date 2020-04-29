@@ -1,46 +1,75 @@
 {% extends "base.html" %}
 
 {% block content %}
+	<section class="banner-area relative" id="home">
+		<div class="overlay overlay-bg"></div>	
+		<div class="container">
+			<div class="row fullscreen d-flex align-items-center justify-content-center">
+				<div class="banner-content col-lg-8 col-md-12">
+					<h1>
+						We Care for Your Pets Health
+						Every Moment		
+					</h1>
+					<p class="pt-10 pb-10 text-white">
+						 Healing Paws Veterinary Hospital
+					</p>
+				</div>										
+			</div>
+		</div>					
+	</section>
+	
 <div>
     <div class="appointment"></div>
     <a href={{ url_for('check_appointment',page=1) }}><button>Back</button></a>
-	<div class="formcss">
-    <!-- <p>Appointment id: {{ appointment.id }}</p> -->
-    <p class="center"><i>Appointment type:</i>
-        {% if appointment.is_emergency == true %}
-           <span class="red"> Emergency </span>
-        {% else %}
-           <b> Standard <b>
-        {% endif %}
-	&nbsp;&nbsp; <i>Appointment Status:</i><b> {{ appointment.status }}</b></p>
-	<span class="right"><i>Submit time: {{ appointment.datetime }}</i></span>
-	<hr>
-    
-	<p>Customer Name: <b>{{ customer.username }}</b></p>
-    <p>Pet Name: <b>{{ pet.name }}</b></p>
-    <p>Appointment location:
-        {% if  appointment.loc  == 1 %}
-            <b>Beijing</b>
-        {% elif  appointment.loc  == 2 %}
-            <b>Shanghai</b>
-        {% elif appointment.loc  == 3 %}
-            <b>Chengdu</b>
-        {% else %}
-        {% endif %}
-    </p>
+	
+	<section class="appointment-area">			
+		<div class="container">
+			<div class="row justify-content-between align-items-center pb-120 appointment-wrap">						
+				<div class="col-lg-5 col-md-6 appointment-left">
+					<ul class="time-list">
+						<li class="d-flex justify-content-between">
+						<span>Appointment type:</span>
+						{% if appointment.is_emergency == true %}
+							<span class="red"> Emergency </span>
+						{% else %}
+							<b> Standard <b>
+						{% endif %}
+						</li><br><br><br><br><br><br>
+						<li class="d-flex justify-content-between">
+							<span>Appointment Status:</span>
+							<span><b> {{ appointment.status }}</b></span>
+						</li><br><br><br><br><br><br>
+						<li class="d-flex justify-content-between">
+							<span>Submit time: </span>
+							<span>{{ appointment.datetime }}</span>
+						</li>																
+					</ul>
+				</div>
+				<div class="col-lg-6 col-md-6 appointment-right pt-80 pb-60 form-group">
+					<p>Customer Name: <b>{{ customer.username }}</b></p><br>
+					<p>Pet Name: <b>{{ pet.name }}</b></p><br>
+					<p>Appointment location:
+					{% if  appointment.loc  == 1 %}
+						<b>Beijing</b>
+					{% elif  appointment.loc  == 2 %}
+						<b>Shanghai</b>
+					{% elif appointment.loc  == 3 %}
+						<b>Chengdu</b>
+					{% endif %}
+					</p><br>
 {#    <p>Appointment Date: {{ appointment.date }}</p>#}
 {#    <p>Appointment Time: {{ appointment.time }}</p>#}
    
-    <p>Preferred Doctor: {{ preferred.username }}</p>
+    <p>Preferred Doctor: {{ preferred.username }}</p><br>
     <p>Accept Adjustment:
         {% if  appointment.changeable == 1 %}
             <b>Yes</b>
         {% else %}
             <b class="red">No</b>
         {% endif %}
-    </p>
+    </p><br>
 	<p>Description:
-	<span><u>{{ appointment.description }}</u></span></p>
+	<span><u>{{ appointment.description }}</u></span></p><br>
     <p>Assigned Employee:
         {% if assigned %}
              <b>{{ assigned.username }}<b>
@@ -53,13 +82,15 @@
     {% if appointment.status == "Pending" %}
         <p>
              <a href="{{ url_for('update_appointment',apt=appointment.id,operation='Cancel') }}"><button>Cancel</button></a>
-        </p>
+        </p><br>
     {% elif appointment.status == "Confirmed" %}
         {% if appointment.is_emergency == true %}
             <p class="big">
                 <b>Pet Status: {{ appointment.pet_status }}</b>
-            </p>
+            </p><br>
         {% endif %}
     {% endif %}
 </div>
+</div>
+</section>
 {% endblock %}

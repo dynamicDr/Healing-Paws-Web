@@ -40,7 +40,7 @@
 						</li>																
 					</ul>
 				</div>
-				<div class="col-lg-6 col-md-6 appointment-right pt-80 pb-60">
+				<div class="col-lg-6 col-md-6 appointment-right pt-80 pb-60 form-group">
 				<h2>Make a new appointment</h2>
 				<p class="right">Enter your information</p><hr>
 				<form action="" method="post" novalidate>
@@ -100,7 +100,7 @@
 				</div>
 				<br>
 
-				<div>{{ form.submit() }}</div>
+				<button id="submit" name="submit" type="submit" class="i18n btnA"></button>
 				{% for error in form.submit.errors %}
 				<span style="color: red;" class="flash">[{{ error }}]</span>
 				{% endfor %}
