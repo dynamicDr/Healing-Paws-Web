@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, RadioField, FileField, DateTimeField, TextAreaField, RadioField, SelectField, IntegerField
-from wtforms.validators import DataRequired, Email, NumberRange
+from wtforms.validators import DataRequired, Email, NumberRange, EqualTo
 from flask_wtf.file import FileRequired, FileAllowed
 
 class LoginForm(FlaskForm):
@@ -70,3 +70,10 @@ class ResetPasswordRequestForm(FlaskForm):
     """重置密码请求表单"""
     email = StringField('邮箱', validators=[DataRequired(), Email()])
     submit = SubmitField('请求密码重置')
+
+class ResetPasswordForm(FlaskForm):
+    """重置密码表单"""
+    password = PasswordField('密码', validators=[DataRequired()])
+    password2 = PasswordField('确认密码', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('请求密码重置')
+

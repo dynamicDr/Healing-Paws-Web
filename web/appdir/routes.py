@@ -377,3 +377,17 @@ def reset_password_request():
         return redirect(url_for('login'))
     return render_template('reset_password_request.html', title='重置密码', form=form)
     # https://blog.csdn.net/sdwang198912/java/article/details/89884414
+
+@app.route("/reset_password", methods=['GET','POST'])
+def reset_password():
+    token = request.args.get('token')
+    user = User.verify_jwt_token(token)
+    if not user:
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('您的密码已被重置')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)
