@@ -49,21 +49,21 @@
 		{% if user.is_customer %}
 			<form action="" method="post" enctype="multipart/form-data" novalidate>
 				{{ form.hidden_tag() }}
-				<div class="form-group">
+				<div class="form-group center">
 				<fieldset>
-					<legend>New Question</legend>
-					<p class="center formcss">
+					<legend><h1>New Question</h1></legend>
+					<p>
 						{{ form.title.label }}<br>
 						{{ form.title(size=64) }}
 					</p>
-					<p class="center formcss">
+					<p>
 						{{ form.body.label }}:<br>
-						{{ form.body(cols=60,rows=6) }}
+						{{ form.body(cols=100,rows=6) }}
 					</p>
-					<p class='right red'>{{ form.anonymity.label }} {{ form.anonymity }}</p>
+					<p class='red'>{{ form.anonymity.label }} {{ form.anonymity }}</p>
 					<br>
-					<p class='center'>{{ form.submit() }}</p>
-			</fieldset>
+					<button id="submit" name="submit" type="submit" class="i18n btnA"></button>
+				</fieldset>
 			</div>
 		</form>
 		{% endif %}
