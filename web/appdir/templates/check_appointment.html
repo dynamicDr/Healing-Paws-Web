@@ -4,30 +4,27 @@
 <div>
     <table>
         <tr>
-            <th>Appointment type</th>
-            <th>date</th>
-            <th>location</th>
-            <th>status</th>
+            <th class="i18n" name="apt_type"></th>
+            <th class="i18n" name="date"></th>
+            <th class="i18n" name="location"></th>
+            <th class="i18n" name="status"></th>
 
         </tr>
         {% for appointment in appointments %}
             <tr>
-                <td>
-                    {% if appointment.is_emergency == true %}
-                        Emergency
-                    {% else %}
-                        Standard
-                    {% endif %}
-                </td>
+                {% if appointment.is_emergency == true %}
+                    <td class="i18n" name="emergency"></td>
+                {% else %}
+                    <td class="i18n" name="standard"></td>
+                {% endif %}
                 <td>{{ appointment.datetime }}</td>
-                <td>{% if  appointment.loc  == 1 %}
-                        Beijing
-                    {% elif  appointment.loc  == 2 %}
-                        Shanghai
-                    {% elif appointment.loc  == 3 %}
-                        Chengdu
-                    {% else %}
-                    {% endif %}</td>
+                {% if appointment.loc == 1 %}
+                    <td class="i18n" name="beijing"></td>
+                {% elif  appointment.loc == 2 %}
+                    <td class="i18n" name="shanghai"></td>
+                {% elif appointment.loc == 3 %}
+                    <td class="i18n" name="chengdu"></td>
+                {% endif %}
                 <td>{{ appointment.status }}</td>
                 <!-- <p id="save">save()</p> -->
                 <td><a href="{{ url_for('details',appointment_id=appointment.id) }}"><button>details</button></a></td>

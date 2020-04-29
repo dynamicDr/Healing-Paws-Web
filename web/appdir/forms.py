@@ -37,11 +37,11 @@ class AppointmentForm(FlaskForm):
 	pet = SelectField(label='为哪只宠物预约', validators=[DataRequired('请选择宠物')], coerce=int)
 	loc = RadioField(
         validators=[DataRequired('请选择就医所在地')],
-        choices=[(1, '北京'), (2, '上海'), (3, '成都')],
+        choices=[(1, 'Beijing'), (2, 'Shanghai'), (3, 'Chengdu')],
         coerce=int
     )
 	is_emergency = RadioField(label='What type of appointment?', choices = [('E','Emergency'), ('S', 'Standard')], validators=[DataRequired('请选择')])
-	changeable = RadioField(label='Do you accept CHANGE?', choices = [('A','Accpet'), ('R', 'Refuse')], validators=[DataRequired('请选择')])
+	changeable = RadioField(label='Do you accept CHANGE?', choices = [('A','\u221a'), ('R', 'X')], validators=[DataRequired('请选择')])
 	description = TextAreaField(label="Describe your pet's condition", validators=[DataRequired()])
 	doctor = SelectField(label='希望预约哪位医生?', coerce=int, validators=[DataRequired()])
 	submit = SubmitField('Comfirm and Submit')
