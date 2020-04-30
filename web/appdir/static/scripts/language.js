@@ -121,10 +121,8 @@ var execI18n = function(){
                 insertEle.each(function() {
                     // 根据i18n元素的 name 获取内容写入
                     var tmp = $(this).html()
-                    console.log('123'+tmp)
                     $(this).html( $.i18n.prop($(this).attr('name'))+tmp);
                 });
-                console.log('123')
                 console.log("写入完毕");
 
                 console.log(".i18n-input 写入中...");

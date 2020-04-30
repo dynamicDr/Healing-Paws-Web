@@ -147,7 +147,7 @@ def answerquestion():
             prev_answers = Answer.query.filter(Answer.question_id == questionid).all()
     else:
         user_in_db = None
-
+        prev_answers = Answer.query.filter(Answer.question_id == questionid).all()
     return render_template('answerquestion.html', title="Answer Question", \
                            question=question_db, prev_answers=prev_answers, form=form, user=user_in_db)
 

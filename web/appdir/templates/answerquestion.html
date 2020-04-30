@@ -6,13 +6,8 @@
 		<div class="container">
 			<div class="row fullscreen d-flex align-items-center justify-content-center">
 				<div class="banner-content col-lg-8 col-md-12">
-					<h1>
-						We Care for Your Pets Health
-						Every Moment		
-					</h1>
-					<p class="pt-10 pb-10 text-white">
-						 Healing Paws Veterinary Hospital
-					</p>
+					<h1 class="i18n" name="welcome"></h1>
+					<p class="pt-10 pb-10 text-white i18n" name="hospital"></p>
 				</div>										
 			</div>
 		</div>					
@@ -24,10 +19,10 @@
 				<div class="col-lg-5 col-md-6 appointment-left">
 					<ul class="time-list">
 						<li class="d-flex justify-content-between">
-						<span><h3>Question: {{ question.title }}</h3></span>
+						<span><h3 class="i18n" name="question">: {{ question.title }}</h3></span>
 						</li><br><br><br><br><br><br>
 						<li class="d-flex justify-content-between">
-							<h3>Answers:</h3><br>
+							<h3 class="i18n" name="answer"></h3><br>
 							{% if prev_answers %}
 								<ul>
 								{% for answer in prev_answers %}
