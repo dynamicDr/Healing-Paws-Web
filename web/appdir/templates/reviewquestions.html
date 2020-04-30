@@ -4,7 +4,7 @@
 	<script src="{{ url_for('static', filename='scripts/questions.js') }}"></script>
 	<div id="search" class='right'>
 		<input type="text" placeholder="Search..."/>
-		<button>Search</button>
+		<button class="i18n" name="search"></button>
 
 	</div>
 	<section class="site-section bg-light">
@@ -12,7 +12,7 @@
         <div class="row mb-5">
           <div class="col-md-12">
             <div class="section-heading text-center">
-              <h2><strong>Questions</strong></h2>
+              <h2><strong class="i18n" name="question"></strong></h2>
             </div>
           </div>
         </div>
@@ -24,9 +24,9 @@
 					<blockquote class="block-47-quote">
 						<a href="{{ url_for('answerquestion',questionid=question.id)}}" >{{ question.title }}</a><br>
 						{% if question.anonymity == 1 %}
-						<cite class="block-47-quote-author">- Asked by an anonymous user</cite>
+						<cite class="block-47-quote-author i18n" name="ask_by_anony"></cite>
 						{% else %}
-							<cite class="block-47-quote-author">- Asked by {{ question.author.username }}</cite>
+							<cite class="block-47-quote-author">&nbsp;&nbsp;&nbsp;&nbsp;- by {{ question.author.username }}</cite>
 						{% endif %}
 					</blockquote>
 				</div>
@@ -34,7 +34,7 @@
 			{% endfor %}
 			</div>
 		{% else %}
-			<p>No questions</p>
+			<p class="i18n" name="no_ques">No questions</p>
 			<hr>
 		{% endif %}        
       </div>
@@ -51,17 +51,19 @@
 				{{ form.hidden_tag() }}
 				<div class="form-group center">
 				<fieldset>
-					<legend><h1>New Question</h1></legend>
+					<legend><h1 class="i18n" name="new_ques"></h1></legend>
 					<p>
-						{{ form.title.label }}<br>
+						<label class="i18n" name="ques_title"></label><br>
 						{{ form.title(size=64) }}
 					</p>
 					<p>
-						{{ form.body.label }}:<br>
+						<label class="i18n" name="ques_desc"></label><br>
 						{{ form.body(cols=100,rows=6) }}
 					</p>
-					<p class='red'>{{ form.anonymity.label }} {{ form.anonymity }}</p>
-					<br>
+					<p class='red'>
+						<label class="i18n" name="is_anony"><label>
+						{{ form.anonymity }}
+					</p><br>
 					<button id="submit" name="submit" type="submit" class="i18n btnA"></button>
 				</fieldset>
 			</div>
