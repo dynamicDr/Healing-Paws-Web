@@ -42,35 +42,36 @@
 					</ul>
 				</div>
 				<div class="col-lg-6 col-md-6 appointment-right pt-80 pb-60 form-group">
-					<p class="i18n" name="customer_name"></p><b>{{ customer.username }}</b><br>
-					<p class="i18n" name="pet_name"></p><b>{{ pet.name }}</b><br>
-					<p class="i18n" name="apt_location"></p>
+					<p class="i18n" name="customer_name">: {{ customer.username }}</p><br>
+					<p class="i18n" name="pet_name">: {{ pet.name }}</p><br>
+					<p class="i18n" name="apt_location" style="display: inline;">: 
 					{% if  appointment.loc  == 1 %}
-						<b class="i18n" name="beijing">Beijing</b>
+						<p class="i18n" name="beijing" style="display: inline;"></p>
 					{% elif  appointment.loc  == 2 %}
-						<b class="i18n" name="shanghai">Shanghai</b>
+						<p class="i18n" name="shanghai" style="display: inline;"></p>
 					{% elif appointment.loc  == 3 %}
-						<b class="i18n" name="chegndu">Chengdu</b>
+						<p class="i18n" name="chegndu" style="display: inline;"></p>
 					{% endif %}
+					</p>
 					<br>
 {#    <p>Appointment Date: {{ appointment.date }}</p>#}
 {#    <p>Appointment Time: {{ appointment.time }}</p>#}
    
-					<p class="i18n" name="prefer_doctor"></p><b>{{ preferred.username }}</b><br>
-					<p class="i18n" name="accept_adj"></p>
+					<p class="i18n" name="prefer_doctor">: {{ preferred.username }}</p><br>
+					<p class="i18n" name="accept_adj" style="display: inline;">: </p>
 						{% if  appointment.changeable == 1 %}
-							<b class="i18n" name="yes"></b>
+							<p class="i18n" name="yes" style="display: inline;"></p>
 						{% else %}
-							<b class="red" class="i18n" name="no"></b>
+							<p class="red" class="i18n" name="no" style="display: inline;"></p>
 						{% endif %}
 					<br>
 					<p class="i18n" name="desc"></p>
 					<span><u>{{ appointment.description }}</u></span><br>
-					<p class="i18n" name="assigned_employee"></p>
+					<p class="i18n" name="assigned_employee" style="display: inline;">: </p>
 					{% if assigned %}
-						<b>{{ assigned.username }}<b>
+						<p style="display: inline;">{{ assigned.username }}<p>
 					{% else %}
-						<b class="i18n" name="none"></b>
+						<p class="i18n" name="none" style="display: inline;"></p>
 					{% endif %}
 					
 				</div>

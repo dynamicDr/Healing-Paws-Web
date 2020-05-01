@@ -1,67 +1,68 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<section class="banner-area relative" id="home">
-		<div class="overlay overlay-bg"></div>	
-		<div class="container">
-			<div class="row fullscreen d-flex align-items-center justify-content-center">
-				<div class="banner-content col-lg-8 col-md-12">
-					<h1>
-						We Care for Your Pets Health
-						Every Moment		
-					</h1>
-					<p class="pt-10 pb-10 text-white">
-						 Healing Paws Veterinary Hospital
-					</p>
-				</div>										
+<section class="banner-area relative" id="home">
+	<div class="overlay overlay-bg"></div>	
+	<div class="container">
+		<div class="row fullscreen d-flex align-items-center justify-content-center">
+			<div class="banner-content col-lg-8 col-md-12">
+				<h1 class="i18n" name="welcome"></h1>
+				<p class="pt-10 pb-10 text-white i18n" name="hospital"></p>
+			</div>										
+		</div>
+	</div>					
+</section>
+<section class="appointment-area">			
+	<div class="container">
+		<div class="row justify-content-between align-items-center pb-120 appointment-wrap">						
+			<div class="col-lg-5 col-md-6 appointment-left">
+				<h2 class="i18n" name="personal_info"></h2>
+				<ul class="time-list">
+					<li class="d-flex justify-content-between">
+						<p class="i18n" name="username">: {{ user.username }}</p></li>
+					<li class="d-flex justify-content-between">
+						<p class="i18n" name="phone">: {{ customer.phone }}</p></li>
+					<li class="d-flex justify-content-between">
+						<p class="i18n" name="email">: {{ user.email }}</p></li>
+					<li class="d-flex justify-content-between">
+						<p class="i18n" name="birthday">: {{ customer.dob }}</p></li>
+					<li class="d-flex justify-content-between">
+						<p class="i18n" name="address">: {{ customer.address }}</p></li>
+				</ul>
 			</div>
-		</div>					
-	</section>
-	<section class="appointment-area">			
-		<div class="container">
-			<div class="row justify-content-between align-items-center pb-120 appointment-wrap">						
-				<div class="col-lg-5 col-md-6 appointment-left">
-					<h2>Personal Information</h2>
-					<ul class="time-list">
-						<li class="d-flex justify-content-between">
-							<p class="i18n" name="username">Username: {{ user.username }}</p></li>
-						<li class="d-flex justify-content-between">
-							<p>Phone: {{ customer.phone }}</p></li>
-						<li class="d-flex justify-content-between">
-							<p>Email: {{ customer.email }}</p></li>
-						<li class="d-flex justify-content-between">
-							<p>Brithdaty: {{ customer.dob }}</p></li>
-						<li class="d-flex justify-content-between">
-							<p>Address: {{ customer.address }}</p></li>
-					</ul>
-				</div>
-				<div class="col-lg-6 col-md-6 appointment-right pt-80 pb-60">
-    <fieldset id='pets'>
-        <legend>Your pets</legend><hr>
-        <table border="1">
-            <tr>
-                <th>name</th><th>age</th><th>category</th><th>operation</th>
-            </tr>
-            {% for pet in pets %}
-            <tr>
-                <td>{{ pet.name }}</td>
-                <td>{{ pet.age }}</td>
-                <td>{{ pet.category }}</td>
-                <td><button><a href="delete_pet?id={{ pet.id }}">delete</a></button></td>
-            </tr>
-            {% endfor %}
-            <form action="" method="post" enctype="multipart/form-data" novalidate>
-                {{ form.hidden_tag() }}
-                <td>{{ form.name() }}</td>
-                <td>{{ form.age() }}</td>
-                <td>{{ form.category() }}</td>
-                <td>{{ form.submit() }}</td>
-			</form>
-        </table> 
-    </fieldset>
-
-</div>
-</div>
+		<div class="col-lg-6 col-md-6 appointment-right pt-80 pb-60">
+			<fieldset id='pets'>
+				<legend class="i18n" name="your_pets"></legend><hr>
+				<table border="1">
+					<tr>
+						<th class="i18n" name="name"></th>
+						<th class="i18n" name="age"></th>
+						<th class="i18n" name="category"></th>
+						<th class="i18n" name="operation"></th>
+					</tr>
+					{% for pet in pets %}
+					<tr>
+						<td>{{ pet.name }}</td>
+						<td>{{ pet.age }}</td>
+						{% if pet.category == 'cat' %}
+							<td class="i18n" name="cat"></td>
+						{% else %}
+							<td class="i18n" name="dog"></td>
+						{% endif %}
+							<td><button><a href="delete_pet?id={{ pet.id }}" class="i18n" name="delete"></a></button></td>
+					</tr>
+					{% endfor %}
+					<form action="" method="post" enctype="multipart/form-data" novalidate>
+						{{ form.hidden_tag() }}
+						<td>{{ form.name() }}</td>
+						<td>{{ form.age() }}</td>
+						<td>{{ form.category() }}</td>
+						<td><button id="submit" name="add" type="submit" class="i18n"></button></td>
+					</form>
+				</table> 
+			</fieldset>
+		</div>
+	</div>
 </section>
   
 {% endblock %}

@@ -98,7 +98,8 @@ def personal_info():
                 return render_template('customer_info.html', title="Personal Infomation", user=user_in_db,
                                        customer=customer, pets=pets, form=form)
         else:
-            pass
+            employee = Employee.query.filter(Employee.id == user_in_db.ref_id).first()
+            return render_template('employee_info.html', title="Personal Infomation", user=user_in_db, employee=employee, form=form)
     else:
         flash("User needs to either login or signup first")
         return redirect(url_for('login'))

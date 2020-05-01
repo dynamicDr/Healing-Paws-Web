@@ -5,22 +5,22 @@
     {#TODO#}
     <form action={{ url_for("all_appointments",page=page) }} method="get">
         <label style="display:none;"><input name="page" value=1></label>
-        Type:
-        <label><input name="type" type="radio" value="all"/>All</label>
-        <label><input name="type" type="radio" value="standard" />Standard </label>
-        <label><input name="type" type="radio" value="emergency" />Emergency </label>
+        <b class="i18n" name="type">: </b>
+        <label><input name="type" type="radio" value="all"/><label class="i18n" name="all"></label></label>
+        <label><input name="type" type="radio" value="standard" /><label class="i18n" name="standard"></label></label>
+        <label><input name="type" type="radio" value="emergency" /><label class="i18n" name="emergency"></label></label>
         <br>
-        Status:
-        <label><input name="status" type="radio" value="all"/>All</label>
-        <label><input name="status" type="radio" value="Pending" />Pending </label>
-        <label><input name="status" type="radio" value="Confirmed" />Confirmed </label>
-        <label><input name="status" type="radio" value="Canceled" />Canceled </label>
-        <label><input name="status" type="radio" value="Finished" />Finished </label>
+        <b class="i18n" name="status">: </b>
+        <label><input name="status" type="radio" value="all"/><label class="i18n" name="all"></label></label>
+        <label><input name="status" type="radio" value="Pending" /><label class="i18n" name="pending"></label></label>
+        <label><input name="status" type="radio" value="Confirmed" /><label class="i18n" name="confirmed"></label></label>
+        <label><input name="status" type="radio" value="Canceled" /><label class="i18n" name="canceled"></label></label>
+        <label><input name="status" type="radio" value="Finished" /><label class="i18n" name="finished"></label></label>
         <br>
-        Customer Name:
+        <b class="i18n" name="customer_name">: </b>
         <input name="name" type="text" value=""/>
         <br>
-        <button id="search">Search</button>
+        <button id="search" class="i18n" name="search"></button>
     </form>
 
 </div>
@@ -28,24 +28,30 @@
 <div>
     <table id="data">
         <tr>
-            <th>Appointment type</th>
-            <th>date</th>
-            <th>status</th>
+            <th class="i18n" name="apt_type"></th>
+            <th class="i18n" name="date"></th>
+            <th class="i18n" name="status"></th>
 
         </tr>
         {% for appointment in appointments %}
             <tr>
-                <td>
-                    {% if appointment.is_emergency == true %}
-                        Emergency
-                    {% else %}
-                        Standard
-                    {% endif %}
-                </td>
+                {% if appointment.is_emergency == true %}
+                    <td class="i18n" name="emergency"></td>
+                {% else %}
+                    <td class="i18n" name="standard"></td>
+                {% endif %}
                 <td>{{ appointment.datetime }}</td>
-                <td>{{ appointment.status }}</td>
+                {% if appointment.status == 'Canceled' %}
+                    <td class="i18n" name="canceled"></td>
+                {% elif appointment.status == 'Pending' %}
+                    <td class="i18n" name="pending"></td>
+                {% elif appointment.status == 'Finished' %}
+                    <td class="i18n" name="finished"></td>
+                {% elif appointment.status == 'Confirmed' %}
+                    <td class="i18n" name="confirmed"></td>
+                {% endif %}
                 <!-- <p id="save">save()</p> -->
-                <td><a href="{{ url_for('handleappointment',appointment_id=appointment.id) }}"><button>details</button></a></td>
+                <td><a href="{{ url_for('handleappointment',appointment_id=appointment.id) }}"><button class="i18n" name="details"></button></a></td>
             </tr>
         {% endfor %}
     </table>

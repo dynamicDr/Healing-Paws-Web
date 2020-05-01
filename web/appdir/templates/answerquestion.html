@@ -26,27 +26,27 @@
 							{% if prev_answers %}
 								<ul>
 								{% for answer in prev_answers %}
-									<li><h3>{{ answer.body }} made by {{ answer.author.username }}</h3></li><br>
+									<li><h3>{{ answer.body }} —— {{ answer.author.username }}</h3></li><br>
 								{% endfor %}
 								</ul>
 							{% else %}
-								<h3>No answer yet</h3>
+								<h3 class="i18n" name="no_answer_yet"></h3>
 							{% endif %}
 						</li>																
 					</ul>
 				</div>
 {% if user %}
-		{% if not user.is_customer %}
+	{% if not user.is_customer %}
 		<div class="col-lg-6 col-md-6 appointment-right pt-80 pb-60 form-group">
 			<form action="" method="post" enctype="multipart/form-data" novalidate>
 				{{ form.hidden_tag() }}
 				<fieldset>
-					<legend>Add a new answer</legend>
+					<legend class="i18n" name="add_answer"></legend>
 					<p class="center">
-						{{ form.body.label }}<br>
+						<label class="i18n" name="answer"></label><br>
 						{{ form.body(cols=100,rows=6) }}
 					</p>
-					<p class="right">{{ form.submit() }}</p>
+					<p class="right"><button id="submit" class="i18n" name="reply" type="submit"></button></p>
 				</fieldset>
 			</form>
 		</div>
