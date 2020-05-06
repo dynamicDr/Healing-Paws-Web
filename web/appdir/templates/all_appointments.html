@@ -1,65 +1,69 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="filter">
-    {#TODO#}
-    <form action={{ url_for("all_appointments",page=page) }} method="get">
-        <label style="display:none;"><input name="page" value=1></label>
-        <b class="i18n" name="type">: </b>
-        <label><input name="type" type="radio" value="all"/><label class="i18n" name="all"></label></label>
-        <label><input name="type" type="radio" value="standard" /><label class="i18n" name="standard"></label></label>
-        <label><input name="type" type="radio" value="emergency" /><label class="i18n" name="emergency"></label></label>
-        <br>
-        <b class="i18n" name="status">: </b>
-        <label><input name="status" type="radio" value="all"/><label class="i18n" name="all"></label></label>
-        <label><input name="status" type="radio" value="Pending" /><label class="i18n" name="pending"></label></label>
-        <label><input name="status" type="radio" value="Confirmed" /><label class="i18n" name="confirmed"></label></label>
-        <label><input name="status" type="radio" value="Canceled" /><label class="i18n" name="canceled"></label></label>
-        <label><input name="status" type="radio" value="Finished" /><label class="i18n" name="finished"></label></label>
-        <br>
-        <b class="i18n" name="customer_name">: </b>
-        <input name="name" type="text" value=""/>
-        <br>
-        <button id="search" class="i18n" name="search"></button>
-    </form>
-
-</div>
-<br>
-<div>
-    <table id="data">
-        <tr>
-            <th class="i18n" name="apt_type"></th>
-            <th class="i18n" name="date"></th>
-            <th class="i18n" name="status"></th>
-
-        </tr>
-        {% for appointment in appointments %}
+<div class="container main">
+    <div id="filter">
+        <form action={{ url_for("all_appointments",page=page) }} method="get">
+            <label style="display:none;"><input name="page" value=1></label>
+            <b class="i18n" name="type">: </b>
+            <label><input name="type" type="radio" value="all"/><label class="i18n" name="all"></label></label>
+            <label><input name="type" type="radio" value="standard" /><label class="i18n" name="standard"></label></label>
+            <label><input name="type" type="radio" value="emergency" /><label class="i18n" name="emergency"></label></label>
+            <br>
+            <b class="i18n" name="status">: </b>
+            <label><input name="status" type="radio" value="all"/><label class="i18n" name="all"></label></label>
+            <label><input name="status" type="radio" value="Pending" /><label class="i18n" name="pending"></label></label>
+            <label><input name="status" type="radio" value="Confirmed" /><label class="i18n" name="confirmed"></label></label>
+            <label><input name="status" type="radio" value="Canceled" /><label class="i18n" name="canceled"></label></label>
+            <label><input name="status" type="radio" value="Finished" /><label class="i18n" name="finished"></label></label>
+            <br>
+            <b class="i18n" name="customer_name">: </b>
+            <input name="name" type="text" value=""/>
+            <br>
+            <button id="search" class="i18n" name="search"></button>
+        </form>
+    </div>
+    <hr>
+    <div>
+        <table id="data" class="table-hover" >
+          <thead>
             <tr>
-                {% if appointment.is_emergency == true %}
-                    <td class="i18n" name="emergency"></td>
-                {% else %}
-                    <td class="i18n" name="standard"></td>
-                {% endif %}
-                <td>{{ appointment.datetime }}</td>
-                {% if appointment.status == 'Canceled' %}
-                    <td class="i18n" name="canceled"></td>
-                {% elif appointment.status == 'Pending' %}
-                    <td class="i18n" name="pending"></td>
-                {% elif appointment.status == 'Finished' %}
-                    <td class="i18n" name="finished"></td>
-                {% elif appointment.status == 'Confirmed' %}
-                    <td class="i18n" name="confirmed"></td>
-                {% endif %}
-                <!-- <p id="save">save()</p> -->
-                <td><a href="{{ url_for('handleappointment',appointment_id=appointment.id) }}"><button class="i18n" name="details"></button></a></td>
+                <th class="i18n" name="apt_type"></th>
+                <th class="i18n" name="date"></th>
+                <th class="i18n" name="status"></th>
+
             </tr>
-        {% endfor %}
-    </table>
-<hr>
-{%import 'aptpage.html' as pg%}
-{{pg.my_paginate(pagination,type,status,'all_appointments')}}
-<hr>
+            </thead>
+
+            {% for appointment in appointments %}
+                <tr>
+                    {% if appointment.is_emergency == true %}
+                        <td class="i18n" name="emergency"></td>
+                    {% else %}
+                        <td class="i18n" name="standard"></td>
+                    {% endif %}
+                    <td>{{ appointment.datetime }}</td>
+                    {% if appointment.status == 'Canceled' %}
+                        <td class="i18n" name="canceled"></td>
+                    {% elif appointment.status == 'Pending' %}
+                        <td class="i18n" name="pending"></td>
+                    {% elif appointment.status == 'Finished' %}
+                        <td class="i18n" name="finished"></td>
+                    {% elif appointment.status == 'Confirmed' %}
+                        <td class="i18n" name="confirmed"></td>
+                    {% endif %}
+                    <!-- <p id="save">save()</p> -->
+                    <td><a href="{{ url_for('handleappointment',appointment_id=appointment.id) }}"><button class="i18n" name="details"></button></a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    <hr>
+    {%import 'aptpage.html' as pg%}
+    {{pg.my_paginate(pagination,type,status,'all_appointments')}}
+    <hr>
+    </div>
 </div>
+
 <script>
 function getQueryVariable(variable)
 {

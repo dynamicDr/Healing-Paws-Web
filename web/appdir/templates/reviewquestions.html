@@ -2,6 +2,7 @@
 
 {% block content %}
 	<script src="{{ url_for('static', filename='scripts/questions.js') }}"></script>
+<div class="container main">
 	<div id="search" class='right'>
 		<input type="text" placeholder="Search..."/>
 		<button class="i18n" name="search"></button>
@@ -70,5 +71,6 @@
 		</form>
 		{% endif %}
 	{% endif %}
+</div>
 {% endblock %}
 
