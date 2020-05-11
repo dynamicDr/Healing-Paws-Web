@@ -1,154 +1,135 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="big container main">
-{#	<section class="banner-area relative" id="home">#}
-{#		<div class="overlay overlay-bg"></div>	#}
-{#		<div class="container">#}
-{#			<div class="row fullscreen d-flex align-items-center justify-content-center">#}
-{#				<div class="banner-content col-lg-8 col-md-12">#}
-{#					<h1 class="i18n" name="welcome">	</h1>#}
-{#					<p class="pt-10 pb-10 text-white i18n" name="hospital"></p>#}
-{#				</div>										#}
-{#			</div>#}
-{#		</div>					#}
-{#	</section>#}
+<div>
     <br>
-    <a href={{ url_for('all_appointments',page=1) }}><button class="btn btn-primary">Back</button></a>
-    <hr>
+    <p>
+        <a  class="btn btn-primary i18n" name="back" href="{{ url_for('all_appointments',page=1) }}" ></a>
+        <span style="margin: auto" class="lead i18n" name="detail"></span>
+    </p>
+<hr>
     <div>
-        <section class="appointment-area">
-            <div class="container">
-                <div class="row justify-content-between align-items-center pb-120 appointment-wrap">
-                    <div class="col-lg-5 col-md-6 appointment-left">
-                        <ul class="time-list">
+    <table class="table table-hover">
+     <thead>
+             <tr>
+                <td class="i18n" name="apt_id"></td>
+                <td>{{ appointment.id }}</td>
+            </tr>
+     </thead>
+      <tbody>
+            <tr>
+                <td class="i18n" name="submit_time"></td>
+                <td>{{ appointment.datetime }}</td>
+            </tr>
 
-                            <li class="d-flex justify-content-between">
-                                <label class="i18n" name="apt_id"></label>
-                                <span>{{ appointment.id }}</span>
-                            </li>
-
-                            <li class="d-flex justify-content-between">
-                                <label class="i18n" name="submit_time"></label>
-                                <span>{{ appointment.datetime }}</span>
-                            </li>
-
-                            <li class="d-flex justify-content-between">
-                                <label class="i18n" name="apt_type"></label>
-                                {% if appointment.is_emergency == true %}
-                                    <span class="red i18n" name="emergency"></span>
-                                {% else %}
-                                    <b class="i18n" name="standard"></b>
-                                {% endif %}
-                            </li>
-                            <li class="d-flex justify-content-between">
-                                <label class="i18n" name="apt_status"></label>
-                                    {% if appointment.status == 'Canceled' %}
-                                        <b class="i18n" name="canceled"></b>
-                                    {% elif appointment.status == 'Pending' %}
-                                        <b class="i18n" name="pending"></b>
-                                    {% elif appointment.status == 'Finished' %}
-                                        <b class="i18n" name="finished"></b>
-                                    {% elif appointment.status == 'Confirmed' %}
-                                        <b class="i18n" name="confirmed"></b>
-                                    {% endif %}
-                            </li>
-                        </ul>
-                    </div>
-
-
-        <table class="table table-bordered">
-        <tr>
-
-
-
-            <td class="i18n" name="apt_location"></td>
-            <td>
-            {% if  appointment.loc  == 1 %}
-                <b class="i18n" name="beijing"></b>
-            {% elif  appointment.loc  == 2 %}
-                <b class="i18n" name="shanghai"></b>
-            {% elif appointment.loc  == 3 %}
-                <b class="i18n" name="chengdu"></b>
-            {% else %}
-            {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td class="i18n" name="apt_desc"></td>
-            <td><b>{{ appointment.description }}</b></td>
-        </tr>
-    {#    <p>Appointment Date: <b>{{ appointment.date }}</b></p>#}
-    {#    <p>Appointment Time: <b>{{ appointment.time }}</b></p>#}
-        <tr>
-            <td class="i18n" name="customer_name"></td>
-            <td><b>{{ customer.username }}</b></td>
-        </tr>
-        <tr>
-            <td class="i18n" name="pet_name"></td>
-            <td><b>{{ pet.name }}</b></td>
-        </tr>
-        <tr>
-            <td class="i18n" name="prefer_doctor"></td>
-            <td><b>{{ preferred.username }}</b>
-        </td></tr>
-        <tr><td class="i18n" name="accept_change"></td>
-            <td>
-                {% if appointment.changeable == 1 %}
-                    <b class="i18n" name="yes"></b>
+            <tr>
+                <td class="i18n" name="apt_type"></td>
+                {% if appointment.is_emergency == true %}
+                    <td class="red i18n" name="emergency"></td>
                 {% else %}
-                    <span class="red" class="i18n" name="no"></span>
+                    <td class="i18n" name="standard"></td>
                 {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td class="i18n" name="assigned_employee"></td>
-            {% if assigned %}
-                 <td><b>{{ assigned.username }}</b></td>
-            {% else %}
-                <td class="i18n" name="none"></td>
-            {% endif %}
-        </tr><br><br>
-        </table>
-        <div style="margin: 0 auto">
+            </tr>
+            <tr>
+                <td class="i18n" name="apt_status"></td>
+                    {% if appointment.status == 'Canceled' %}
+                        <td class="i18n" name="canceled"></td>
+                    {% elif appointment.status == 'Pending' %}
+                        <td class="i18n" name="pending"></td>
+                    {% elif appointment.status == 'Finished' %}
+                        <td class="i18n" name="finished"></td>
+                    {% elif appointment.status == 'Confirmed' %}
+                        <td class="i18n" name="confirmed"></td>
+                    {% endif %}
+            </tr>
+
+            <tr>
+                <td class="i18n" name="apt_location"></td>
+                    {% if  appointment.loc  == 1 %}
+                        <td class="i18n" name="beijing"></td>
+                    {% elif  appointment.loc  == 2 %}
+                        <td class="i18n" name="shanghai"></td>
+                    {% elif appointment.loc  == 3 %}
+                        <td class="i18n" name="chengdu"></td>
+                    {% else %}
+                    {% endif %}
+            </tr>
+            <tr>
+                <td class="i18n" name="apt_desc"></td>
+                    <td>{{ appointment.description }}</td>
+            </tr>
+            <tr>
+                <td class="i18n" name="customer_name"></td>
+                   <td> {{ customer.username }}</td>
+            </tr>
+            <tr>
+                <td class="i18n" name="pet_name"></td>
+                    <td>{{ pet.name }}</td>
+            </tr>
+            <tr>
+                <td class="i18n" name="prefer_doctor"></td>
+                    <td>{{ preferred.username }}</td>
+            </tr>
+            <tr>
+                <td class="i18n" name="accept_change"></td>
+                    {% if appointment.changeable == 1 %}
+                        <td class="i18n" name="yes"></td>
+                    {% else %}
+                        <td class="red i18n" name="no"></td>
+                    {% endif %}
+            </tr>
+、          <tr>
+                <td class="i18n" name="assigned_employee"></td>
+                {% if assigned %}
+                     <td><b>{{ assigned.username }}</b></td>
+                {% else %}
+                    <td class="i18n" name="none"></td>
+                {% endif %}
+            </tr>
+      </tbody>
+    </table>
+    <br>
+    {% if appointment.status == "Confirmed" %}
+    <div style="margin: 0 auto">
+        <form class="bs-example bs-example-form" role="form">
+            <div class="row">
+                <div class="col-lg-6" style="margin: 0 auto">
+                    <span class="i18n" name="pet_status">:</span>
+                    <div class="input-group">
+                        <input  id="pet_status" type="text" class="form-control" value="{{ appointment.pet_status }}">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="update">
+                                <span class="i18n" name="update"></span>
+                            </button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+        </form>
+    </div>
+    <br>
+{% endif %}
+    <hr>
+     <div class="center">
             {% if appointment.status == "Pending" %}
                 <p>
                     <a  class="btn btn-primary i18n" name="reject" href="{{ url_for('update_appointment',apt=appointment.id,operation='Reject') }}" style="margin: 50px"></a>
                     <a  class="btn btn-primary i18n" name="confirm" href="{{ url_for('update_appointment',apt=appointment.id,operation='Confirm') }}" style="margin: 50px"></a>
                 </p>
             {% elif appointment.status == "Confirmed" %}
-                {% if appointment.is_emergency == true %}
-                    <p>
-                        Pet Status:
-                        <textarea id="pet_status",rows="1">{{ appointment.pet_status }}</textarea>
-                        <input id="update" type="button" value="update">
-                    </p>
-                {% endif %}
                 <p>
                     <a  class="btn btn-primary i18n" name="cancel" href="{{ url_for('update_appointment',apt=appointment.id,operation='Cancel') }}" style="margin: 50px"></a>
                     <a  class="btn btn-primary i18n" name="finish" href="{{ url_for('update_appointment',apt=appointment.id,operation='Finish') }}" style="margin: 50px"></a>
                 </p>
             {% endif %}
         </div>
-    </div>
 
-    <section class="banner-area relative" id="home">
-		<div class="overlay overlay-bg"></div>
-		<div class="container">
-			<div class="row fullscreen d-flex align-items-center justify-content-center">
-				<div class="banner-content col-lg-8 col-md-12">
-					<h1 class="i18n" name="welcome">	</h1>
-					<p class="pt-10 pb-10 text-white i18n" name="hospital"></p>
-				</div>
-			</div>
-		</div>
-	</section>
 </div>
 <script>
     btn = document.getElementById('update');
     btn.onclick = function() {
             let pet_status = document.getElementById("pet_status").value;
-            alert(pet_status);
+            {#alert(pet_status);#}
             window.location.href = "{{url_for('set_status',apt=appointment.id) }}&status="+pet_status;
         }
 

@@ -1,93 +1,111 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<section class="banner-area relative" id="home">
-		<div class="overlay overlay-bg"></div>	
-		<div class="container">
-			<div class="row fullscreen d-flex align-items-center justify-content-center">
-				<div class="banner-content col-lg-8 col-md-12">
-					<h1 class="i18n" name="welcome">		
-					</h1>
-					<p class="pt-10 pb-10 text-white i18n" name="hospital"></p>
-				</div>										
-			</div>
-		</div>					
-	</section>
-	
 <div>
-    <div class="appointment"></div>
-    <a href={{ url_for('check_appointment',page=1) }}><button class="i18n" name="back">Back</button></a>
-	
-	<section class="appointment-area">			
-		<div class="container">
-			<div class="row justify-content-between align-items-center pb-120 appointment-wrap">						
-				<div class="col-lg-5 col-md-6 appointment-left">
-					<ul class="time-list">
-						<li class="d-flex justify-content-between">
-						<span class="i18n" name="apt_type"></span>
-						{% if appointment.is_emergency == true %}
-							<span class="red i18n" name="emergency"></span>
-						{% else %}
-							<b class="i18n" name="standard"></b>
-						{% endif %}
-						</li><br><br><br><br><br><br>
-						<li class="d-flex justify-content-between">
-							<span class="i18n" name="apt_status"></span>
-							<span><b> {{ appointment.status }}</b></span>
-						</li><br><br><br><br><br><br>
-						<li class="d-flex justify-content-between">
-							<span class="i18n" name="submittime"></span>
-							<span>{{ appointment.datetime }}</span>
-						</li>																
-					</ul>
-				</div>
-				<div class="col-lg-6 col-md-6 appointment-right pt-80 pb-60 form-group">
-					<p class="i18n" name="customer_name">: {{ customer.username }}</p><br>
-					<p class="i18n" name="pet_name">: {{ pet.name }}</p><br>
-					<p class="i18n" name="apt_location" style="display: inline;">: 
-					{% if  appointment.loc  == 1 %}
-						<p class="i18n" name="beijing" style="display: inline;"></p>
-					{% elif  appointment.loc  == 2 %}
-						<p class="i18n" name="shanghai" style="display: inline;"></p>
-					{% elif appointment.loc  == 3 %}
-						<p class="i18n" name="chegndu" style="display: inline;"></p>
-					{% endif %}
-					</p>
-					<br>
-{#    <p>Appointment Date: {{ appointment.date }}</p>#}
-{#    <p>Appointment Time: {{ appointment.time }}</p>#}
-   
-					<p class="i18n" name="prefer_doctor">: {{ preferred.username }}</p><br>
-					<p class="i18n" name="accept_adj" style="display: inline;">: </p>
-						{% if  appointment.changeable == 1 %}
-							<p class="i18n" name="yes" style="display: inline;"></p>
-						{% else %}
-							<p class="red" class="i18n" name="no" style="display: inline;"></p>
-						{% endif %}
-					<br>
-					<p class="i18n" name="desc"></p>
-					<span><u>{{ appointment.description }}</u></span><br>
-					<p class="i18n" name="assigned_employee" style="display: inline;">: </p>
-					{% if assigned %}
-						<p style="display: inline;">{{ assigned.username }}<p>
-					{% else %}
-						<p class="i18n" name="none" style="display: inline;"></p>
-					{% endif %}
-					
-				</div>
-	<hr>
-    {% if appointment.status == "Pending" %}
-        <p>
-             <a href="{{ url_for('update_appointment',apt=appointment.id,operation='Cancel') }}"><button class="i18n" name="cancel_botton"></button></a>
-        </p><br>
-    {% elif appointment.status == "Confirmed" %}
-        {% if appointment.is_emergency == true %}
-            <p class="big i18n" name="pet_status">
-                <b>Pet Status: {{ appointment.pet_status }}</b>
-            </p><br>
-        {% endif %}
-    {% endif %}
+    <br>
+    <p>
+        <a  class="btn btn-primary i18n" name="back" href="{{ url_for('check_appointment',page=1) }}" ></a>
+        <span style="margin: auto" class="lead i18n" name="detail"></span>
+    </p>
+<hr>
+    <div>
+    <table class="table table-hover">
+     <thead>
+             <tr>
+                <td class="i18n" name="apt_id"></td>
+                <td>{{ appointment.id }}</td>
+            </tr>
+     </thead>
+      <tbody>
+            <tr>
+                <td class="i18n" name="submit_time"></td>
+                <td>{{ appointment.datetime }}</td>
+            </tr>
+
+            <tr>
+                <td class="i18n" name="apt_type"></td>
+                {% if appointment.is_emergency == true %}
+                    <td class="red i18n" name="emergency"></td>
+                {% else %}
+                    <td class="i18n" name="standard"></td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td class="i18n" name="apt_status"></td>
+                    {% if appointment.status == 'Canceled' %}
+                        <td class="i18n" name="canceled"></td>
+                    {% elif appointment.status == 'Pending' %}
+                        <td class="i18n" name="pending"></td>
+                    {% elif appointment.status == 'Finished' %}
+                        <td class="i18n" name="finished"></td>
+                    {% elif appointment.status == 'Confirmed' %}
+                        <td class="i18n" name="confirmed"></td>
+                    {% endif %}
+            </tr>
+
+            <tr>
+                <td class="i18n" name="apt_location"></td>
+                    {% if  appointment.loc  == 1 %}
+                        <td class="i18n" name="beijing"></td>
+                    {% elif  appointment.loc  == 2 %}
+                        <td class="i18n" name="shanghai"></td>
+                    {% elif appointment.loc  == 3 %}
+                        <td class="i18n" name="chengdu"></td>
+                    {% else %}
+                    {% endif %}
+            </tr>
+            <tr>
+                <td class="i18n" name="apt_desc"></td>
+                    <td>{{ appointment.description }}</td>
+            </tr>
+            <tr>
+                <td class="i18n" name="customer_name"></td>
+                   <td> {{ customer.username }}</td>
+            </tr>
+            <tr>
+                <td class="i18n" name="pet_name"></td>
+                    <td>{{ pet.name }}</td>
+            </tr>
+            <tr>
+                <td class="i18n" name="prefer_doctor"></td>
+                    <td>{{ preferred.username }}</td>
+            </tr>
+            <tr>
+                <td class="i18n" name="accept_change"></td>
+                    {% if appointment.changeable == 1 %}
+                        <td class="i18n" name="yes"></td>
+                    {% else %}
+                        <td class="red i18n" name="no"></td>
+                    {% endif %}
+            </tr>
+、          <tr>
+                <td class="i18n" name="assigned_employee"></td>
+                {% if assigned %}
+                     <td><b>{{ assigned.username }}</b></td>
+                {% else %}
+                    <td class="i18n" name="none"></td>
+                {% endif %}
+            </tr>
+          {% if appointment.status == "Confirmed" %}
+            <tr>
+                <td class="i18n" name="pet_status"></td>
+                <td >{{ appointment.pet_status }}</td>
+            </tr>
+    <br>
+{% endif %}
+      </tbody>
+    </table>
+    <br>
+
+
+     <div class="center">
+            {% if appointment.status == "Pending" %}
+                <hr>
+                <p>
+                    <<a  class="btn btn-primary i18n" name="cancel" href="{{ url_for('update_appointment',apt=appointment.id,operation='Cancel') }}" style="margin: 50px"></a>
+                </p>
+            {% endif %}
+        </div>
+
 </div>
-</div>
-</section>
 {% endblock %}

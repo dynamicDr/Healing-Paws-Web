@@ -54,12 +54,12 @@ def login():
     if form.validate_on_submit():
         user_in_db = User.query.filter(User.username == form.username.data).first()
         if not user_in_db:
-            flash('No user found with username: {}'.format(form.username.data))
+            flash('No user found with username: {}'.format(form.username.data),"danger")
             return redirect(url_for('login'))
         if (check_password_hash(user_in_db.password_hash, form.password.data)):
             session["USERNAME"] = user_in_db.username  # 登录成功后添加状态
             return redirect(url_for('index'))
-        flash('Incorrect Password')
+        flash('Incorrect Password',"danger")
         return redirect(url_for('login'))
     return render_template('login.html', title='Login', form=form)
 
@@ -101,7 +101,7 @@ def personal_info():
             employee = Employee.query.filter(Employee.id == user_in_db.ref_id).first()
             return render_template('employee_info.html', title="Personal Infomation", user=user_in_db, employee=employee, form=form)
     else:
-        flash("User needs to either login or signup first")
+        flash("User needs to either login or signup first","danger")
         return redirect(url_for('login'))
 
 
@@ -171,18 +171,13 @@ def all_appointments():
             filter_text = "is_emergency=0"
         else:
             filter_text = "true"
-            print("all")
-
-        if not status is None:
-            if status != "all":
-                filter_text += " and status=\"" + status+"\""
-            else:
-                print("all")
+        if (not status is None) and (status != "all"):
+            filter_text += " and status=\"" + status+"\""
         appointments = Appointment.query.filter(text(filter_text)).order_by(Appointment.datetime.desc()).paginate(page=page, per_page=5)
         return render_template('all_appointments.html', title="Check Appointment", appointments=appointments.items,
                                user=user_in_db,page=page,pagination=appointments,type=type,status=status,name=name)
     else:
-        flash("User needs to either login or signup first")
+        flash("User needs to either login or signup first","danger")
         return redirect(url_for('login'))
 
 
@@ -193,7 +188,8 @@ def handleappointment():
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if user_in_db.is_customer:
-            return "请以员工身份登录"
+            flash("Please login as employee.","danger")
+            return redirect(url_for('index'))
         appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
         pet = Pet.query.filter(Pet.id == appointment.pet_id).first()
         customer = User.query.filter(User.id == pet.owner_id).first()
@@ -202,17 +198,8 @@ def handleappointment():
         return render_template('handleappointment.html', title="Handle Appointment", appointment=appointment, pet=pet, \
                                customer=customer, user=user_in_db, preferred=preferred, assigned=assigned)
     else:
-        flash("User needs to either login or signup first")
+        flash("User needs to either login or signup first","danger")
         return redirect(url_for('login'))
-
-
-@app.route('/change_pet_status', methods=["POST"])
-def change_pet_status():
-    appointment_id = request.args.get("appointment_id")
-    pet_status = request.args.get("pet_status")
-    appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
-    appointment.pet_status = pet_status
-    return jsonify({"code": 200})
 
 
 @app.route('/update_appointment', methods=["GET"])
@@ -224,12 +211,12 @@ def update_appointment():
     appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
     if operation == "Reject":
         if appointment.preferred_doctor_id != user_in_db.id and appointment.changeable is False:
-            flash("Cannot confirm the appointment. There is an assigned doctor.")
+            flash("Cannot confirm the appointment. There is an assigned doctor.","danger")
             return redirect(url_for('handleappointment', appointment_id=appointment_id))
         appointment.status = "Canceled"
     elif operation == "Confirm":
         if appointment.preferred_doctor_id != user_in_db.id and appointment.changeable is False:
-            flash("Cannot reject the appointment. There is an assigned doctor.")
+            flash("Cannot reject the appointment. There is an assigned doctor.","danger")
             return redirect(url_for('handleappointment', appointment_id=appointment_id))
         appointment.status = "Confirmed"
         appointment.employee_id = user_in_db.id
@@ -239,6 +226,7 @@ def update_appointment():
         appointment.status = "Finished"
     db.session.add(appointment)
     db.session.commit()
+    flash("Appointment status has been changed.", "success")
     if user_in_db.is_customer:
         return redirect(url_for('details', appointment_id=appointment_id, user=user_in_db))
     else:
@@ -257,6 +245,7 @@ def set_status():
     print("apt.ps=" + str(appointment.pet_status))
     db.session.add(appointment)
     db.session.commit()
+    flash("Pet status has been changed.","success")
     return redirect(url_for('handleappointment', appointment_id=appointment_id))
 
 
@@ -266,7 +255,8 @@ def make_appointment():
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if not user_in_db.is_customer:
-            return "请以顾客身份登录"
+            flash("Please login as customer","danger")
+            return redirect(url_for('index'))
         form = AppointmentForm()
         pets = Pet.query.filter(Pet.owner_id == user_in_db.id).all()
         form.pet.choices = [(pet.id, pet.name) for pet in pets]
@@ -280,10 +270,11 @@ def make_appointment():
                                       preferred_doctor_id=int(form.doctor.data))
             db.session.add(appointment)
             db.session.commit()
+            flash("Your appointment has been successfully submitted.","success")
             return redirect('index')
         return render_template('make_appointment.html', title="Make a new appointment", user=user_in_db, form=form)
     else:
-        flash("User needs to either login or signup first")
+        flash("User needs to either login or signup first","danger")
         return redirect(url_for('login'))
 
 
@@ -293,7 +284,8 @@ def check_appointment():
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if not user_in_db.is_customer:
-            return "Please login as customer"
+            flash("Please login as customer","danger")
+            return redirect(url_for('index'))
         my_pets = Pet.query.with_entities(Pet.id).filter(Pet.owner_id == User.id).all()
         page = int(request.args.get('page'))
         appointments = Appointment.query.join(Pet, Appointment.pet_id == Pet.id).filter(Pet.owner_id == user_in_db.id)\
@@ -301,28 +293,28 @@ def check_appointment():
         return render_template('check_appointment.html', title="Handle Appointment", appointments=appointments.items,
                                user=user_in_db,page=page,pagination=appointments)
     else:
-        flash("User needs to either login or signup first")
+        flash("User needs to either login or signup first","danger")
         return redirect(url_for('login'))
 
 
 @app.route('/details', methods=['GET'])
 def details():
     appointment_id = request.args.get('appointment_id')
-    if not session.get("USERNAME") is None:
-        username = session.get("USERNAME")
-        user_in_db = User.query.filter(User.username == username).first()
-        if not user_in_db.is_customer:
-            return "请以顾客身份登录"
-        appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
-        pet = Pet.query.filter(Pet.id == appointment.pet_id).first()
-        customer = User.query.filter(User.id == pet.owner_id).first()
-        preferred = User.query.filter(User.id == appointment.preferred_doctor_id).first()
-        assigned = User.query.filter(User.id == appointment.employee_id).first()
-        return render_template('details.html', title="Appointment details", appointment=appointment, pet=pet, \
-                               customer=customer, user=user_in_db, preferred=preferred, assigned=assigned)
-    else:
-        flash("User needs to either login or signup first")
-        return redirect(url_for('login'))
+    user_in_db=check_login()
+    if not user_in_db.is_customer:
+        flash("Please login as customer","danger");
+        return redirect(url_for('index'))
+    appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
+    pet = Pet.query.filter(Pet.id == appointment.pet_id).first()
+    customer = User.query.filter(User.id == pet.owner_id).first()
+    preferred = User.query.filter(User.id == appointment.preferred_doctor_id).first()
+    assigned = User.query.filter(User.id == appointment.employee_id).first()
+    if not user_in_db == customer:
+        flash("Premission denied.","danger");
+        return redirect(url_for('index'))
+    return render_template('details.html', title="Appointment details", appointment=appointment, pet=pet, \
+                           customer=customer, user=user_in_db, preferred=preferred, assigned=assigned)
+
 
 
 @app.route('/delete_pet', methods=['GET', 'POST'])
@@ -338,7 +330,7 @@ def deletePost():
         db.session.commit()
         return redirect(url_for('personal_info'))
     else:
-        flash('Please login first')
+        flash('Please login first',"danger")
         return redirect(url_for('login'))
 
 
@@ -370,11 +362,11 @@ def reset_password_request():
     if form.validate_on_submit():
         user = User.query.filter(User.email == form.email.data).first()
         if not user:
-            flash('该电子邮箱未注册')
+            flash('该电子邮箱未注册',"danger")
             return redirect(url_for('reset_password_request'))
 
         send_password_reset_email(user)
-        flash('查看您的电子邮箱消息，以重置您的密码')
+        flash('查看您的电子邮箱消息，以重置您的密码',"info")
         return redirect(url_for('login'))
     return render_template('reset_password_request.html', title='重置密码', form=form)
     # https://blog.csdn.net/sdwang198912/java/article/details/89884414
@@ -389,6 +381,14 @@ def reset_password():
     if form.validate_on_submit():
         user.set_password(form.password.data)
         db.session.commit()
-        flash('您的密码已被重置')
+        flash('您的密码已被重置',"success")
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
+
+def check_login():
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        return User.query.filter(User.username == username).first()
+    else:
+        flash("User needs to either login or signup first","danger")
+        return redirect(url_for('login'))
