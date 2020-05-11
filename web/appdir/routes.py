@@ -51,6 +51,7 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    print(form.username.data)
     if form.validate_on_submit():
         user_in_db = User.query.filter(User.username == form.username.data).first()
         if not user_in_db:
@@ -347,6 +348,7 @@ def reset():
     db.drop_all()
     db.create_all()
     # 在这里往数据库里添加测试数据，每次reset后就直接添加
+    print("重建完毕，插入输入中")
     customer = Customer(dob='2000-01-01', phone='123', address='123')
     employee = Employee(intro='1123', loc=1)
     db.session.add(customer)
@@ -362,6 +364,7 @@ def reset():
     db.session.add(pet1)
     db.session.add(pet2)
     db.session.commit()
+    print("数据插入完毕")
     return '重建所有表'
 
 @app.route("/reset_password_request", methods=['GET','POST'])
