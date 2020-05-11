@@ -1,64 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
-    <table>
-        <tr>
-            <th class="i18n" name="apt_type"></th>
-            <th class="i18n" name="date"></th>
-            <th class="i18n" name="location"></th>
-            <th class="i18n" name="status"></th>
-
-        </tr>
-        {% for appointment in appointments %}
+<div class="container main">
+    <div>
+        <table id="data" class="table-hover">
+          <thead>
             <tr>
-                {% if appointment.is_emergency == true %}
-                    <td class="i18n" name="emergency"></td>
-                {% else %}
-                    <td class="i18n" name="standard"></td>
-                {% endif %}
-                <td>{{ appointment.datetime }}</td>
-                {% if appointment.loc == 1 %}
-                    <td class="i18n" name="beijing"></td>
-                {% elif  appointment.loc == 2 %}
-                    <td class="i18n" name="shanghai"></td>
-                {% elif appointment.loc == 3 %}
-                    <td class="i18n" name="chengdu"></td>
-                {% endif %}
-                <td>
-                {% if appointment.status == 'Canceled' %}
-                    <b class="i18n" name="canceled"></b>
-                {% elif appointment.status == 'Pending' %}
-                    <b class="i18n" name="pending"></b>
-                {% elif appointment.status == 'Finished' %}
-                    <b class="i18n" name="finished"></b>
-                {% elif appointment.status == 'Confirmed' %}
-                    <b class="i18n" name="confirmed"></b>
-                {% endif %}
-                </td>
-                <!-- <p id="save">save()</p> -->
-                <td><a href="{{ url_for('details',appointment_id=appointment.id) }}"><button>details</button></a></td>
-            </tr>
-        {% endfor %}
-    </table>
+                <th class="i18n" name="apt_type"></th>
+                <th class="i18n" name="date"></th>
+                <th class="i18n" name="status"></th>
 
-	<hr>
-	{%import 'questionpage.html' as pg%}
-	{{pg.my_paginate(pagination,'check_appointment')}}
-	<hr>
+            </tr>
+            </thead>
+
+            {% for appointment in appointments %}
+                <tr>
+                    {% if appointment.is_emergency == true %}
+                        <td class="i18n" name="emergency"></td>
+                    {% else %}
+                        <td class="i18n" name="standard"></td>
+                    {% endif %}
+                    <td>{{ appointment.datetime }}</td>
+                    {% if appointment.status == 'Canceled' %}
+                        <td class="i18n" name="canceled"></td>
+                    {% elif appointment.status == 'Pending' %}
+                        <td class="i18n" name="pending"></td>
+                    {% elif appointment.status == 'Finished' %}
+                        <td class="i18n" name="finished"></td>
+                    {% elif appointment.status == 'Confirmed' %}
+                        <td class="i18n" name="confirmed"></td>
+                    {% endif %}
+                    <!-- <p id="save">save()</p> -->
+                    <td><a href="{{ url_for('details',appointment_id=appointment.id) }}"><button style="margin: 5px" class="btn i18n btn-primary" name="details"></button></a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    <hr>
+    <p>
+        {%import 'questionpage.html' as pg%}
+        {{pg.my_paginate(pagination,'check_appointment')}}
+    </p>
+
+    <hr>
+    </div>
 </div>
-{#<script>#}
-{#    function save(cp_value){#}
-{#        var num = new Object;#}
-{#        num.cp_keynum ="key_num";#}
-{#        num.cp_num_value = cp_value;#}
-{#        var str = JSON.stringify(num);#}
-{#        localStorage.setItem(num.cp_keynum,str);#}
-{#    }#}
-{#btn = document.getElementById('details');#}
-{#    btn.onclick = function() {#}
-{#            save(appointment.id);#}
-{#            window.location.href('details');#}
-{#    }#}
-{#</script>#}
+
+<script>
+</script>
 {% endblock %}
