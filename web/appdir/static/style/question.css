@@ -55,7 +55,6 @@ table th,td{
 }
 .btnA {
 	border-radius: 50px;
-	text-transform: uppercase;
 	font-weight: bold;
 	letter-spacing: 2px;
 	font-size: 20px;
@@ -81,11 +80,3 @@ table th,td{
   position: relative;
   -webkit-box-shadow: 0 2px 30px -2px rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 30px -2px rgba(0, 0, 0, 0.1); }
-a {
-    color: #495057;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    margin: 0 10px;
-    text-transform: uppercase;
-    font-size: 17px;
-    letter-spacing: .2em; }

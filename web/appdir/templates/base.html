@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <meta id="i18n_pagename" content="index-login-appointment-question">
@@ -6,32 +7,39 @@
         {% else %}
         <title>Don't be lazy! Set a title.</title>
         {% endif %}
+
+        <!-- core CSS -->
+        <link href="static/style/bootstrap.min.css" rel="stylesheet">
+        <link href="static/style/font-awesome.min.css" rel="stylesheet">
+        <link href="static/style/animate.min.css" rel="stylesheet">
+        <link href="static/style/owl.carousel.css" rel="stylesheet">
+        <link href="static/style/owl.transitions.css" rel="stylesheet">
+        <link href="static/style/prettyPhoto.css" rel="stylesheet">
+        <link href="static/style/styles.css" rel="stylesheet">
+        <!--[if lt IE 9]>
+        <script src="static/scripts/html5shiv.js"></script>
+        <script src="static/scripts/respond.min.js"></script>
+        <![endif]-->
+        <link rel="shortcut icon" href="images/ico/favicon.ico">
         <script src="{{ url_for('static', filename='scripts/jquery-3.4.1.js') }}"></script>
 		<script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
 		<script src="{{ url_for('static', filename='scripts/jquery.fractionslider.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='scripts/jquery.colorbox.js') }}"></script>
 		<script src="{{ url_for('static', filename='scripts/isotop.js') }}"></script>
-		<script src="{{ url_for('static', filename='scripts/bootstrap.js') }}"></script>
-		<script src="{{ url_for('static', filename='scripts/bootstrap.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='scripts/animation.js') }}"></script>
         <script src="{{ url_for('static', filename='scripts/jquery.min.js') }}"></script>
         <script src="{{ url_for('static', filename='scripts/jquery.i18n.properties.js') }}"></script>
+    	<script src="{{ url_for('static', filename='scripts/bootstrap.js') }}"></script>
         <script src="{{ url_for('static', filename='scripts/language.js') }}"></script>
         <style type="text/css">
-            li{ display:inline} 
+            li{ display:inline}
 		</style>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style/question.css') }}">
-		<link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.min.css') }}">
-		<link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.css') }}">
-		<link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}">
+
     </head>
 
     <body>
-		<div class="header">
-		<div class="container">
-        <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center">
-            <nav class="navbar navbar-default" role="navigation">
+        <div style="position: relative; top: 0px; left: 0px; width: 100%">
+            <nav class="navbar navbar-default" role="navigation" style="background-color: #FFFFFF">
                 <ul style="display:inline" class="nav navbar-nav pull-right">
                     <li><a href="{{ url_for('index') }}" class="i18n" name="home"></a></li>
                     <li><a href="{{ url_for('reviewquestions',page=1) }}" class="i18n" name="question_board"></a></li>
@@ -49,26 +57,27 @@
                         <li><a href="{{ url_for('register',role='e') }}" class="i18n" name="join"></a></li>
                         <li><a href="{{ url_for('login') }}" class="i18n" name="login"></a></li>
                     {% endif %}
-                        <li><select id="language">
+                        <li>
+
+                            <select id="language" class="dropdown" style="margin: 15px">
                             <option value="zh-CN">中文简体</option>
                             <option value="en">English</option>
                             </select>
+
                         </li>
                 </ul>
             </nav>
         </div>
-        </div>
-        {% for message in get_flashed_messages(with_categories=True) %}
-        <div class="alert alert-{{ message[0] }}">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{ message[1] }}
-        </div>
-        {% endfor %}
-        {% block content %}{% endblock %}
-        </div>
-        </div>
+        <hr style="margin: 0">
+		<div class="container" style="padding: 0">
+            {% for message in get_flashed_messages(with_categories=True) %}
+            <div class="alert alert-{{ message[0] }}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message[1] }}
+            {% endfor %}
+            {% block content %}{% endblock %}
 
-        
+        </div>
     </body>
 
 </html>
