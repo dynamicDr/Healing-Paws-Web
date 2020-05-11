@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
         <meta id="i18n_pagename" content="index-login-appointment-question">
         {% if title %}
         <title>{{ title }}</title>
@@ -25,7 +29,21 @@
 		<script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
 		<script src="{{ url_for('static', filename='scripts/jquery.fractionslider.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='scripts/jquery.colorbox.js') }}"></script>
+<<<<<<< HEAD
 		<script src="{{ url_for('static', filename='scripts/isotop.js') }}"></script>
+=======
+        <script src="{{ url_for('static', filename='scripts/isotop.js') }}"></script>
+        
+		<!-- <script src="{{ url_for('static', filename='scripts/bootstrap.js') }}"></script>
+        <script src="{{ url_for('static', filename='scripts/bootstrap.min.js') }}"></script> -->
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+        <!-- Optional theme -->
+        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous"> -->
+
+
+>>>>>>> 8750f49f030327d0a61b960366c02422ee6a83a5
 		<script src="{{ url_for('static', filename='scripts/animation.js') }}"></script>
         <script src="{{ url_for('static', filename='scripts/jquery.min.js') }}"></script>
         <script src="{{ url_for('static', filename='scripts/jquery.i18n.properties.js') }}"></script>
@@ -34,7 +52,16 @@
         <style type="text/css">
             li{ display:inline}
 		</style>
+<<<<<<< HEAD
 
+=======
+        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style/question.css') }}"> -->
+		<!-- <link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.min.css') }}"> -->
+        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.css') }}"> -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style/normalize.css') }}">
+>>>>>>> 8750f49f030327d0a61b960366c02422ee6a83a5
     </head>
 
     <body>
@@ -79,5 +106,19 @@
 
         </div>
     </body>
-
+    <script>
+        !function(n) {
+            var e = n.document,
+            t = e.documentElement,
+            i = 640,
+            d = i / 100,
+            o = "orientationchange" in n ? "orientationchange": "resize",
+            a = function() {
+                var n = t.clientWidth || 320;
+                n > 640 && (n = 640),
+                t.style.fontSize = n / d + "px"
+            };
+            e.addEventListener && (n.addEventListener(o, a, !1), e.addEventListener("DOMContentLoaded", a, !1))
+        } (window);
+        </script>
 </html>
