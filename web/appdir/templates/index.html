@@ -1,69 +1,115 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="page-title">
-    <div class="container">
-        <h1 class="i18n" name="about_us"></h1>
-    </div>
-</div><!-- /page-title -->
-<div class="h-recent-work">
-    <div class="container">
-        <div class="about">
-            <div class="center"> 
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <h1 class="i18n" name="intro_web"></h1>
-                    <p class="i18n" name="intro_detail"></p>
-                </div>
-            </div>
-            <hr>
-            <div class="center">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <h1 class="i18n" name="our_adv"></h1>
-                    <div class="panel-group" id="accordion">
+<section id="about">
+	<div class="container">
+		<div class="section-header">
+			<h2 class="section-title text-center wow fadeInDown">About Us</h2>
+			<p class="text-center wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa <br> semper aliquam quis mattis quam.</p>
+		</div>
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="i18n" name="adv1"></a>
-                                </h4>
-                            </div>
-                            <div id="collapseOne" class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    <!-- 中英文切换的功能不能用在div里面直接放文本的情况，放在p里面就可以，希望不会影响到你的css -->
-                                    <p class="i18n" name="adv1_des"></p>
-                                </div>
-                            </div>
-                        </div>
+		<div class="row">
+			<div class="col-sm-6 wow fadeInLeft">
+			  <img class="img-responsive" src="images/about.png" alt="">
+			</div>
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="i18n" name="adv2"></a>
-                                </h4>
-                            </div>
-                            <div id="collapseTwo" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <p class="i18n" name="adv2_des"></p>
-                                </div>
-                            </div>
-                        </div>
+			<div class="col-sm-6 wow fadeInRight">
+				<h3 class="column-title">We Take Care Your Pets</h3>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa semper aliquam quis mattis quam. Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"  class="i18n" name="adv3"></a>
-                                </h4>
-                            </div>
-                            <div id="collapseThree" class="panel-collapse collapse">
-                                <div class="panel-body" class="i18n" name="adv3_des">
-                                    <p class="i18n" name="adv3_des"></p>
-                                </div>
-                            </div>
-                        </div>
+				<p>Nulla eu neque commodo, dapibus dolor eget, dictum arcu. In nec purus eu tellus consequat ultricies. Donec feugiat tempor turpis, rutrum sagittis mi venenatis at. Sed molestie lorem a blandit congue. Ut pellentesque odio quis leo volutpat, vitae vulputate felis condimentum. </p>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+				<p>Praesent vulputate fermentum lorem, id rhoncus sem vehicula eu. Quisque ullamcorper, orci adipiscing auctor viverra, velit arcu malesuada metus, in volutpat tellus sem at justo.</p>
+
+
+				<a class="btn btn-primary" href="#">Learn More</a>
+
+			</div>
+		</div>
+	</div>
+</section><!--/#about-->
+    <section id="services" >
+	<div class="container" style="padding: 20px">
+
+		<div class="section-header">
+			<h2 class="section-title text-center wow fadeInDown">Our Services</h2>
+			<p class="text-center wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa <br> semper aliquam quis mattis quam.</p>
+		</div>
+
+		<div class="row">
+			<div class="features">
+				<div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="0ms">
+					<div class="media service-box">
+						<div class="pull-left">
+							<i class="fa fa-heart"></i>
+						</div>
+						<div      >
+							<h4 class="media-heading">Quick Coffee</h4>
+							<p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
+						</div>
+					</div>
+				</div><!--/.col-md-4-->
+
+				<div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="100ms">
+					<div class="media service-box">
+						<div class="pull-left">
+							<i class="fa fa-compass"></i>
+						</div>
+						<div      >
+							<h4 class="media-heading">Radiology</h4>
+							<p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
+						</div>
+					</div>
+				</div><!--/.col-md-4-->
+
+				<div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="200ms">
+					<div class="media service-box">
+						<div class="pull-left">
+							<i class="fa fa-bell"></i>
+						</div>
+						<div      >
+							<h4 class="media-heading">Emergency</h4>
+							<p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+						</div>
+					</div>
+				</div><!--/.col-md-4-->
+
+				<div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="300ms">
+					<div class="media service-box">
+						<div class="pull-left">
+							<i class="fa fa-cube"></i>
+						</div>
+						<div      >
+							<h4 class="media-heading">Neurology</h4>
+							<p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+						</div>
+					</div>
+				</div><!--/.col-md-4-->
+
+				<div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="400ms">
+					<div class="media service-box">
+						<div class="pull-left">
+							<i class="fa fa-yelp"></i>
+						</div>
+						<div      >
+							<h4 class="media-heading">Ultrasound</h4>
+							<p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+						</div>
+					</div>
+				</div><!--/.col-md-4-->
+
+				<div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="500ms">
+					<div class="media service-box">
+						<div class="pull-left">
+							<i class="fa fa-life-ring"></i>
+						</div>
+						<div      >
+							<h4 class="media-heading">Cardiology</h4>
+							<p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+						</div>
+					</div>
+				</div><!--/.col-md-4-->
+			</div>
+		</div><!--/.row-->
+	</div><!--/.container-->
+</section><!--/#services-->
 {% endblock %}

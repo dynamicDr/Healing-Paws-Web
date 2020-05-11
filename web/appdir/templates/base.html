@@ -1,51 +1,41 @@
+<!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
         <meta id="i18n_pagename" content="index-login-appointment-question">
         {% if title %}
         <title>{{ title }}</title>
         {% else %}
         <title>Don't be lazy! Set a title.</title>
         {% endif %}
+
+        <!-- core CSS -->
+        <link href="static/style/bootstrap.min.css" rel="stylesheet">
+        <link href="static/style/font-awesome.min.css" rel="stylesheet">
+        <link href="static/style/animate.min.css" rel="stylesheet">
+        <link href="static/style/owl.carousel.css" rel="stylesheet">
+        <link href="static/style/owl.transitions.css" rel="stylesheet">
+        <link href="static/style/prettyPhoto.css" rel="stylesheet">
+        <link href="static/style/styles.css" rel="stylesheet">
+        <link rel="shortcut icon" href="images/ico/favicon.ico">
         <script src="{{ url_for('static', filename='scripts/jquery-3.4.1.js') }}"></script>
 		<script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
 		<script src="{{ url_for('static', filename='scripts/jquery.fractionslider.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='scripts/jquery.colorbox.js') }}"></script>
-        <script src="{{ url_for('static', filename='scripts/isotop.js') }}"></script>
-        
-		<!-- <script src="{{ url_for('static', filename='scripts/bootstrap.js') }}"></script>
-        <script src="{{ url_for('static', filename='scripts/bootstrap.min.js') }}"></script> -->
-        
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-        <!-- Optional theme -->
-        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous"> -->
-
-
+		<script src="{{ url_for('static', filename='scripts/isotop.js') }}"></script>
 		<script src="{{ url_for('static', filename='scripts/animation.js') }}"></script>
         <script src="{{ url_for('static', filename='scripts/jquery.min.js') }}"></script>
         <script src="{{ url_for('static', filename='scripts/jquery.i18n.properties.js') }}"></script>
+    	<script src="{{ url_for('static', filename='scripts/bootstrap.js') }}"></script>
         <script src="{{ url_for('static', filename='scripts/language.js') }}"></script>
         <style type="text/css">
-            li{ display:inline} 
+            li{ display:inline}
 		</style>
-        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style/question.css') }}"> -->
-		<!-- <link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.min.css') }}"> -->
-        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.css') }}"> -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='style/normalize.css') }}">
+
     </head>
 
     <body>
-		<div class="header">
-		<div class="container">
-        <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center">
-            <nav class="navbar navbar-default" role="navigation">
+        <div style="position: relative; top: 0px; left: 0px; width: 100%">
+            <nav class="navbar navbar-default" role="navigation" style="background-color: #FFFFFF">
                 <ul style="display:inline" class="nav navbar-nav pull-right">
                     <li><a href="{{ url_for('index') }}" class="i18n" name="home"></a></li>
                     <li><a href="{{ url_for('reviewquestions',page=1) }}" class="i18n" name="question_board"></a></li>
@@ -63,40 +53,27 @@
                         <li><a href="{{ url_for('register',role='e') }}" class="i18n" name="join"></a></li>
                         <li><a href="{{ url_for('login') }}" class="i18n" name="login"></a></li>
                     {% endif %}
-                        <li><select id="language">
+                        <li>
+
+                            <select id="language" class="dropdown" style="margin: 15px">
                             <option value="zh-CN">中文简体</option>
                             <option value="en">English</option>
                             </select>
+
                         </li>
                 </ul>
             </nav>
         </div>
-        </div>
-        {% for message in get_flashed_messages(with_categories=True) %}
-        <div class="alert alert-{{ message[0] }}">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{ message[1] }}
-        </div>
-        {% endfor %}
-        {% block content %}{% endblock %}
-        </div>
-        </div>
+        <hr style="margin: 0">
+		<div class="container" style="padding: 0">
+            {% for message in get_flashed_messages(with_categories=True) %}
+            <div class="alert alert-{{ message[0] }}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message[1] }}
+            {% endfor %}
+            {% block content %}{% endblock %}
 
-        
+        </div>
     </body>
-    <script>
-        !function(n) {
-            var e = n.document,
-            t = e.documentElement,
-            i = 640,
-            d = i / 100,
-            o = "orientationchange" in n ? "orientationchange": "resize",
-            a = function() {
-                var n = t.clientWidth || 320;
-                n > 640 && (n = 640),
-                t.style.fontSize = n / d + "px"
-            };
-            e.addEventListener && (n.addEventListener(o, a, !1), e.addEventListener("DOMContentLoaded", a, !1))
-        } (window);
-        </script>
+
 </html>
