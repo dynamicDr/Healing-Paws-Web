@@ -51,7 +51,7 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    print(form.username.data)
+    # print(form.username.data)
     if form.validate_on_submit():
         user_in_db = User.query.filter(User.username == form.username.data).first()
         if not user_in_db:
