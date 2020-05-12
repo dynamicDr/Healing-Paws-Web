@@ -212,12 +212,12 @@ def update_appointment():
     appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
     if operation == "Reject":
         if appointment.preferred_doctor_id != user_in_db.id and appointment.changeable is False:
-            flash("Cannot confirm the appointment. There is an assigned doctor.","danger")
+            flash("Cannot reject the appointment. There is another assigned doctor.","danger")
             return redirect(url_for('handleappointment', appointment_id=appointment_id))
         appointment.status = "Canceled"
     elif operation == "Confirm":
         if appointment.preferred_doctor_id != user_in_db.id and appointment.changeable is False:
-            flash("Cannot reject the appointment. There is an assigned doctor.","danger")
+            flash("Cannot confirm the appointment. There is another assigned doctor.","danger")
             return redirect(url_for('handleappointment', appointment_id=appointment_id))
         appointment.status = "Confirmed"
         appointment.employee_id = user_in_db.id

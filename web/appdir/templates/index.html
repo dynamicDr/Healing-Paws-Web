@@ -3,7 +3,7 @@
 <section id="about">
 	<div class="container">
 		<div class="section-header">
-			<h2 class="section-title text-center wow fadeInDown">About Us</h2>
+			<h2 class="section-title text-center i18n" name="about_us"></h2>
 			<p class="text-center wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa <br> semper aliquam quis mattis quam.</p>
 		</div>
 
@@ -12,16 +12,13 @@
 			  <img class="img-responsive" src="images/about.png" alt="">
 			</div>
 
-			<div class="col-sm-6 wow fadeInRight">
-				<h3 class="column-title">We Take Care Your Pets</h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa semper aliquam quis mattis quam. Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+			<div class="col-sm-6">
+				<h3 class="column-title i18n" name="take_care" ></h3>
+				<p  class="i18n" name="intro_1"></p>
+                <p  class="i18n" name="intro_2"></p>
+                <p  class="i18n" name="intro_3"></p>
 
-				<p>Nulla eu neque commodo, dapibus dolor eget, dictum arcu. In nec purus eu tellus consequat ultricies. Donec feugiat tempor turpis, rutrum sagittis mi venenatis at. Sed molestie lorem a blandit congue. Ut pellentesque odio quis leo volutpat, vitae vulputate felis condimentum. </p>
-
-				<p>Praesent vulputate fermentum lorem, id rhoncus sem vehicula eu. Quisque ullamcorper, orci adipiscing auctor viverra, velit arcu malesuada metus, in volutpat tellus sem at justo.</p>
-
-
-				<a class="btn btn-primary" href="#">Learn More</a>
+				<a class="btn btn-primary i18n" name="learn_more" href={{ url_for("reviewquestions",page=1 )}}></a>
 
 			</div>
 		</div>
@@ -31,8 +28,8 @@
 	<div class="container" style="padding: 20px">
 
 		<div class="section-header">
-			<h2 class="section-title text-center wow fadeInDown">Our Services</h2>
-			<p class="text-center wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa <br> semper aliquam quis mattis quam.</p>
+			<h2 class="section-title text-center i18n" name="our_service"></h2>
+			<p class="text-center i18n" name="our_service_context"><br></p>
 		</div>
 
 		<div class="row">
@@ -43,8 +40,8 @@
 							<i class="fa fa-heart"></i>
 						</div>
 						<div      >
-							<h4 class="media-heading">Quick Coffee</h4>
-							<p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
+							<h4 class="media-heading i18n" name="f1"></h4>
+							<p class="i18n" name="f1c">
 						</div>
 					</div>
 				</div><!--/.col-md-4-->
@@ -55,9 +52,9 @@
 							<i class="fa fa-compass"></i>
 						</div>
 						<div      >
-							<h4 class="media-heading">Radiology</h4>
-							<p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
-						</div>
+							<h4 class="media-heading i18n" name="f2"></h4>
+							<p class="i18n" name="f2c">
+                        </div>
 					</div>
 				</div><!--/.col-md-4-->
 
@@ -67,45 +64,45 @@
 							<i class="fa fa-bell"></i>
 						</div>
 						<div      >
-							<h4 class="media-heading">Emergency</h4>
-							<p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
-						</div>
+							<h4 class="media-heading i18n" name="f3"></h4>
+							<p class="i18n" name="f3c">
+                        </div>
 					</div>
 				</div><!--/.col-md-4-->
 
 				<div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="300ms">
 					<div class="media service-box">
 						<div class="pull-left">
-							<i class="fa fa-cube"></i>
+							<i class="fa fa-question"></i>
 						</div>
 						<div      >
-							<h4 class="media-heading">Neurology</h4>
-							<p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
-						</div>
+							<h4 class="media-heading i18n" name="f4"></h4>
+							<p class="i18n" name="f4c">
+                        </div>
 					</div>
 				</div><!--/.col-md-4-->
 
 				<div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="400ms">
 					<div class="media service-box">
 						<div class="pull-left">
-							<i class="fa fa-yelp"></i>
+							<i class="fa fa-paw"></i>
 						</div>
 						<div      >
-							<h4 class="media-heading">Ultrasound</h4>
-							<p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
-						</div>
+							<h4 class="media-heading i18n" name="f5"></h4>
+							<p class="i18n" name="f5c">
+                        </div>
 					</div>
 				</div><!--/.col-md-4-->
 
 				<div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="500ms">
 					<div class="media service-box">
 						<div class="pull-left">
-							<i class="fa fa-life-ring"></i>
+							<i class="fa fa-credit-card"></i>
 						</div>
 						<div      >
-							<h4 class="media-heading">Cardiology</h4>
-							<p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
-						</div>
+							<h4 class="media-heading i18n" name="f6"></h4>
+							<p class="i18n" name="f6c">
+                        </div>
 					</div>
 				</div><!--/.col-md-4-->
 			</div>
