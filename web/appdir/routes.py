@@ -37,11 +37,6 @@ def register():
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('index'))
-        if request.method == 'POST':
-            if form.username.data == '' or form.password.data == '' or form.dob.data == '' or form.phone.data == '' or form.address.data == '' or form.email.data == '' or form.password2.data == '':
-                return render_template('login.html', title='Login', form=form)
-            msg = do_the_register(form.username.data)
-            return msg
         return render_template('register_customer.html', title='Register as a customer!', form=form)
     elif role == 'e':
         form = RegisterForm_E()
@@ -56,25 +51,6 @@ def register():
             db.session.commit()
             return redirect(url_for('index'))
         return render_template('register_employee.html', title='Join as an employee!', form=form)
-
-
-def do_the_register(username):
-    user_in_db = User.query.filter(User.username == username).first()
-    if not user_in_db:
-        form = RegisterForm_C()
-        passw_hash = generate_password_hash(form.password.data)
-        customer = Customer(dob=form.dob.data, phone=form.phone.data,
-                            address=form.address.data)
-        db.session.add(customer)
-        db.session.flush()
-        user = User(username=form.username.data, password_hash=passw_hash, email=form.email.data, is_customer=True,
-                    ref_id=customer.id)
-        db.session.add(user)
-        db.session.commit()
-        msg = jsonify("status", "200")
-        return msg
-    msg = jsonify("status", "409")
-    return msg
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -92,29 +68,7 @@ def login():
             return redirect(url_for('index'))
         flash('Incorrect Password', "danger")
         return redirect(url_for('login'))
-    if request.method == 'POST':
-        if form.username.data == '' or form.password.data == '':
-            return render_template('login.html', title='Login', form=form)
-        msg = do_the_login(form.username.data, form.password.data)
-        return msg
     return render_template('login.html', title='Login', form=form)
-
-
-def do_the_login(username, password):
-    user_in_db = User.query.filter(User.username == username).first()
-    if not user_in_db:
-        msg = jsonify("status", "404")
-        return msg
-    if not user_in_db.is_customer:
-        msg = jsonify("status", "400")
-        return msg
-    if check_password_hash(user_in_db.password_hash, password) and user_in_db.is_customer:
-        session["USERNAME"] = user_in_db.username  # 登录成功后添加状态
-        print(session["USERNAME"])
-        msg = jsonify("status", "200")
-        return msg
-    msg = jsonify("status", "403")
-    return msg
 
 
 @app.route('/logout')
@@ -266,12 +220,12 @@ def update_appointment():
     appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
     if operation == "Reject":
         if appointment.preferred_doctor_id != user_in_db.id and appointment.changeable is False:
-            flash("Cannot reject the appointment. There is another assigned doctor.","danger")
+            flash("Cannot reject the appointment. There is another assigned doctor.", "danger")
             return redirect(url_for('handleappointment', appointment_id=appointment_id))
         appointment.status = "Canceled"
     elif operation == "Confirm":
         if appointment.preferred_doctor_id != user_in_db.id and appointment.changeable is False:
-            flash("Cannot confirm the appointment. There is another assigned doctor.","danger")
+            flash("Cannot confirm the appointment. There is another assigned doctor.", "danger")
             return redirect(url_for('handleappointment', appointment_id=appointment_id))
         appointment.status = "Confirmed"
         appointment.employee_id = user_in_db.id
@@ -454,3 +408,41 @@ def check_login():
     else:
         flash("User needs to either login or signup first", "danger")
         return redirect(url_for('login'))
+
+
+@app.route("/login_android", methods=['GET', 'POST'])
+def login_android(username, password):
+    user_in_db = User.query.filter(User.username == username).first()
+    if not user_in_db:
+        msg = jsonify("status", "404")
+        return msg
+    if not user_in_db.is_customer:
+        msg = jsonify("status", "400")
+        return msg
+    if check_password_hash(user_in_db.password_hash, password) and user_in_db.is_customer:
+        session["USERNAME"] = user_in_db.username  # 登录成功后添加状态
+        print(session["USERNAME"])
+        msg = jsonify("status", "200")
+        return msg
+    msg = jsonify("status", "403")
+    return msg
+
+
+@app.route("/register_android", methods=['GET', 'POST'])
+def do_the_register(username):
+    user_in_db = User.query.filter(User.username == username).first()
+    if not user_in_db:
+        form = RegisterForm_C()
+        passw_hash = generate_password_hash(form.password.data)
+        customer = Customer(dob=form.dob.data, phone=form.phone.data,
+                            address=form.address.data)
+        db.session.add(customer)
+        db.session.flush()
+        user = User(username=form.username.data, password_hash=passw_hash, email=form.email.data, is_customer=True,
+                    ref_id=customer.id)
+        db.session.add(user)
+        db.session.commit()
+        msg = jsonify("status", "200")
+        return msg
+    msg = jsonify("status", "409")
+    return msg
