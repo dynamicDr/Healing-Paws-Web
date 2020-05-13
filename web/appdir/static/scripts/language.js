@@ -159,4 +159,24 @@ $(function(){
         });
         location.reload();
     });
+
+    $("#Chinese").on('click', function() {
+        var language = "zh-CN"
+        console.log(language);
+        getCookie("userLanguage",language,{
+            expires: 30,
+            path:'/'
+        });
+        location.reload();
+    });
+
+    $("#English").on('click', function() {
+        var language = "en"
+        console.log(language);
+        getCookie("userLanguage",language,{
+            expires: 30,
+            path:'/'
+        });
+        location.reload();
+    });
 });
