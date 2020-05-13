@@ -411,15 +411,16 @@ def check_login():
 
 
 @app.route("/login_android", methods=['GET', 'POST'])
-def login_android(username, password):
-    user_in_db = User.query.filter(User.username == username).first()
+def login_android():
+    form = LoginForm()
+    user_in_db = User.query.filter(User.username == form.username.data).first()
     if not user_in_db:
         msg = jsonify("status", "404")
         return msg
     if not user_in_db.is_customer:
         msg = jsonify("status", "400")
         return msg
-    if check_password_hash(user_in_db.password_hash, password) and user_in_db.is_customer:
+    if check_password_hash(user_in_db.password_hash, form.password.data) and user_in_db.is_customer:
         session["USERNAME"] = user_in_db.username  # 登录成功后添加状态
         print(session["USERNAME"])
         msg = jsonify("status", "200")
@@ -429,10 +430,10 @@ def login_android(username, password):
 
 
 @app.route("/register_android", methods=['GET', 'POST'])
-def do_the_register(username):
-    user_in_db = User.query.filter(User.username == username).first()
+def register_android():
+    form = RegisterForm_C()
+    user_in_db = User.query.filter(User.username == form.username.data).first()
     if not user_in_db:
-        form = RegisterForm_C()
         passw_hash = generate_password_hash(form.password.data)
         customer = Customer(dob=form.dob.data, phone=form.phone.data,
                             address=form.address.data)
