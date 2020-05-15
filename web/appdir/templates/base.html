@@ -31,6 +31,9 @@
         <script src="{{ url_for('static', filename='scripts/jquery.i18n.properties.js') }}"></script>
     	<script src="{{ url_for('static', filename='scripts/bootstrap.js') }}"></script>
         <script src="{{ url_for('static', filename='scripts/language.js') }}"></script>
+        <script src="{{ url_for('static', filename='scripts/mousescroll.js') }}"></script>
+        <script src="{{ url_for('static', filename='scripts/smoothscroll.js') }}"></script>
+        <script src="{{ url_for('static', filename='scripts/wow.js') }}"></script>
         <style type="text/css">
             li{ display:inline}
 		</style>
@@ -67,8 +70,9 @@
             </nav>
         </div> -->
 
-        <!-- 之前用的导航栏在手机浏览器上看是竖排的，下面这种在手机上是横向流动的，一行放不下了会到下一行。到时候可以选一种 -->
-       <div class="container">
+        <!-- <nav id="main-nav" class="navbar-default navbar-fixed-top" role="banner"> -->
+            <!-- 之前用的导航栏在手机浏览器上看是竖排的，下面这种在手机上是横向流动的，一行放不下了会到下一行。到时候可以选一种 -->
+            <div class="container">
             <div class="row clearfix">
                 <div class="col-md-12 column">
                     <ul class="nav nav-tabs">
@@ -96,7 +100,7 @@
                             </select>
                         </li>
                         <li class="dropdown pull-right">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">语言<strong class="caret"></strong></a>
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle i18n" name="language"><strong class="caret"></strong></a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="#" id="Chinese">中文</a>
@@ -109,7 +113,8 @@
                     </ul>
                 </div>
             </div>
-        </div>     
+        </div>
+    <!-- </nav> -->
 
         <hr style="margin: 0">
 		<div class="container" style="padding: 0">
