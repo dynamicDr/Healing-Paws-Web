@@ -16,7 +16,7 @@ function check_username(){
 	console.log("User chose: " + chosen_user.val());
 	
 	$("#checkuser").removeClass();
-	$("#checkuser").html('<img src="static/style/loading.gif")>');
+	$("#checkuser").html('<img src="static/images/loading.gif">');
 	
 	// ajax code 
 	$.post('/checkuser', {
