@@ -78,7 +78,7 @@
                         <td class="red i18n" name="no"></td>
                     {% endif %}
             </tr>
-、          <tr>
+            <tr>
                 <td class="i18n" name="assigned_employee"></td>
                 {% if assigned %}
                      <td><b>{{ assigned.username }}</b></td>
@@ -102,7 +102,7 @@
             {% if appointment.status == "Pending" %}
                 <hr>
                 <p>
-                    <<a  class="btn btn-primary i18n" name="cancel" href="{{ url_for('update_appointment',apt=appointment.id,operation='Cancel') }}" style="margin: 50px"></a>
+                    <a  class="btn btn-primary i18n" name="cancel" href="{{ url_for('update_appointment',apt=appointment.id,operation='Cancel') }}" style="margin: 50px"></a>
                 </p>
             {% endif %}
         </div>

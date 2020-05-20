@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<script src="{{ url_for('static', filename='scripts/signup_check.js') }}"></script>
 <section id="section-home">
 	<div class="container">
 		<div class="row align-items-center justify-content-center">
@@ -80,5 +81,13 @@
 		</div>
 	</div>
 </section>
+<style>
+.success{
+	color: green;
+}
+.failure{
+	color: red;
+}
+</style>
 {% endblock %}
 
