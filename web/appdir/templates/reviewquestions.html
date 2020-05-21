@@ -51,7 +51,7 @@
 		{% if user.is_customer %}
 			<form action="" method="post" enctype="multipart/form-data" novalidate>
 				{{ form.hidden_tag() }}
-				<div class="form-group center">
+				<div >
 				<fieldset>
 					<legend><h1 class="i18n" name="new_ques"></h1></legend>
 					<p>
@@ -63,10 +63,10 @@
 						{{ form.body(cols=100,rows=6) }}
 					</p>
 					<p class='red'>
-						<label class="i18n" name="is_anony"><label>
+						<label class="i18n" name="is_anony"></label>
 						{{ form.anonymity }}
-					</p><br>
-					<button id="submit" name="submit" type="submit" class="i18n btnA"></button>
+					</p>
+					<button id="submit" name="submit" type="submit" class="i18n btn btn-primary"></button>
 				</fieldset>
 			</div>
 		</form>
