@@ -48,8 +48,9 @@ class AppointmentForm(FlaskForm):
 
     
 class QuestionForm(FlaskForm):
-    title = StringField('Question', validators=[DataRequired()])
-    body = TextAreaField('Question description')
+    title = StringField('Question', validators=[DataRequired()],render_kw={"class": "form-control"})
+    body = TextAreaField('Question description',
+						 render_kw={"class": "form-control"})
     anonymity = BooleanField('anonymity')
     submit = SubmitField('Confirm')
     

@@ -34,7 +34,7 @@ a {
 a:hover,
 a:focus {
   text-decoration: none;
-  color: #2a95be;
+  color: #C22083;
 }
 hr {
   border-top: 1px solid #e5e5e5;
@@ -817,6 +817,7 @@ font-size: 15px;
 .contact-info .form-control { 
 padding: 6px 12px;
 border-radius: 0;
+
 }
 .help-block ul li{
   color:red;
@@ -857,6 +858,8 @@ text-align: center;
 .form-control {
   box-shadow: none;
   -webkit-box-shadow: none;
+    font-size: 1.6rem;
+  padding: 20px;
 }
 @media only screen and (max-width: 480px) {
 #portfolio .portfolio-filter {
@@ -984,4 +987,8 @@ a {
 
 .page-link:hover {
     color: #8f1961;
+}
+
+input[type=radio], input[type=checkbox]{
+  margin: 8px;
 }

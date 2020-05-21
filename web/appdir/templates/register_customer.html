@@ -10,7 +10,7 @@
 				<div class="sub-heading">
 					<p class="mb-4 i18n" name="hospital"></p>
 				</div>
-			</div> 
+			</div>
 			<div class="col-md-1"></div>
 	  		<div class="col-md-5 relative align-self-center">
 				<form action="" method="post" novalidate>
@@ -25,7 +25,7 @@
 							{% endfor %}
 						</div>
         <!-- 前端还需要一个重复密码验证 -->
-						<div id="passwords">    
+						<div id="passwords">
 							<div>
 								<span class="i18n" name="password"></span><br>
 								{{ form.password(size=32) }}
@@ -58,7 +58,7 @@
 							<span class="i18n" name="phone"></span><br>
 							{{ form.phone(size=32) }}<br>
 							<span id="checkphone"></span>
-				
+
 							{% for error in form.phone.errors %}
 								<span style="color: red;"  class="flash">[{{ error }}]</span>
 							{% endfor %}
@@ -68,7 +68,7 @@
 							<span class="i18n" name="birthday"></span><br>
 							{{ form.dob(size=32) }}<br>
 							<span id="checkdob"></span>
-				
+
 							{% for error in form.dob.errors %}
 								<span style="color: red;"  class="flash">[{{ error }}]</span>
 							{% endfor %}
@@ -78,7 +78,7 @@
 							<span class="i18n" name="address"></span><br>
 							{{ form.address(size=32) }}<br>
 							<span id="checkadress"></span>
-				
+
 							{% for error in form.address.errors %}
 								<span style="color: red;"  class="flash">[{{ error }}]</span>
 							{% endfor %}
@@ -87,7 +87,7 @@
 						 <div class="submit">
                             <button id="submit" name="submit" type="submit" class="i18n btn btn-primary"></button>
                         </div>
-					</div> 
+					</div>
 				</div>
 			</div>
 		</div>
