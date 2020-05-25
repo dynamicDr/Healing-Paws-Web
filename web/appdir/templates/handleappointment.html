@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<script src="{{ url_for('static', filename='scripts/change_status.js') }}"></script>
 <div>
     <br>
     <p>
@@ -13,7 +14,7 @@
      <thead>
              <tr>
                 <td class="i18n" name="apt_id"></td>
-                <td>{{ appointment.id }}</td>
+                <td id="apt_id">{{ appointment.id }}</td>
             </tr>
      </thead>
       <tbody>
@@ -78,7 +79,7 @@
                         <td class="red i18n" name="no"></td>
                     {% endif %}
             </tr>
-、          <tr>
+            <tr>
                 <td class="i18n" name="assigned_employee"></td>
                 {% if assigned %}
                      <td><b>{{ assigned.username }}</b></td>
@@ -86,6 +87,14 @@
                     <td class="i18n" name="none"></td>
                 {% endif %}
             </tr>
+            {% if appointment.is_emergency == true %}
+                <tr>
+                    <td>Pet's status</td>
+                    <td>
+                        <textarea id="status">{{ appointment.pet_status }}</textarea>
+                    </td>
+                </tr>
+            {% endif %}
       </tbody>
     </table>
     <br>
@@ -132,6 +141,5 @@
             {#alert(pet_status);#}
             window.location.href = "{{url_for('set_status',apt=appointment.id) }}&status="+pet_status;
         }
-
 </script>
 {% endblock %}

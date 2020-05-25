@@ -244,18 +244,15 @@ def update_appointment():
 
 @app.route('/set_status', methods=["GET"])
 def set_status():
-    # username = session.get("USERNAME")
-    # user_in_db = User.query.filter(User.username == username).first()
-    appointment_id = request.args.get("apt")
+    appointment_id = request.args.get("apt_id")
     status = request.args.get("status")
+    print(appointment_id+" "+status)
     print("status=" + str(status))
     appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
     appointment.pet_status = status
     print("apt.ps=" + str(appointment.pet_status))
-    db.session.add(appointment)
+    # db.session.add(appointment)
     db.session.commit()
-    flash("Pet status has been changed.", "success")
-    return redirect(url_for('handleappointment', appointment_id=appointment_id))
 
 
 @app.route('/make_appointment', methods=['POST', 'GET'])
@@ -312,7 +309,7 @@ def details():
     appointment_id = request.args.get('appointment_id')
     user_in_db = check_login()
     if not user_in_db.is_customer:
-        flash("Please login as customer", "danger");
+        flash("Please login as customer", "danger")
         return redirect(url_for('index'))
     appointment = Appointment.query.filter(Appointment.id == appointment_id).first()
     pet = Pet.query.filter(Pet.id == appointment.pet_id).first()
@@ -320,7 +317,7 @@ def details():
     preferred = User.query.filter(User.id == appointment.preferred_doctor_id).first()
     assigned = User.query.filter(User.id == appointment.employee_id).first()
     if not user_in_db == customer:
-        flash("Premission denied.", "danger");
+        flash("Premission denied.", "danger")
         return redirect(url_for('index'))
     return render_template('details.html', title="Appointment details", appointment=appointment, pet=pet, \
                            customer=customer, user=user_in_db, preferred=preferred, assigned=assigned)
@@ -447,3 +444,4 @@ def register_android():
         return msg
     msg = jsonify("status", "409")
     return msg
+
