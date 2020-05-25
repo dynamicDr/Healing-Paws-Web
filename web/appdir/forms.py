@@ -46,6 +46,8 @@ class AppointmentForm(FlaskForm):
 	doctor = SelectField(label='希望预约哪位医生?', coerce=int, validators=[DataRequired()])
 	submit = SubmitField('Comfirm and Submit')
 
+class StatusForm(FlaskForm):
+	status = TextAreaField(label="pet's status")
     
 class QuestionForm(FlaskForm):
     title = StringField('Question', validators=[DataRequired()],render_kw={"class": "form-control"})
