@@ -23,8 +23,8 @@
 						<p class="i18n" name="username">: {{ user.username }}</p></li>
 					<li class="d-flex justify-content-between">
 						<p class="i18n" name="email">: {{ user.email }}</p></li>
-					<li class="d-flex justify-content-between">
-                        <p class="i18n" name="location">:</p>
+					<li class="d-flex">
+                        <p class="i18n" name="location">:&nbsp;
                         {% if  employee.loc  == 1 %}
                             <p class="i18n" name="beijing"></p>
                         {% elif  employee.loc  == 2 %}
@@ -32,7 +32,7 @@
                         {% elif employee.loc  == 3 %}
                             <p class="i18n" name="chegndu"></p>
                         {% endif %}
-                        
+                        </p>
                     </li>
 					<li class="d-flex justify-content-between">
 						<p class="i18n" name="intro">: {{ employee.intro }}</p></li>

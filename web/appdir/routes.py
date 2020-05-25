@@ -123,7 +123,7 @@ def reviewquestions():
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
     if form.validate_on_submit():
-        question_db = Question(title=form.title.data, body=form.body.data, anonymity=form.anonymity.data,
+        question_db = Question(title=form.title.data,type=int(form.type.data), body=form.body.data, anonymity=form.anonymity.data,
                                user_id=user_in_db.id)
         db.session.add(question_db)
         db.session.commit()

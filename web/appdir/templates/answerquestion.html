@@ -17,41 +17,83 @@
 
 	<section class="appointment-area">			
 		<div class="container">
-			<div class="row justify-content-between align-items-center pb-120 appointment-wrap">						
-				<div class="col-lg-5 col-md-6 appointment-left">
-					<ul class="time-list">
-						<li class="d-flex justify-content-between">
-						<span><h3 class="i18n" name="question">: {{ question.title }}</h3></span>
-						</li><br><br><br><br><br><br>
-						<li class="d-flex justify-content-between">
-							<h3 class="i18n" name="answer"></h3><br>
-							{% if prev_answers %}
-								<ul>
-								{% for answer in prev_answers %}
-									<li><h3>{{ answer.body }} —— {{ answer.author.username }}</h3></li><br>
-								{% endfor %}
-								</ul>
-							{% else %}
-								<h3 class="i18n" name="no_answer_yet"></h3>
-							{% endif %}
-						</li>																
-					</ul>
-				</div>
-{% if user %}
-	{% if not user.is_customer %}
-		<div class="col-lg-6 col-md-6 appointment-right pt-80 pb-60 form-group">
-			<form action="" method="post" enctype="multipart/form-data" novalidate>
-				{{ form.hidden_tag() }}
-				<fieldset>
-					<legend class="i18n" name="add_answer"></legend>
-					<p class="center">
-						<label class="i18n" name="answer"></label><br>
-						{{ form.body(cols=100,rows=6) }}
-					</p>
-					<p class="right"><button id="submit" class="i18n" name="reply" type="submit"></button></p>
-				</fieldset>
-			</form>
+			<table width="100%">
+			<tr>
+			<td><span>
+				{% if question.type == 1 %}
+					<img src="static/images/about.png" width='50px' height='50px' alt="" style="margin: 0 auto">
+				{% elif question.type == 2 %}
+					<img src="static/images/team-1.jpg" width='50px' height='50px' alt="" style="margin: 0 auto">
+				{% else %}
+					<img src="static/images/logo.png" width='50px' height='50px' alt="" style="margin: 0 auto">
+				{% endif %}
+			</span></td>
+			<td>
+			<span><h3 class="i18n" name="question">: {{ question.title }}</h3></span>
+			</td></tr>
+			<tr><td>
+			{% if question.anonymity == 1 %}
+				<cite class="block-47-quote-author i18n left" name="ask_by_anony"></cite><br>
+			{% else %}
+				<cite class="block-47-quote-author left">by {{ question.author.username }}</cite><br>
+			{% endif %}
+			</td>
+			<td>
+			<span><h4>{{ question.body }}</h4></span>
+			</td></tr>
+			</table>
+			
+			<br><br>
+			<hr>
+			<div text-align='left' style="position: relative">
+			{% if prev_answers %}
+				<h3>{{ question.counta }} Answers</h3><br>
+				<ul>
+					{% for answer in prev_answers %}
+						<li>
+						<table>
+						<tr>
+						<td rowspan = '3'><img src = "static/images/team-1.jpg" width="50px" height="50px" alt=''>
+						<td><span><b>{{ answer.author.username }}</b></span></td>
+						</tr>
+						<tr><td>
+						<span class='left'>{{ answer.timestamp }}</span><br>
+						</td></tr>
+						<tr><td>
+						<span><b>{{ answer.body }}</b></span>
+						</td></tr></table></li><br>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<h3 class="i18n" name="no_answer_yet"></h3>
+			{% endif %}
+			<br><br>
+			</div>
 		</div>
+		<div id='d1'>
+		{% if user %}
+			{% if not user.is_customer %}
+				<div>
+					<form action="" method="post" enctype="multipart/form-data" novalidate>
+					{{ form.hidden_tag() }}
+					<fieldset>
+					<legend class="i18n" name="add_answer"></legend>
+						<p class="center">
+							<label class="i18n" name="answer"></label><br>
+							{{ form.body(cols=100,rows=6) }}
+						</p>
+						<p class="right"><button id="submit" class="i18n" name="reply" type="submit"></button></p>
+					</fieldset>
+					</form>
+				</div>
+			{% endif %}
 		{% endif %}
-	{% endif %}
+		</div>
+		<style>
+			#d1 {
+				position:relative;
+				top: 50px;
+			}
+		</style>
+	</section>
 {% endblock %}

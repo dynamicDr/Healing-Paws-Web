@@ -24,12 +24,37 @@
 			<div class="col-md-6">
 				<div class="block-47 d-flex mb-5">
 					<blockquote class="block-47-quote">
-						<a href="{{ url_for('answerquestion',questionid=question.id)}}" >{{ question.title }}</a><br>
-						{% if question.anonymity == 1 %}
-						<cite class="block-47-quote-author i18n" name="ask_by_anony"></cite>
+						
+						{% if question.type == 1 %}
+						<img src="static/images/about.png" width='300px' height='250px' alt="">
+						{% elif question.type == 2 %}
+						<img src="static/images/team-1.jpg" width='300px' height='250px' alt="">
 						{% else %}
-							<cite class="block-47-quote-author">&nbsp;&nbsp;&nbsp;&nbsp;- by {{ question.author.username }}</cite>
+						<img src="static/images/logo.png" width='300px' height='250px' alt="">
 						{% endif %}
+						<table max-width="300" text-align="left">
+						<tr>
+						<td>
+						
+						{% if question.anonymity == 1 %}
+							<cite class="block-47-quote-author i18n left" name="ask_by_anony"></cite><br>
+							
+						{% else %}
+							<cite class="block-47-quote-author left">by {{ question.author.username }}</cite><br>
+							
+						{% endif %}
+						</td>
+						<td rowspan='3' width='150' overflow='hidden'>
+						<a class='center big' href="{{ url_for('answerquestion',questionid=question.id)}}" >{{ question.title }}</a><br>
+						</td>
+						<tr><td width='70' overflow='hidden'>
+						<p class = 'left'>{{ question.timestamp }}</p>
+						</td></tr>
+						<tr><td>
+						<p class = 'left'> Answers {{ question.counta }}</p>
+						</td>
+						</tr>
+						</table>
 					</blockquote>
 				</div>
 			</div>
@@ -56,8 +81,11 @@
 					<legend><h1 class="i18n" name="new_ques"></h1></legend>
 					<p>
 						<label class="i18n" name="ques_title"></label><br>
-						{{ form.title(size=64) }}
+						{{ form.title(size=128) }}
 					</p>
+					<p>
+						<label class="i18n" name="ques_type"></label><br>
+						{{ form.type }}
 					<p>
 						<label class="i18n" name="ques_desc"></label><br>
 						{{ form.body(cols=100,rows=6) }}

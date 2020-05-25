@@ -51,6 +51,11 @@ class StatusForm(FlaskForm):
     
 class QuestionForm(FlaskForm):
     title = StringField('Question', validators=[DataRequired()],render_kw={"class": "form-control"})
+    type = SelectField(
+        validators=[DataRequired('请选择问题类型')],
+        choices=[(1, '关于宠物'), (2, '关于医生'), (3, '其它')],
+        coerce=int
+    )
     body = TextAreaField('Question description',
 						 render_kw={"class": "form-control"})
     anonymity = BooleanField('anonymity')

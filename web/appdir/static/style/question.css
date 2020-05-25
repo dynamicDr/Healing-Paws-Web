@@ -4,6 +4,11 @@
 .center{
 	text-align:center!important;
 }
+.left{
+	text-align:right !important;
+	font-size:70%;
+	color:gray;
+}
 .bor{
 	border: 2px solid black;
 	margin: 100px;
