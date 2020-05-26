@@ -87,25 +87,17 @@
                     <td class="i18n" name="none"></td>
                 {% endif %}
             </tr>
-            {% if appointment.is_emergency == true %}
-                <tr>
-                    <td class="i18n" name="pet_status"></td>
-                    <td>
-                        <textarea id="status">{{ appointment.pet_status }}</textarea>
-                    </td>
-                </tr>
-            {% endif %}
       </tbody>
     </table>
     <br>
-    {% if appointment.status == "Confirmed" %}
+    {% if appointment.status == "Confirmed" and appointment.is_emergency == true%}
     <div style="margin: 0 auto">
         <form class="bs-example bs-example-form" role="form">
             <div class="row">
                 <div class="col-lg-6" style="margin: 0 auto">
                     <span class="i18n" name="pet_status">:</span>
                     <div class="input-group"  style="margin: 20px">
-                        <input style="font-size: 1.6rem" id="pet_status" type="text" class="form-control" value="{{ appointment.pet_status }}">
+                        <input style="font-size: 1.6rem" id="status" type="text" class="form-control" value="{{ appointment.pet_status }}">
                         <span class="input-group-btn">
                             <button class="btn" type="button" id="update">
                                 <span class="i18n" name="update"></span>

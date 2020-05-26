@@ -34,7 +34,7 @@ class RegisterForm_E(FlaskForm):
 	submit = SubmitField('Register')
 
 class AppointmentForm(FlaskForm):
-	pet = SelectField(label='为哪只宠物预约', validators=[DataRequired('请选择宠物')], coerce=int)
+	pet = SelectField(label='为哪只宠物预约', validators=[DataRequired('请选择宠物')], coerce=int,render_kw={"style": "padding: 5px;width: 100%;margin-top: 5px"})
 	loc = RadioField(
         validators=[DataRequired('请选择就医所在地')],
         choices=[(1, 'Beijing'), (2, 'Shanghai'), (3, 'Chengdu')],
@@ -42,8 +42,8 @@ class AppointmentForm(FlaskForm):
     )
 	is_emergency = RadioField(label='What type of appointment?', choices = [('E','Emergency'), ('S', 'Standard')], validators=[DataRequired('请选择')])
 	changeable = RadioField(label='Do you accept CHANGE?', choices = [('A','\u221a'), ('R', 'X')], validators=[DataRequired('请选择')])
-	description = TextAreaField(label="Describe your pet's condition", validators=[DataRequired()])
-	doctor = SelectField(label='希望预约哪位医生?', coerce=int, validators=[DataRequired()])
+	description = TextAreaField(label="Describe your pet's condition", validators=[DataRequired()], render_kw={"class": "form-control"})
+	doctor = SelectField(label='希望预约哪位医生?', coerce=int, validators=[DataRequired()],render_kw={"style": "padding: 5px;width: 100%;margin-top: 5px"})
 	submit = SubmitField('Comfirm and Submit')
 
 class StatusForm(FlaskForm):
@@ -57,7 +57,7 @@ class QuestionForm(FlaskForm):
         coerce=int
     )
     body = TextAreaField('Question description',
-						 render_kw={"class": "form-control"})
+						 render_kw={"class": "form-control","style": "padding: 5px"})
     anonymity = BooleanField('anonymity')
     submit = SubmitField('Confirm')
     

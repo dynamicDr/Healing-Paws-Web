@@ -108,6 +108,9 @@ ol, ul {
 
 select {
   display: block;
+    padding: 5px;
+    width: 100%;
+    margin-top: 5px;
 }
 
 figure {
@@ -2479,7 +2482,8 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .banner-area .overlay-bg {
-  background-color: rgba(0, 0, 0, 0.4);
+background-color: rgb(196, 86, 153);
+  margin: 8px;
 }
 
 @media (max-width: 767px) {
@@ -2547,6 +2551,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /*-------- Start appointment Area ------------*/
 .appointment-area .appointment-wrap {
   border-bottom: 1px solid #eee;
+  margin-top: 100px
 }
 
 .appointment-area .appointment-left h1 {
@@ -4691,3 +4696,4 @@ dl.toggle.time-line:before {
 .footer-text i {
   color: #69be00;
 }
+

@@ -86,14 +86,7 @@
                     <td class="i18n" name="none"></td>
                 {% endif %}
             </tr>
-            {% if appointment.status == "Confirmed" %}
-            <tr>
-                <td class="i18n" name="pet_status"></td>
-                <td >{{ appointment.pet_status }}</td>
-            </tr><br>
-            {% endif %}
-            
-            
+
             {% if appointment.is_emergency == true %}
                 <tr>
                     <td class="i18n" name="pet_status"></td>
