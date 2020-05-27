@@ -29,7 +29,7 @@ class RegisterForm_E(FlaskForm):
         choices=[(1, 'Beijing'), (2, 'Shanghai'), (3, 'Chengdu')],
         coerce=int
     )
-	intro = TextAreaField('Introduction', validators=[DataRequired(),Length(1,1000)])
+	intro = TextAreaField('Introduction', validators=[DataRequired(),Length(1,1000)], render_kw={"class": "form-control"})
 	# 暂时没必要，后面可修改得更合理，比如只有用户注册时会显示这个。
 	submit = SubmitField('Register')
 

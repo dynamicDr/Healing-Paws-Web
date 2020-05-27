@@ -956,12 +956,14 @@ table th,td{
 }
 
 .form-group input {
+  width: 100%;
 	font-size: 20px;
 	font-weight: lighter;
 	border: none;
 	background-color: #F0F0F0;
 	color: #465347!important;
-	padding: 26px 30px;
+	padding: 20px;
+    margin: 5px 0;
 	border-radius: 50px;
 	transition : 0.2s;
 }
@@ -1034,3 +1036,12 @@ input[type=radio], input[type=checkbox]{
     /*给自定义的图标实现点击下来功能*/
     pointer-events: none;
     }
+
+  .nav>li>a:hover, .nav>li>a:focus {
+    text-decoration: none;
+    background-color: transparent;
+    border-color: transparent;
+}
+  .nav-tabs {
+     border: none;
+}
