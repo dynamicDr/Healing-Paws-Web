@@ -55,6 +55,7 @@ class Employee(db.Model):
 
 class Appointment(db.Model):
     __tablename__ = 'appointments'
+    
 
     id = db.Column(db.Integer, primary_key=True)
     datetime = db.Column(db.DateTime, default=datetime.now)# 提交的时间
@@ -67,6 +68,11 @@ class Appointment(db.Model):
     employee_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.id'))
     preferred_doctor_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def rank(self):
+        Type={True:0, False:5}
+        status={'Pending':0, 'Confirmed':1, 'Canceled':4, 'Finished':3}
+        return Type[self.is_emergency]+self.status[status]
     
 class Pet(db.Model):
     __tablename__ = 'pets'

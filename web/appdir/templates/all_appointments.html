@@ -17,9 +17,13 @@
             <label><input name="status" type="radio" value="Canceled" /><label class="i18n" name="canceled"></label></label>
             <label><input name="status" type="radio" value="Finished" /><label class="i18n" name="finished"></label></label>
             <br>
-{#            <b class="i18n" name="customer_name">: </b>#}
-{#            <input name="name" type="text" value=""/>#}
-{#            <br>#}
+            {# <b class="i18n" name="customer_name">: </b> #}
+            {# <input name="name" type="text" value=""/> #}
+            {# <br> #}
+            <span class="i18n" name="sort">:</span>
+            <label><input name="sort" type="radio" value="time" checked/><label class="i18n" name="time"></label></label>
+            <label><input name="sort" type="radio" value="status" /><label class="i18n" name="status"></label></label>
+            <br />
             <button id="search" class="i18n btn btn-primary" name="search"></button>
         </form>
     </div>
@@ -38,7 +42,7 @@
             {% for appointment in appointments %}
                 <tr>
                     {% if appointment.is_emergency == true %}
-                        <td class="i18n" name="emergency"></td>
+                        <td class="i18n red" name="emergency"></td>
                     {% else %}
                         <td class="i18n" name="standard"></td>
                     {% endif %}
@@ -60,7 +64,7 @@
     <hr>
     <p>
         {%import 'aptpage.html' as pg%}
-        {{pg.my_paginate(pagination,type,status,'all_appointments')}}
+        {{pg.my_paginate(pagination,type,status,sort,'all_appointments')}}
     </p>
 
     <hr>
@@ -68,16 +72,16 @@
 </div>
 
 <script>
-function getQueryVariable(variable)
-{
-       var query = window.location.search.substring(1);
-       var vars = query.split("&");
-       for (var i=0;i<vars.length;i++) {
-               var pair = vars[i].split("=");
-               if(pair[0] == variable){return pair[1];}
-       }
-       return(false);
+function getQueryVariable(variable){
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+    }
+    return(false);
 }
+
 current_type=getQueryVariable("type")
 if(current_type){
     type_radio=$("[value="+current_type+"][name='type']")
@@ -86,6 +90,7 @@ else {
     type_radio=$("[value='all'][name='type']")
 }
 type_radio.prop("checked",1);
+
 current_status=getQueryVariable("status")
 if(current_status){
     status_radio=$("[value="+current_status+"][name='status']")
@@ -94,5 +99,14 @@ else {
     status_radio=$("[value='all'][name='status']")
 }
 status_radio.prop("checked",1);
+
+current_sort=getQueryVariable("sort")
+if(current_sort){
+    sort_radio=$("[value="+current_sort+"][name='sort']")
+}
+else {
+    sort_radio=$("[value='all'][name='sort']")
+}
+sort_radio.prop("checked",1);
 </script>
 {% endblock %}

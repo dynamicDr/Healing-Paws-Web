@@ -7,7 +7,7 @@ from appdir.forms import *
 from appdir.models import *
 from appdir.email import send_password_reset_email
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import text
+from sqlalchemy import text, case
 
 
 @app.route("/")
@@ -169,26 +169,43 @@ def all_appointments():
         if user_in_db.is_customer:
             return "Please login as employee"
         page = int(request.args.get('page'))
-        type = request.args.get('type')
+        Type = request.args.get('type')
         status = request.args.get('status')
         name = request.args.get('name')
+        sort = request.args.get('sort')
         filter_text = ""
-        if type == "emergency":
+        if Type == "emergency":
             filter_text = "is_emergency=1"
-        elif type == "standard":
+        elif Type == "standard":
             filter_text = "is_emergency=0"
         else:
             filter_text = "true"
         if (not status is None) and (status != "all"):
             filter_text += " and status=\"" + status + "\""
-        appointments = Appointment.query.filter(text(filter_text)).order_by(Appointment.datetime.desc()).paginate(
-            page=page, per_page=5)
+        
+        if sort == 'status':
+            appointments = Appointment.query.filter(text(filter_text))\
+                .order_by(case(value=Appointment.status, whens={'Pending':0, 'Confirmed':1, 'Canceled':4, 'Finished':3}))\
+                    .order_by(case(value=Appointment.is_emergency, whens={True:0, False:1}))
+        else:
+            appointments = Appointment.query.filter(text(filter_text)).order_by(Appointment.datetime.desc())
+        appointments = appointments.paginate(page=page, per_page=5)
         return render_template('all_appointments.html', title="Check Appointment", appointments=appointments.items,
-                               user=user_in_db, page=page, pagination=appointments, type=type, status=status, name=name)
+                               user=user_in_db, page=page, pagination=appointments, type=Type, status=status, name=name, sort=sort)
     else:
         flash("User needs to either login or signup first", "danger")
         return redirect(url_for('login'))
 
+
+def sort_apt(apts):
+    Type={True:0, False:5}
+    status={'Pending':0, 'Confirmed':1, 'Canceled':4, 'Finished':3}
+    sort_apts = []
+    for apt in apts:
+        sort_apts.append((Type[apt.is_emergency]+status[apt.status], apt))
+    sorted(sort_apts, key=lambda x: x[0], reverse=True)
+    return sort_apts
+    print(sort_apts)
 
 @app.route('/handleappointment', methods=['GET'])
 def handleappointment():
