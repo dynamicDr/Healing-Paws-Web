@@ -17,15 +17,15 @@
 
 	<section class="appointment-area">			
 		<div class="container">
-			<table width="100%">
+			<table>
 			<tr>
 			<td><span>
 				{% if question.type == 1 %}
-					<img src="static/images/about.png" width='50px' height='50px' alt="" style="margin: 0 auto">
+					<img src="static/images/about.png" width='150px' height='150px' alt="" style="margin: 0 auto">
 				{% elif question.type == 2 %}
-					<img src="static/images/team-1.jpg" width='50px' height='50px' alt="" style="margin: 0 auto">
+					<img src="static/images/team-1.jpg" width='150px' height='150px' alt="" style="margin: 0 auto">
 				{% else %}
-					<img src="static/images/logo.png" width='50px' height='50px' alt="" style="margin: 0 auto">
+					<img src="static/images/logo.png" width='150px' height='150px' alt="" style="margin: 0 auto">
 				{% endif %}
 			</span></td>
 			<td>
@@ -33,9 +33,9 @@
 			</td></tr>
 			<tr><td>
 			{% if question.anonymity == 1 %}
-				<cite class="block-47-quote-author i18n left" name="ask_by_anony"></cite><br>
+				<span class="block-47-quote-author i18n left" name="ask_by_anony"></span><br>
 			{% else %}
-				<cite class="block-47-quote-author left">by {{ question.author.username }}</cite><br>
+				<span class="block-47-quote-author left">by {{ question.author.username }}</span><br>
 			{% endif %}
 			</td>
 			<td>
@@ -51,17 +51,19 @@
 				<ul>
 					{% for answer in prev_answers %}
 						<li>
-						<table>
+						<table style="table-layout:fixed;">
 						<tr>
-						<td rowspan = '3'><img src = "static/images/team-1.jpg" width="50px" height="50px" alt=''>
-						<td><span><b>{{ answer.author.username }}</b></span></td>
+						<td  width="200px"><img src = "static/images/team-1.jpg" width="100px" height="100px" alt=''></td>
+						<td rowspan = '3'>
+						<div style="background-color:#EEE5DE; transparent:30%;"><h4>{{ answer.body }}</h4></div>
+						</td></tr>
+						<tr>
+						<td><span><b>Admin {{ answer.author.username }}</b></span></td>
 						</tr>
 						<tr><td>
 						<span class='left'>{{ answer.timestamp }}</span><br>
-						</td></tr>
-						<tr><td>
-						<span><b>{{ answer.body }}</b></span>
-						</td></tr></table></li><br>
+						</td>
+						<tr></table></li><br>
 					{% endfor %}
 				</ul>
 			{% else %}
@@ -82,7 +84,7 @@
 							<label class="i18n" name="answer"></label><br>
 							{{ form.body(cols=100,rows=6) }}
 						</p>
-						<p class="right"><button id="submit" class="i18n" name="reply" type="submit"></button></p>
+						<p class="right"><button id="submit" class="i18n btn btn-primary" name="reply" type="submit"></button></p>
 					</fieldset>
 					</form>
 				</div>
