@@ -323,21 +323,16 @@ def details():
                            customer=customer, user=user_in_db, preferred=preferred, assigned=assigned)
 
 
-@app.route('/delete_pet', methods=['GET', 'POST'])
+@app.route('/delete_pet', methods=['GET'])
 def deletePost():
-    id = request.args.get('id')
-    pet = Pet.query.filter(Pet.id == id).first()
-    if not session.get("USERNAME") is None:
-        username = session.get("USERNAME")
-        user_in_db = User.query.filter(User.username == username).first()
-        if not user_in_db.is_customer:
-            return "Please login as customer"
+    pet_id = request.args.get('id')
+    pet = Pet.query.filter(Pet.id == pet_id).first()   
+    try:
         db.session.delete(pet)
         db.session.commit()
-        return redirect(url_for('personal_info'))
-    else:
-        flash('Please login first', "danger")
-        return redirect(url_for('login'))
+        return jsonify({'text': 'pet is deleted', 'returnvalue': 0})
+    except: 
+        return jsonify({'text': 'Sorry! This pet still has appointment.', 'returnvalue': 1})
 
 
 @app.route("/reset")
