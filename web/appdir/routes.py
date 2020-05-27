@@ -354,7 +354,9 @@ def deletePost():
 
 @app.route("/reset")
 def reset():
+    print("reset")
     db.drop_all()
+    print("drop完毕")
     db.create_all()
     # 在这里往数据库里添加测试数据，每次reset后就直接添加
     print("重建完毕，插入输入中")
