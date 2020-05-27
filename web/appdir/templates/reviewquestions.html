@@ -70,6 +70,9 @@
 					<p>
 						<label class="i18n" name="ques_title"></label><br>
 						{{ form.title(size=128) }}
+                                            {% for error in form.title.errors %}
+						<span style="color: red;"  class="flash">[{{ error }}]</span>
+					{% endfor %}
 					</p>
 					<p>
 						<label class="i18n" name="ques_type"></label><br>
@@ -77,7 +80,11 @@
 					<p>
 						<label class="i18n" name="ques_desc"></label><br>
 						{{ form.body(cols=100,rows=6) }}
+                                        {% for error in form.body.errors %}
+						<span style="color: red;"  class="flash">[{{ error }}]</span>
+					{% endfor %}
 					</p>
+
 					<p class='red'>
 						<label class="i18n" name="is_anony"></label>
 						{{ form.anonymity }}
