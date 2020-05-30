@@ -3,8 +3,9 @@ $(document).ready(function(){
 	console.log("Adding event handlers");
 	$("#username").on("change", check_username);
     $("#email").on("change", check_email);
-    $("#birthday").on("change", check_birthday);
-	$("#password2").on("change", check_password);
+	$("#birthday").on("change", check_birthday);
+	$("#password").on("change", check_password);
+	$("#password2").on("change", check_password2);
 	console.log("function registered");
 });
 
@@ -87,25 +88,53 @@ function check_birthday(){
 }
 
 function check_password(){
-    $("#passwords").find(".flash").hide();
+    $("#password").find(".flash").hide();
     console.log("check_password called");
-    var password2 = $(this);
-    var password1 = $("#password");
-    console.log("password repeat: " + password1.val() + " "+ password2.val());
-    if(password1.val() == password2.val()){
-        $("#checkpassword").html('<span>Repeat Password is same</span>');
+	var password = $(this);
+	var password_str = password.val()
+    if(password_str.length < 8){//长度太短
+        password.val("");
+		setTimeout(function(){password.focus()},0); //https://www.cnblogs.com/djh-create/p/5511277.html
+        $("#checkpassword").html('<span>The password should longer than 8</span>');
+		$("#checkpassword").addClass("failure");
+		$("#checkpassword").removeClass("success");
+	}else if(/\W/.test(password_str)){//需要英文字母和数字
+		password.val("");
+		setTimeout(function(){password.focus()},0); //https://www.cnblogs.com/djh-create/p/5511277.html
+        $("#checkpassword").html('<span>The password should only contain letters, numbers and _</span>');
+		$("#checkpassword").addClass("failure");
+		$("#checkpassword").removeClass("success");
+	}else if(!(/\d/.test(password_str) && /[a-zA-Z]/.test(password_str))){
+		password.val("");
+		setTimeout(function(){password.focus()},0); //https://www.cnblogs.com/djh-create/p/5511277.html
+        $("#checkpassword").html('<span>The password should contain letters and numbers</span>');
+		$("#checkpassword").addClass("failure");
+		$("#checkpassword").removeClass("success");
+	}else{
+		$("#checkpassword").html('<span>The password is ok!</span>');
 		$("#checkpassword").addClass("success");
 		$("#checkpassword").removeClass("failure");
-    }else{
-        password2.val("");
-		setTimeout(function(){password2.focus()},0); //https://www.cnblogs.com/djh-create/p/5511277.html
-        $("#checkpassword").html('<span>Repeat Password is not same</span>');
-		$("#checkpassword").addClass("failure");
-    	$("#checkpassword").removeClass("success");
     }
     
 }
 
-// line 1-4,8-46 copy from lecture 15
-// others are inspired by lecture 15
-// line 60,79,99 inspired from https://www.cnblogs.com/djh-create/p/5511277.html
+function check_password2(){
+    $("#passwords").find(".flash").hide();
+    console.log("check_password2 called");
+    var password2 = $(this);
+    var password1 = $("#password");
+    console.log("password repeat: " + password1.val() + " "+ password2.val());
+    if(password1.val() == password2.val()){
+        $("#checkpassword2").html('<span>Repeat Password is same</span>');
+		$("#checkpassword2").addClass("success");
+		$("#checkpassword2").removeClass("failure");
+    }else{
+        password2.val("");
+		setTimeout(function(){password2.focus()},0); //https://www.cnblogs.com/djh-create/p/5511277.html
+        $("#checkpassword2").html('<span>Repeat Password is not same</span>');
+		$("#checkpassword2").addClass("failure");
+    	$("#checkpassword2").removeClass("success");
+    }
+    
+}
+

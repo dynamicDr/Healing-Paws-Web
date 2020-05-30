@@ -29,7 +29,8 @@
 						<div id="passwords">
 							<div>
 								<span class="i18n" name="password"></span><br />
-								{{ form.password(size=32) }}
+								{{ form.password(size=32) }}<br />
+								<span id="checkpassword"></span>
 							</div>
 							{% for error in form.password.errors %}
 							<span style="color: red;" class="flash">[{{ error }}]</span>
@@ -37,7 +38,7 @@
 							<div>
 								<span class="i18n" name="password2"></span><br />
 								{{ form.password2(size=32) }}<br>
-							<span id="checkpassword"></span>
+							<span id="checkpassword2">123</span>
 							</div>
 							{% for error in form.password2.errors %}
 								<span style="color: red;" class="flash">[{{ error }}]</span>
@@ -66,7 +67,7 @@
 
 						<div id="intro">
 							<span class="i18n" name="intro"></span><br>
-							{{ form.intro(cols=32,rows=6) }}<br>
+							{{ form.intro(cols=42,rows=6) }}<br>
 							<span id="checkintro"></span>
 							{% for error in form.intro.errors %}
 								<span style="color: red;" class="flash">[{{ error }}]</span>

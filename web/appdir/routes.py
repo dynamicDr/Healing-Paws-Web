@@ -80,7 +80,9 @@ def logout():
 @app.route('/checkuser', methods=['POST'])
 def check_username():
     chosen_name = request.form['username']
+    print(chosen_name)
     user_in_db = User.query.filter(User.username == chosen_name).first()
+    print(user_in_db)
     if not user_in_db:
         return jsonify({'text': 'Username is available', 'returnvalue': 0})
     else:
@@ -102,11 +104,11 @@ def personal_info():
                 db.session.commit()
                 return redirect(url_for('personal_info'))
             else:
-                return render_template('customer_info.html', title="Personal Infomation", user=user_in_db,
+                return render_template('customer_info.html', title="Personal Infomation", user=user_in_db,\
                                        customer=customer, pets=pets, form=form)
         else:
             employee = Employee.query.filter(Employee.id == user_in_db.ref_id).first()
-            return render_template('employee_info.html', title="Personal Infomation", user=user_in_db,
+            return render_template('employee_info.html', title="Personal Infomation", user=user_in_db,\
                                    employee=employee, form=form)
     else:
         flash("User needs to either login or signup first", "danger")
