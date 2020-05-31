@@ -14,15 +14,14 @@
       <div >
             <!-- <div class="section-heading text-center"> -->
 			<div class="section-header section-title">
-              <h1><strong class="i18n center" name="question"></strong></h1>
+              <h1 class="i18n center" name="question"></h1>
             </div>
 		{% if prev_questions %}
-			<div class="row">
+			<div class="row" style="">
 			{% for question in prev_questions %}
-			<div class="col-md-4">
+			<div style="width: 350px">
 				<div style="width:350px;height:380px; WORD-BREAK: break-all; "class="block-47 d-flex mb-5">
 					<blockquote class="block-47-quote">
-						
 						{% if question.type == 1 %}
 						<img src="static/images/about.png" width='240px' height='200px' alt="">
 						{% elif question.type == 2 %}
@@ -32,7 +31,7 @@
 						{% endif %}
 						<br>
 						
-						<a class='center' href="{{ url_for('answerquestion',questionid=question.id)}}" ><b>{{ question.title }}</b></a><br>
+						<a class='center' href="{{ url_for('answerquestion',questionid=question.id)}}" style="margin: 0" ><b>{{ question.title }}</b></a><br>
 						{% if question.anonymity == 1 %}
 							<cite class="block-47-quote-author i18n left" name="ask_by_anony"></cite><br>
 							

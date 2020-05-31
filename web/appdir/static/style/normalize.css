@@ -33,9 +33,8 @@ input { /* 1 */
 
 button,
 select { /* 1 */
-  width: 100%;
   padding: 8px;
-  margin: 10px 0;
+  margin: 5px 0;
   text-transform: none;
 }
 

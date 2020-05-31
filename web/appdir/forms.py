@@ -50,7 +50,7 @@ class StatusForm(FlaskForm):
 	status = TextAreaField(label="pet's status")
     
 class QuestionForm(FlaskForm):
-    title = StringField('Question', validators=[DataRequired(),Length(1,100)],render_kw={"class": "form-control"})
+    title = StringField('Question', validators=[DataRequired(),Length(1,40)],render_kw={"class": "form-control"})
     type = SelectField(
         validators=[DataRequired('请选择问题类型')],
         choices=[(1, ''), (2, ''), (3, '')],
