@@ -37,10 +37,10 @@ class AppointmentForm(FlaskForm):
 	pet = SelectField(label='为哪只宠物预约', validators=[DataRequired('请选择宠物')], coerce=int,render_kw={"style": "padding: 5px;width: 100%;margin-top: 5px"})
 	loc = RadioField(
         validators=[DataRequired('请选择就医所在地')],
-        choices=[(1, 'Beijing'), (2, 'Shanghai'), (3, 'Chengdu')],
+        choices=[(1, ''), (2, ''), (3, '')],
         coerce=int
     )
-	is_emergency = RadioField(label='What type of appointment?', choices = [('E','Emergency'), ('S', 'Standard')], validators=[DataRequired('请选择')])
+	is_emergency = RadioField(label='What type of appointment?', choices = [('E',''), ('S', '')], validators=[DataRequired('请选择')])
 	changeable = RadioField(label='Do you accept CHANGE?', choices = [('A','\u221a'), ('R', 'X')], validators=[DataRequired('请选择')])
 	description = TextAreaField(label="Describe your pet's condition", validators=[DataRequired()], render_kw={"class": "form-control"})
 	doctor = SelectField(label='希望预约哪位医生?', coerce=int, validators=[DataRequired()],render_kw={"style": "padding: 5px;width: 100%;margin-top: 5px"})
@@ -53,7 +53,7 @@ class QuestionForm(FlaskForm):
     title = StringField('Question', validators=[DataRequired()],render_kw={"class": "form-control"})
     type = SelectField(
         validators=[DataRequired('请选择问题类型')],
-        choices=[(1, '关于宠物'), (2, '关于医生'), (3, '其它')],
+        choices=[(1, ''), (2, ''), (3, '')],
         coerce=int
     )
     body = TextAreaField('Question description',
@@ -70,7 +70,7 @@ class PetForm(FlaskForm):
 	age = IntegerField('Age', validators=[NumberRange(min=0,max=30)])
 	category = RadioField(
         validators=[DataRequired('请选择宠物种类')],
-        choices=[('dog', '狗'), ('cat', '猫')]
+        choices=[('dog', ''), ('cat', '')]
     )
 	submit = SubmitField('Add')
 
