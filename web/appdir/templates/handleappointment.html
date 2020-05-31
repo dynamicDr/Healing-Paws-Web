@@ -98,11 +98,6 @@
                     <span class="i18n" name="pet_status">:</span>
                     <div class="input-group"  style="margin: 20px">
                         <input style="font-size: 1.6rem" id="status" type="text" class="form-control" value="{{ appointment.pet_status }}">
-                        <span class="input-group-btn">
-                            <button class="btn" type="button" id="update">
-                                <span class="i18n" name="update"></span>
-                            </button>
-                        </span>
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
@@ -114,24 +109,24 @@
      <div class="center">
             {% if appointment.status == "Pending" %}
                 <p>
-                    <a  class="btn btn-primary i18n" name="reject" href="{{ url_for('update_appointment',apt=appointment.id,operation='Reject') }}" style="margin: 50px"></a>
-                    <a  class="btn btn-primary i18n" name="confirm" href="{{ url_for('update_appointment',apt=appointment.id,operation='Confirm') }}" style="margin: 50px"></a>
+                    <p  class="btn btn-primary i18n" name="reject" style="margin: 50px"  onclick="disp_confirm('Reject')"></p>
+                    <p  class="btn btn-primary i18n" name="confirm" style="margin: 50px" onclick="disp_confirm('Confirm')"></p>
                 </p>
             {% elif appointment.status == "Confirmed" %}
                 <p>
-                    <a  class="btn btn-primary i18n" name="cancel" href="{{ url_for('update_appointment',apt=appointment.id,operation='Cancel') }}" style="margin: 50px"></a>
-                    <a  class="btn btn-primary i18n" name="finish" href="{{ url_for('update_appointment',apt=appointment.id,operation='Finish') }}" style="margin: 50px"></a>
+                    <p  class="btn btn-primary i18n" name="cancel" style="margin: 50px" onclick="disp_confirm('Cancel')"></p>
+                    <p  class="btn btn-primary i18n" name="finish" style="margin: 50px" onclick="disp_confirm('Finish')"></p>
                 </p>
             {% endif %}
         </div>
 
 </div>
 <script>
-    btn = document.getElementById('update');
-    btn.onclick = function() {
-            let pet_status = document.getElementById("pet_status").value;
-            {#alert(pet_status);#}
-            window.location.href = "{{url_for('set_status',apt=appointment.id) }}&status="+pet_status;
-        }
+function disp_confirm(opreation) {
+  var r=confirm("Are you sure you want to "+opreation+" this appointment?")
+      if (r==true) {
+         window.location.href = "{{ url_for('update_appointment',apt=appointment.id) }}&operation="+opreation;
+      }
+  }
 </script>
 {% endblock %}
