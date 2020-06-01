@@ -51,7 +51,7 @@ class Employee(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     loc = db.Column(db.Integer, nullable=False)
-    intro = db.Column(db.String(32), nullable=True)
+    intro = db.Column(db.String(1024), nullable=True)
 
 class Appointment(db.Model):
     __tablename__ = 'appointments'
@@ -59,7 +59,7 @@ class Appointment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     datetime = db.Column(db.DateTime, default=datetime.now)# 提交的时间
-    description = db.Column(db.String(32), default='')
+    description = db.Column(db.String(1000), default='')
     status = db.Column(db.String(32), default='Pending')   #Pending/Confirmed/Canceled/Finished
     pet_status = db.Column(db.String(32), default='Unchecked')  #设计一系列状态
     loc = db.Column(db.Integer)

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, RadioField, FileField, DateTimeField, TextAreaField, RadioField, SelectField, IntegerField
-from wtforms.validators import DataRequired, Email, NumberRange, EqualTo
+from wtforms.validators import DataRequired, Email, NumberRange, EqualTo, Length
 from flask_wtf.file import FileRequired, FileAllowed
 
 class LoginForm(FlaskForm):
@@ -29,7 +29,7 @@ class RegisterForm_E(FlaskForm):
         choices=[(1, 'Beijing'), (2, 'Shanghai'), (3, 'Chengdu')],
         coerce=int
     )
-	intro = TextAreaField('Introduction')
+	intro = TextAreaField('Introduction', validators=[DataRequired(),Length(1,1000)], render_kw={"class": "form-control"})
 	# 暂时没必要，后面可修改得更合理，比如只有用户注册时会显示这个。
 	submit = SubmitField('Register')
 
@@ -42,7 +42,7 @@ class AppointmentForm(FlaskForm):
     )
 	is_emergency = RadioField(label='What type of appointment?', choices = [('E',''), ('S', '')], validators=[DataRequired('请选择')])
 	changeable = RadioField(label='Do you accept CHANGE?', choices = [('A','\u221a'), ('R', 'X')], validators=[DataRequired('请选择')])
-	description = TextAreaField(label="Describe your pet's condition", validators=[DataRequired()], render_kw={"class": "form-control"})
+	description = TextAreaField(label="Describe your pet's condition", validators=[DataRequired(),Length(1,1024)], render_kw={"class": "form-control"})
 	doctor = SelectField(label='希望预约哪位医生?', coerce=int, validators=[DataRequired()],render_kw={"style": "padding: 5px;width: 100%;margin-top: 5px"})
 	submit = SubmitField('Comfirm and Submit')
 
@@ -50,13 +50,13 @@ class StatusForm(FlaskForm):
 	status = TextAreaField(label="pet's status")
     
 class QuestionForm(FlaskForm):
-    title = StringField('Question', validators=[DataRequired()],render_kw={"class": "form-control"})
+    title = StringField('Question', validators=[DataRequired(),Length(1,40)],render_kw={"class": "form-control"})
     type = SelectField(
         validators=[DataRequired('请选择问题类型')],
         choices=[(1, ''), (2, ''), (3, '')],
         coerce=int
     )
-    body = TextAreaField('Question description',
+    body = TextAreaField('Question description', validators=[DataRequired(),Length(1,100)],
 						 render_kw={"class": "form-control","style": "padding: 5px"})
     anonymity = BooleanField('anonymity')
     submit = SubmitField('Confirm')

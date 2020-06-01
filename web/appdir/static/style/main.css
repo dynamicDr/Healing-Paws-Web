@@ -50,12 +50,12 @@ $black			: #222;
 /* =================================== */
 ::-moz-selection {
   /* Code for Firefox */
-  background-color: #69be00;
+  background-color: #000000;
   color: #fff;
 }
 
 ::selection {
-  background-color: #69be00;
+  background-color: #000000;
   color: #fff;
 }
 

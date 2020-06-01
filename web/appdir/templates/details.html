@@ -104,10 +104,18 @@
             {% if appointment.status == "Pending" %}
                 <hr>
                 <p>
-                    <a  class="btn btn-primary i18n" name="cancel" href="{{ url_for('update_appointment',apt=appointment.id,operation='Cancel') }}" style="margin: 50px"></a>
+                    <p  class="btn btn-primary i18n" name="cancel" style="margin: 50px" onclick="disp_confirm('Cancel')"></p>
                 </p>
             {% endif %}
         </div>
 
 </div>
+<script>
+function disp_confirm(opreation) {
+  var r=confirm("Are you sure you want to "+opreation+" this appointment?")
+      if (r==true) {
+         window.location.href = "{{ url_for('update_appointment',apt=appointment.id) }}&operation="+opreation;
+      }
+  }
+</script>
 {% endblock %}
