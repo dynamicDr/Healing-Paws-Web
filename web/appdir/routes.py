@@ -52,7 +52,6 @@ def register():
             return redirect(url_for('index'))
         return render_template('register_employee.html', title='Join as an employee!', form=form)
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -70,12 +69,10 @@ def login():
         return redirect(url_for('login'))
     return render_template('login.html', title='Login', form=form)
 
-
 @app.route('/logout')
 def logout():
     session.pop("USERNAME", None)
     return redirect(url_for('login'))
-
 
 @app.route('/checkuser', methods=['POST'])
 def check_username():
@@ -87,7 +84,6 @@ def check_username():
         return jsonify({'text': 'Username is available', 'returnvalue': 0})
     else:
         return jsonify({'text': 'Sorry! Username is already taken', 'returnvalue': 1})
-
 
 @app.route('/personal_info', methods=['GET', 'POST'])
 def personal_info():
@@ -353,7 +349,6 @@ def deletePost():
     except: 
         return jsonify({'text': 'Sorry! This pet still has appointment.', 'returnvalue': 1})
 
-
 @app.route("/reset")
 def reset():
     db.drop_all()
@@ -380,7 +375,6 @@ def reset():
     print("数据插入完毕")
     return '重建所有表'
 
-
 @app.route("/reset_password_request", methods=['GET', 'POST'])
 def reset_password_request():
     form = ResetPasswordRequestForm()
@@ -391,11 +385,11 @@ def reset_password_request():
             return redirect(url_for('reset_password_request'))
 
         send_password_reset_email(user)
-        flash('查看您的电子邮箱消息，以重置您的密码', "info")
+        # flash('查看您的电子邮箱消息，以重置您的密码', "info")
+        flash('Please check your email box.', "info")
         return redirect(url_for('login'))
     return render_template('reset_password_request.html', title='重置密码', form=form)
     # https://blog.csdn.net/sdwang198912/java/article/details/89884414
-
 
 @app.route("/reset_password", methods=['GET', 'POST'])
 def reset_password():
@@ -407,7 +401,8 @@ def reset_password():
     if form.validate_on_submit():
         user.set_password(form.password.data)
         db.session.commit()
-        flash('您的密码已被重置', "success")
+        # flash('您的密码已被重置', "success")
+        flash('Your password has been reset.', "success")
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
 
