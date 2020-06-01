@@ -34,36 +34,38 @@
 			</div>
 		<div class="col-lg-6 col-md-6 appointment-right pt-80 pb-60">
 			<fieldset id='pets'>
-				<legend class="i18n" name="your_pets"></legend>
-				<table border="1" class="table">
-					<tr>
-						<th class="i18n" name="name"></th>
-						<th class="i18n" name="age"></th>
-						<th class="i18n" name="category" style="width: 50px;"></th>
-						<th class="i18n" name="operation"></th>
-					</tr>
-					{% for pet in pets %}
-					<tr>
-						<td>{{ pet.name }}</td>
-						<td>{{ pet.age }}</td>
-						{% if pet.category == 'cat' %}
-							<td class="i18n" name="cat"></td>
-						{% else %}
-							<td class="i18n" name="dog"></td>
-						{% endif %}
-						<td><button class="i18n" name="delete"></button></td>
-						<td style="display:none;">{{ pet.id }}</td>
-					</tr>
-					{% endfor %}
-					<form action="" method="post" enctype="multipart/form-data" novalidate>
-						{{ form.hidden_tag() }}
-						<td>{{ form.name() }}</td>
-						<td>{{ form.age() }}</td>
-						<td>{{ form.category() }}</td>
-						<td><button id="submit" name="add" type="submit" class="i18n"></button></td>
+				<div class="table-responsive">
+					<legend class="i18n" name="your_pets"></legend>
+					<table border="1" class="table">
+						<tr>
+							<th class="i18n" name="name"></th>
+							<th class="i18n" name="age"></th>
+							<th class="i18n" name="category" style="width: 50px;"></th>
+							<th class="i18n" name="operation"></th>
+						</tr>
+						{% for pet in pets %}
+						<tr>
+							<td>{{ pet.name }}</td>
+							<td>{{ pet.age }}</td>
+							{% if pet.category == 'cat' %}
+								<td class="i18n" name="cat"></td>
+							{% else %}
+								<td class="i18n" name="dog"></td>
+							{% endif %}
+							<td><button class="i18n" name="delete"></button></td>
+							<td style="display:none;">{{ pet.id }}</td>
+						</tr>
+						{% endfor %}
+						<form action="" method="post" enctype="multipart/form-data" novalidate>
+							{{ form.hidden_tag() }}
+							<td>{{ form.name() }}</td>
+							<td>{{ form.age() }}</td>
+							<td>{{ form.category() }}</td>
+							<td><button id="submit" name="add" type="submit" class="i18n"></button></td>
 
-					</form>
-				</table> 
+						</form>
+					</table> 
+				</div>	
 			</fieldset>
                 {% for error in form.age.errors %}
 						<span style="color: red;"  class="flash">[{{ error }}]</span>
