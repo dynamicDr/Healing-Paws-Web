@@ -318,7 +318,9 @@ def make_appointment():
                                       is_emergency=(form.is_emergency.data == 'E'), \
                                       changeable=(form.changeable.data == 'A'), \
                                       preferred_doctor_id=int(form.doctor.data))
-            doctor_loc=Employee.query.filter(Employee.id==appointment.preferred_doctor_id).first().loc
+
+            doctor_ref_id = User.query.filter(appointment.preferred_doctor_id == User.id).first().ref_id
+            doctor_loc = Employee.query.filter(Employee.id == doctor_ref_id ).first().loc
             if doctor_loc != appointment.loc:
                 flash("The chosen doctor is not in your city.", "danger")
                 return redirect('make_appointment')
