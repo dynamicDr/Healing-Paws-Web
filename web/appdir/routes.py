@@ -110,6 +110,25 @@ def personal_info():
         flash("User needs to either login or signup first", "danger")
         return redirect(url_for('login'))
 
+@app.route('/check_customer_info', methods=['GET'])
+def check_customer_info():
+    customer_id = request.args.get('customer_id')
+    form = PetForm()
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.id == customer_id ).first()
+        session_user = User.query.filter(User.username == username).first()
+        if session_user.is_customer:
+            flash("Please login as employee", "danger")
+            return redirect(url_for('index'))
+        else:
+            customer = Customer.query.filter(Customer.id == user_in_db.ref_id).first()
+            pets = Pet.query.filter(Pet.owner_id == user_in_db.id).all()
+            return render_template('check_customer_info.html', title="Customer Infomation", user=user_in_db, \
+                                       customer=customer, pets=pets, form=form)
+    else:
+        flash("User needs to either login or signup first", "danger")
+        return redirect(url_for('login'))
 
 @app.route('/reviewquestions', methods=['GET', 'POST'])
 def reviewquestions():
@@ -165,7 +184,8 @@ def all_appointments():
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if user_in_db.is_customer:
-            return "Please login as employee"
+            flash("Please login as employee", "danger")
+            return redirect(url_for('index'))
         page = int(request.args.get('page'))
         Type = request.args.get('type')
         status = request.args.get('status')
@@ -283,6 +303,13 @@ def make_appointment():
         pets = Pet.query.filter(Pet.owner_id == user_in_db.id).all()
         form.pet.choices = [(pet.id, pet.name) for pet in pets]
         doctors = User.query.filter(User.is_customer == False).all()
+        doctor_list=[]
+        all_doctors= Employee.query.all()
+        for doc in all_doctors:
+            doctor = Doctor(doc.id,doc.loc,doc.intro)
+            name=User.query.filter(User.id==doc.id).first().username
+            doctor.set_name(name)
+            doctor_list.append(doctor)
         form.doctor.choices = [(u.id, u.username) for u in doctors]
         if form.validate_on_submit():  # 第二次，已填写
             appointment = Appointment(loc=int(form.loc.data), pet_id=int(form.pet.data), \
@@ -290,11 +317,15 @@ def make_appointment():
                                       is_emergency=(form.is_emergency.data == 'E'), \
                                       changeable=(form.changeable.data == 'A'), \
                                       preferred_doctor_id=int(form.doctor.data))
+            doctor_loc=Employee.query.filter(Employee.id==appointment.preferred_doctor_id).first().loc
+            if doctor_loc != appointment.loc:
+                flash("The chosen doctor is not in your city.", "danger")
+                return redirect('make_appointment')
             db.session.add(appointment)
             db.session.commit()
             flash("Your appointment has been successfully submitted.", "success")
             return redirect('index')
-        return render_template('make_appointment.html', title="Make a new appointment", user=user_in_db, form=form)
+        return render_template('make_appointment.html', title="Make a new appointment", user=user_in_db, form=form,doctors=doctor_list)
     else:
         flash("User needs to either login or signup first", "danger")
         return redirect(url_for('login'))
@@ -455,4 +486,14 @@ def register_android():
         return msg
     msg = jsonify("status", "409")
     return msg
+
+class Doctor:
+    def __init__(self,_id, loc,intro ):
+        self.id = _id
+        self.loc = loc
+        self.intro = intro
+
+    def set_name(self,name):
+        self.name = name
+
 

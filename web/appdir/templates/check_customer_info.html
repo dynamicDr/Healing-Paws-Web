@@ -4,19 +4,22 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}">
 <script src="{{ url_for('static', filename='scripts/deletePet.js') }}"></script>
 <section class="banner-area relative" id="home">
-	<div class="overlay overlay-bg"></div>
+	<div class="overlay overlay-bg"></div>	
 	<div class="container">
 		<div class="row fullscreen d-flex align-items-center justify-content-center">
 			<div class="banner-content col-lg-8 col-md-12">
 				<h1 class="i18n" name="welcome"></h1>
 				<p class="pt-10 pb-10 text-white i18n" name="hospital"></p>
-			</div>
+			</div>										
 		</div>
-	</div>
+	</div>					
 </section>
-<section class="appointment-area">
+<p>
+    <a  class="btn btn-primary i18n" name="back" href="javascript:history.back(-1);" style="    margin-top: 20px;" ></a>
+</p>
+<section class="appointment-area">			
 	<div class="container">
-		<div class="row justify-content-between align-items-center pb-120 appointment-wrap">
+		<div class="row justify-content-between align-items-center pb-120 appointment-wrap">						
 			<div class="col-lg-5 col-md-6 appointment-left">
 				<h2 class="i18n" name="personal_info"></h2>
 				<ul class="time-list">
@@ -33,15 +36,14 @@
 				</ul>
 			</div>
 		<div class="col-lg-6 col-md-6 appointment-right pt-80 pb-60">
-			<fieldset id='pets'>
+			<fieldset id='his_pets'>
 				<div class="table-responsive">
-					<legend class="i18n" name="your_pets"></legend>
+					<legend class="i18n" name="his_pets"></legend>
 					<table border="1" class="table">
 						<tr>
 							<th class="i18n" name="name"></th>
 							<th class="i18n" name="age"></th>
-							<th class="i18n" name="category" style="width: 50px;"></th>
-							<th class="i18n" name="operation"></th>
+							<th class="i18n" name="category"></th>
 						</tr>
 						{% for pet in pets %}
 						<tr>
@@ -52,27 +54,12 @@
 							{% else %}
 								<td class="i18n" name="dog"></td>
 							{% endif %}
-							<td><button class="i18n" name="delete"></button></td>
 							<td style="display:none;">{{ pet.id }}</td>
 						</tr>
 						{% endfor %}
-						<form action="" method="post" enctype="multipart/form-data" novalidate>
-							{{ form.hidden_tag() }}
-							<td>{{ form.name() }}</td>
-							<td>{{ form.age() }}</td>
-							<td>{{ form.category() }}</td>
-							<td><button id="submit" name="add" type="submit" class="i18n"></button></td>
-
-						</form>
-					</table>
-				</div>
+					</table> 
+				</div>	
 			</fieldset>
-                {% for error in form.age.errors %}
-						<span style="color: red;"  class="flash">[{{ error }}]</span>
-                {% endfor %}
-                {% for error in form.name.errors %}
-						<span style="color: red;"  class="flash">[{{ error }}]</span>
-                {% endfor %}
 		</div>
 	</div>
 </section>
