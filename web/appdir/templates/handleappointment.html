@@ -98,6 +98,7 @@
                     <span class="i18n" name="pet_status">:</span>
                     <div class="input-group"  style="margin: 20px">
                         <input style="font-size: 1.6rem" id="status" type="text" class="form-control" value="{{ appointment.pet_status }}">
+                        <span id="check_update"></span>
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
@@ -129,4 +130,12 @@ function disp_confirm(opreation) {
       }
   }
 </script>
+<style>
+.success{
+    color: green;
+}
+.failure{
+    color: red;
+}
+</style>
 {% endblock %}
