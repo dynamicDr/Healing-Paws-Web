@@ -128,4 +128,12 @@
     color: red;
 }
 </style>
+<script>
+function disp_confirm(opreation) {
+  var r=confirm("Are you sure you want to "+opreation+" this appointment?")
+      if (r==true) {
+         window.location.href = "{{ url_for('update_appointment',apt=appointment.id) }}&operation="+opreation;
+      }
+  }
+</script>
 {% endblock %}

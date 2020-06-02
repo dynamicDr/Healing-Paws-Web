@@ -23,9 +23,9 @@
 				<div style="width:350px;height:380px; WORD-BREAK: break-all; "class="block-47 d-flex mb-5">
 					<blockquote class="block-47-quote">
 						{% if question.type == 1 %}
-						<img src="static/images/about.png" width='240px' height='200px' alt="">
+						<img src="static/images/portfolio/2.jpg" width='240px' height='200px' alt="">
 						{% elif question.type == 2 %}
-						<img src="static/images/team-1.jpg" width='240px' height='200px' alt="">
+						<img src="static/images/portfolio/6.jpg" width='240px' height='200px' alt="">
 						{% else %}
 						<img src="static/images/logo.png" width='240px' height='200px' alt="">
 						{% endif %}
@@ -41,14 +41,14 @@
 						{% endif %}
 						
 						<p class = 'left'>{{ question.timestamp }}</p>
-						<p class = 'left'> Answers {{ question.counta }}</p>
+						<p class = 'left i18n ' name="answer">  {{ question.counta }}</p>
 					</blockquote>
 				</div>
 			</div>
 			{% endfor %}
 			</div>
 		{% else %}
-			<p class="i18n" name="no_ques">No questions</p>
+			<p class="i18n" name="no_ques"></p>
 			<hr>
 		{% endif %}        
       </div>

@@ -39,6 +39,15 @@ def register():
             return redirect(url_for('index'))
         return render_template('register_customer.html', title='Register as a customer!', form=form)
     elif role == 'e':
+        if not session.get("USERNAME") is None:
+            username = session.get("USERNAME")
+            session_user = User.query.filter(User.username == username).first()
+            if session_user.is_customer:
+                flash("Please login as employee", "danger")
+                return redirect(url_for('index'))
+        else:
+            flash("User needs to either login first", "danger")
+            return redirect(url_for('login'))
         form = RegisterForm_E()
         if form.validate_on_submit():
             passw_hash = generate_password_hash(form.password.data)
@@ -50,7 +59,7 @@ def register():
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('index'))
-        return render_template('register_employee.html', title='Join as an employee!', form=form)
+        return render_template('register_employee.html', title='Join as an employee!', form=form,user=session_user)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
