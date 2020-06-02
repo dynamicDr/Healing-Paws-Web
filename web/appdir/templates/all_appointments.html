@@ -17,6 +17,12 @@
             <label><input name="status" type="radio" value="Canceled" /><label class="i18n" name="canceled"></label></label>
             <label><input name="status" type="radio" value="Finished" /><label class="i18n" name="finished"></label></label>
             <br>
+            <span class="i18n" name="location">: </span>
+            <label><input name="loc" type="radio" value="all"/><label class="i18n" name="all"></label></label>
+            <label><input name="loc" type="radio" value="1" /><label class="i18n" name="beijing"></label></label>
+            <label><input name="loc" type="radio" value="2" /><label class="i18n" name="shanghai"></label></label>
+            <label><input name="loc" type="radio" value="3" /><label class="i18n" name="chengdu"></label></label>
+            <br>
             {# <b class="i18n" name="customer_name">: </b> #}
             {# <input name="name" type="text" value=""/> #}
             {# <br> #}
@@ -64,7 +70,7 @@
     <hr>
     <p>
         {%import 'aptpage.html' as pg%}
-        {{pg.my_paginate(pagination,type,status,sort,'all_appointments')}}
+        {{pg.my_paginate(pagination,type,status,loc,sort,'all_appointments')}}
     </p>
 
     <hr>
@@ -99,6 +105,15 @@ else {
     status_radio=$("[value='all'][name='status']")
 }
 status_radio.prop("checked",1);
+
+current_loc=getQueryVariable("loc")
+if(current_loc){
+    loc_radio=$("[value="+current_loc+"][name='loc']")
+}
+else {
+    loc_radio=$("[value='all'][name='loc']")
+}
+loc_radio.prop("checked",1);
 
 current_sort=getQueryVariable("sort")
 if(current_sort){

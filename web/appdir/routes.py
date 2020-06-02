@@ -190,6 +190,7 @@ def all_appointments():
         Type = request.args.get('type')
         status = request.args.get('status')
         name = request.args.get('name')
+        loc = request.args.get('loc')
         sort = request.args.get('sort')
         filter_text = ""
         if Type == "emergency":
@@ -200,7 +201,9 @@ def all_appointments():
             filter_text = "true"
         if (not status is None) and (status != "all"):
             filter_text += " and status=\"" + status + "\""
-        
+        if (not loc is None) and (loc != "all"):
+            filter_text += " and loc=\"" + loc + "\""
+
         if sort == 'status':
             appointments = Appointment.query.filter(text(filter_text))\
                 .order_by(case(value=Appointment.status, whens={'Pending':0, 'Confirmed':1, 'Canceled':4, 'Finished':3}))\
@@ -209,7 +212,7 @@ def all_appointments():
             appointments = Appointment.query.filter(text(filter_text)).order_by(Appointment.datetime.desc())
         appointments = appointments.paginate(page=page, per_page=5)
         return render_template('all_appointments.html', title="Check Appointment", appointments=appointments.items,
-                               user=user_in_db, page=page, pagination=appointments, type=Type, status=status, name=name, sort=sort)
+                               user=user_in_db, page=page, pagination=appointments, type=Type, status=status, loc=loc, name=name, sort=sort)
     else:
         flash("User needs to either login or signup first", "danger")
         return redirect(url_for('login'))
