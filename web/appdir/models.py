@@ -11,7 +11,7 @@ class User(db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     is_customer = db.Column(db.Boolean, index=True)
-    email = db.Column(db.String(32), index=True, nullable=True)
+    email = db.Column(db.String(32), index=True, nullable=True, unique=True)
     ref_id = db.Column(db.Integer)
     questions = db.relationship('Question', backref='author', lazy='dynamic')
     answers = db.relationship('Answer', backref='author',lazy='dynamic')
