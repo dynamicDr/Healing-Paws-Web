@@ -87,12 +87,12 @@
                                 <li><a href="{{ url_for('make_appointment') }}" class="i18n" name="new_appointment"></a></li>
                             {% else %}
                                 <li><a href="{{ url_for('all_appointments',page=1) }}" class="i18n" name="all_appointment"></a></li>
+                                <li><a href="{{ url_for('register',role='e') }}" class="i18n" name="join"></a></li>
                             {% endif %}
                             <li><a href="{{ url_for('logout') }}" class="i18n" name="logout"></a></li>
                             <li id="username"><a href="{{ url_for('personal_info') }}">{{ user.username }}</a></li>
                         {% else %}
                             <li><a href="{{ url_for('register',role='c') }}" class="i18n" name="register"></a></li>
-                            <li><a href="{{ url_for('register',role='e') }}" class="i18n" name="join"></a></li>
                             <li><a href="{{ url_for('login') }}" class="i18n" name="login"></a></li>
                         {% endif %}
                         <!-- 这里有两种切换语言的组件。安卓小米6默认浏览器两种都能用，iphone6s两种都不能用，iphoneXR只能用第二种 -->

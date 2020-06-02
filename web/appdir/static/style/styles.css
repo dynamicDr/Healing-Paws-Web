@@ -939,10 +939,11 @@ padding: 7px 0 0;
 }
 table{
 	margin:auto;
+]
   width:80%;
   /* table-layout: fixed;
     word-break: break-all;
-    word-wrap: break-word; */
+    word-wrap: break-word; */]
 }
 table th,td{
 	text-align:center;
@@ -1062,4 +1063,9 @@ input[type=radio], input[type=checkbox]{
     margin-bottom: 7px;
     margin-left: 7px;
 }
-
+    .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+      text-align: center;
+    }
+    td, th {
+   text-align: center;
+}
