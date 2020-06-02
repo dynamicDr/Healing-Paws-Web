@@ -76,7 +76,7 @@ class PetForm(FlaskForm):
 
 class ResetPasswordRequestForm(FlaskForm):
     """重置密码请求表单"""
-    email = StringField('邮箱', validators=[DataRequired(), Email()])
+    username = StringField('username', validators=[DataRequired()])
     submit = SubmitField('请求密码重置')
 
 class ResetPasswordForm(FlaskForm):

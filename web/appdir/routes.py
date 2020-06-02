@@ -418,9 +418,9 @@ def reset():
 def reset_password_request():
     form = ResetPasswordRequestForm()
     if form.validate_on_submit():
-        user = User.query.filter(User.email == form.email.data).first()
+        user = User.query.filter(User.username == form.username.data).first()
         if not user:
-            flash('该电子邮箱未注册', "danger")
+            flash('No user has this username', "danger")
             return redirect(url_for('reset_password_request'))
 
         send_password_reset_email(user)
