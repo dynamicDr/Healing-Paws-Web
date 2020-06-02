@@ -20,13 +20,13 @@
 			<table>
 			<tr>
 			<td><span>
-				{% if question.type == 1 %}
-					<img src="static/images/about.png" width='150px' height='150px' alt="" style="margin: 0 auto">
-				{% elif question.type == 2 %}
-					<img src="static/images/team-1.jpg" width='150px' height='150px' alt="" style="margin: 0 auto">
-				{% else %}
-					<img src="static/images/logo.png" width='150px' height='150px' alt="" style="margin: 0 auto">
-				{% endif %}
+						{% if question.type == 1 %}
+						<img src="static/images/portfolio/2.jpg" height='150px' style="margin: 20px">
+						{% elif question.type == 2 %}
+						<img src="static/images/portfolio/6.jpg" height='150px' style="margin: 20px">
+						{% else %}
+						<img src="static/images/logo.png" height='150px' style="margin: 20px">
+						{% endif %}
 			</span></td>
 			<td>
 			<span><h3 class="i18n" name="question">: {{ question.title }}</h3></span>
@@ -42,12 +42,12 @@
 			<span><h4>{{ question.body }}</h4></span>
 			</td></tr>
 			</table>
-			
-			<br><br>
+
+			<br><hr><br>
 			<hr>
 			<div text-align='left' style="position: relative">
 			{% if prev_answers %}
-				<h3>{{ question.counta }} Answers</h3><br>
+				<h3 class = 'i18n ' name="answer">{{ prev_answers|length }}</h3><br>
 				<ul>
 					{% for answer in prev_answers %}
 						<li>
@@ -58,7 +58,7 @@
 						<div style="background-color:#EEE5DE; transparent:30%;"><h4>{{ answer.body }}</h4></div>
 						</td></tr>
 						<tr>
-						<td><span><b>Admin {{ answer.author.username }}</b></span></td>
+						<td><span><b>Doctor {{ answer.author.username }}</b></span></td>
 						</tr>
 						<tr><td>
 						<span class='left'>{{ answer.timestamp }}</span><br>
@@ -81,11 +81,15 @@
 					<fieldset>
 					<legend class="i18n" name="add_answer"></legend>
 						<p class="center">
-							<label class="i18n" name="answer"></label><br>
+							<label class="i18n" name="_answer"></label><br>
 							{{ form.body(cols=100,rows=6) }}
 						</p>
+                        {% for error in form.body.errors %}
+							<span style="color: red;" class="flash">[{{ error }}]</span>
+                        {% endfor %}
 						<p class="right"><button id="submit" class="i18n btn btn-primary" name="reply" type="submit"></button></p>
 					</fieldset>
+
 					</form>
 				</div>
 			{% endif %}

@@ -62,7 +62,7 @@ class QuestionForm(FlaskForm):
     submit = SubmitField('Confirm')
     
 class AnswerForm(FlaskForm):
-    body = TextAreaField('Answer', validators=[DataRequired()])
+    body = TextAreaField('Answer', validators=[DataRequired(),Length(1,100)])
     submit = SubmitField('Reply')
 
 class PetForm(FlaskForm):
