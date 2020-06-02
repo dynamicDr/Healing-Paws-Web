@@ -36,7 +36,7 @@ class RegisterForm_E(FlaskForm):
 class AppointmentForm(FlaskForm):
 	pet = SelectField(label='为哪只宠物预约', validators=[DataRequired('请选择宠物')], coerce=int,render_kw={"style": "padding: 5px;width: 100%;margin-top: 5px"})
 	loc = RadioField(
-        validators=[DataRequired('请选择就医所在地')],
+        validators=[DataRequired('Choose a doctor')],
         choices=[(1, ''), (2, ''), (3, '')],
         coerce=int
     )

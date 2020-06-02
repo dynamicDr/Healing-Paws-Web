@@ -92,17 +92,15 @@
     <br>
     {% if appointment.status == "Confirmed" and appointment.is_emergency == true%}
     <div style="margin: 0 auto">
-        <form class="bs-example bs-example-form" role="form">
-            <div class="row">
-                <div class="col-lg-6" style="margin: 0 auto">
-                    <span class="i18n" name="pet_status">:</span>
-                    <div class="input-group"  style="margin: 20px">
-                        <input style="font-size: 1.6rem" id="status" type="text" class="form-control" value="{{ appointment.pet_status }}">
-                        <span id="check_update"></span>
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-            </div><!-- /.row -->
-        </form>
+        <div class="row">
+            <div class="col-lg-6" style="margin: 0 auto">
+                <span class="i18n" name="pet_status">:</span>
+                <div class="input-group"  style="margin: 20px">
+                    <input style="font-size: 1.6rem" id="status" type="text" class="form-control" value="{{ appointment.pet_status }}">
+                    <span id="check_update"></span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
     </div>
     <br>
 {% endif %}
@@ -122,15 +120,6 @@
         </div>
 
 </div>
-
-<script>
-function disp_confirm(opreation) {
-  var r=confirm("Are you sure you want to "+opreation+" this appointment?")
-      if (r==true) {
-         window.location.href = "{{ url_for('update_appointment',apt=appointment.id) }}&operation="+opreation;
-      }
-  }
-</script>
 <style>
 .success{
     color: green;
