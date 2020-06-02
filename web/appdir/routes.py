@@ -288,6 +288,7 @@ def set_status():
     print("apt.ps=" + str(appointment.pet_status))
     # db.session.add(appointment)
     db.session.commit()
+    return jsonify({'text': 'update successfully', 'returnvalue': 0})
 
 
 @app.route('/make_appointment', methods=['POST', 'GET'])

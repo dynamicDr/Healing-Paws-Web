@@ -939,11 +939,11 @@ padding: 7px 0 0;
 }
 table{
 	margin:auto;
-	width:80%;
-      table-layout: fixed;
+]
+  width:80%;
+  /* table-layout: fixed;
     word-break: break-all;
-    word-wrap: break-word;
-}
+    word-wrap: break-word; */]
 }
 table th,td{
 	text-align:center;
