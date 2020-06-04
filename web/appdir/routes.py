@@ -200,6 +200,7 @@ def all_appointments():
         status = request.args.get('status')
         name = request.args.get('name')
         loc = request.args.get('loc')
+        doc = request.args.get('doc')
         sort = request.args.get('sort')
         filter_text = ""
         if Type == "emergency":
@@ -212,7 +213,8 @@ def all_appointments():
             filter_text += " and status=\"" + status + "\""
         if (not loc is None) and (loc != "all"):
             filter_text += " and loc=\"" + loc + "\""
-
+        if (not doc is None) and (doc == "my"):
+            filter_text += " and employee_id=" + str(user_in_db.id)
         if sort == 'status':
             appointments = Appointment.query.filter(text(filter_text))\
                 .order_by(case(value=Appointment.status, whens={'Pending':0, 'Confirmed':1, 'Canceled':4, 'Finished':3}))\
@@ -221,7 +223,8 @@ def all_appointments():
             appointments = Appointment.query.filter(text(filter_text)).order_by(Appointment.datetime.desc())
         appointments = appointments.paginate(page=page, per_page=5)
         return render_template('all_appointments.html', title="Check Appointment", appointments=appointments.items,
-                               user=user_in_db, page=page, pagination=appointments, type=Type, status=status, loc=loc, name=name, sort=sort)
+                               user=user_in_db, page=page, pagination=appointments, type=Type, status=status, loc=loc
+                               ,doc=doc,name=name, sort=sort)
     else:
         flash("User needs to either login or signup first", "danger")
         return redirect(url_for('login'))
@@ -271,6 +274,10 @@ def update_appointment():
             return redirect(url_for('handleappointment', appointment_id=appointment_id))
         appointment.status = "Canceled"
     elif operation == "Confirm":
+        doctor=Employee.query.filter(user_in_db.ref_id == Employee.id).first()
+        if doctor.loc != appointment.loc:
+            flash("Cannot confirm the appointment. This appointment is not in your city!", "danger")
+            return redirect(url_for('handleappointment', appointment_id=appointment_id))
         if appointment.preferred_doctor_id != user_in_db.id and appointment.changeable is False:
             flash("Cannot confirm the appointment. There is another assigned doctor.", "danger")
             return redirect(url_for('handleappointment', appointment_id=appointment_id))
@@ -315,14 +322,15 @@ def make_appointment():
         form = AppointmentForm()
         pets = Pet.query.filter(Pet.owner_id == user_in_db.id).all()
         form.pet.choices = [(pet.id, pet.name) for pet in pets]
-        doctors = User.query.filter(User.is_customer == False).all()
+        doctors = User.query.filter(User.is_customer == False,User.username !="Admin").all()
         doctor_list=[]
         all_doctors= Employee.query.all()
         for doc in all_doctors:
             doctor = Doctor(doc.id,doc.loc,doc.intro)
-            name=User.query.filter(User.id==doc.id).first().username
-            doctor.set_name(name)
-            doctor_list.append(doctor)
+            name=User.query.filter(User.ref_id==doc.id,User.is_customer==0).first().username
+            if name !="Admin":
+                doctor.set_name(name)
+                doctor_list.append(doctor)
         form.doctor.choices = [(u.id, u.username) for u in doctors]
         if form.validate_on_submit():  # 第二次，已填写
             appointment = Appointment(loc=int(form.loc.data), pet_id=int(form.pet.data), \
@@ -403,12 +411,12 @@ def reset():
     db.create_all()
     # 在这里往数据库里添加测试数据，每次reset后就直接添加
     print("重建完毕，插入输入中")
-    customer = Customer(dob='2000-01-01', phone='123', address='123')
-    employee = Employee(intro='1123', loc=1)
+    customer = Customer(dob='2000-01-01', phone='-', address='-')
+    employee = Employee(intro='First employee account.', loc=1)
     db.session.add(customer)
     db.session.add(employee)
     db.session.flush()
-    user_e = User(username='e', password_hash=generate_password_hash('1'), email='1092950198@qq.com', is_customer=False,
+    user_e = User(username='Admin', password_hash=generate_password_hash('Admin123456'), email='-', is_customer=False,
                   ref_id=employee.id)
     user_c = User(username='c', password_hash=generate_password_hash('1'), email='1092950198@qq.com', is_customer=True,
                   ref_id=customer.id)
