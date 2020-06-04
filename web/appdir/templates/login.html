@@ -70,16 +70,13 @@
 			<form role="form" action="" method="post" novalidate>
                 {{ form.hidden_tag() }}
 				<div class="form-group">
-                     <label for="username" class="i18n" name="username"></label>
+                     <span class="i18n" name="username"/>
                      {{ form.username(size=32) }}
 				</div>
 				<div class="form-group">
-                     <label for="password" class="i18n" name="password"></label>
+                     <span class="i18n" name="password"/>
                      {{ form.password(size=32) }}
 				</div>
-				<!-- <div>
-                    {{ form.remember_me() }}<label class="i18n" name="remember"></label>
-                </div>  -->
                 <div>
                     <a href="{{ url_for('reset_password_request') }}" class="i18n" name="forget"></a>
                 </div>
@@ -91,9 +88,4 @@
 	  </div>
   </div>
 
-
-<script>
-    $("#username").addClass("form-control");
-    $("#password").addClass("form-control");
-</script>
 {% endblock %}
