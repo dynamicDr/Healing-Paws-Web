@@ -29,7 +29,7 @@ def send_password_reset_email(user):
     """发送密码重置电子邮件"""
     token = user.get_jwt_token()
     send_email('[博客] 重置您的密码',\
-               sender = app.config['MAIL_USERNAME'],\
+               sender = ("Healing Paws Veterinary Hospital",app.config['MAIL_USERNAME']),\
                recipients=[user.email],\
                text_body=render_template('email/reset_password.txt', user=user, token=token),\
                html_body=render_template('email/reset_password.html', user=user, token=token))

@@ -17,6 +17,5 @@ class Config(object):
     # 电子邮箱服务器密码
     MAIL_PASSWORD = 'TJVKEZWVDBNJRQOB'
     # 电子邮箱邮件接收地址
-    # MAIL_ADMINS = ['1069291377@qq.com']
     MAIL_USE_SSL = True
     MAIL_DEFAULT_SENDER = ('ZHQ', 'MAIL_USERNAME')
